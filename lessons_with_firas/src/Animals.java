@@ -14,6 +14,7 @@ interface Mammals {
     boolean hasFur();
 }
 
+// Implements requires initialization while extends adds from the superclass
 class Lion extends Animals implements Mammals {
     @Override
     public void sleep() {

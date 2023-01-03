@@ -16,6 +16,20 @@ public class FunctionalFaces {
         T function(T t);
     }
 
+    static <T> void displayInput(T input) {
+        System.out.println(input.getClass().getName() + " = " + input);
+    }
+
+    static <T> T returnAsType(String type){
+        if (type == "java.lang.String") {
+            return (T) "Hello World";
+        }
+        if (type == "java.lang.Character") {
+            return (T) "j";
+        }
+        return (T) "Josh";
+    }
+
     public static void main(String[] args) {
         // Argument goes into ()
         MyInterface ref = () -> 3.14159;
@@ -42,5 +56,11 @@ public class FunctionalFaces {
         int exIntTwo = 9;
         System.out.println("Factorial of " + exInt + " = " + factorial.function(exInt));
         System.out.println("Factorial of " + exIntTwo + " = " + factorial.function(exIntTwo));
+        displayInput(14);
+        displayInput("Josh");
+        int[] list = {1, 2, 3};
+        displayInput(list);
+        System.out.println((String) returnAsType("java.lang.String"));
+        System.out.println((String) returnAsType("java.lang.Character"));
     }
 }

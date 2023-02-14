@@ -1,11 +1,16 @@
+import 'package:first_project/widgets/answer.dart';
 import 'package:first_project/widgets/question.dart';
 import 'package:flutter/material.dart';
+
+import '../app_constants.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> answers =
+        AppConstants.questions[0]["answers"];
     return Scaffold(
       appBar: AppBar(
         title: const SizedBox(
@@ -21,25 +26,14 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.only(
-              left: 50,
-            ),
-            color: Colors.blue,
-            child: const Text("Hello World"),
-          ),
+          Question(questionText: AppConstants.questions[0]["text"]),
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Dog"),
-              SizedBox(width: 100),
-              Text("Dog"),
-            ],
-          ),
-          const Question()
+          // Answer(answerText: AppConstants.questions[0]["answers"][0]["ans"])
+          // ... is called the spread operator and splits
+          // a list of widgets into individual widgets
+          ...answers.map((e) => Answer(answerText: e["ans"])).toList(),
         ],
       ),
     );

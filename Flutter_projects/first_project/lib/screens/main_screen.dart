@@ -4,19 +4,23 @@ import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainScreenState extends State<MainScreen> {
   int questionIdx = 0;
 
   void answerClicked() {
     setState(() {
-      if (questionIdx < AppConstants.questions.length - 1) questionIdx++;
+      if (questionIdx < AppConstants.questions.length - 1) {
+        questionIdx++;
+      } else {
+        Navigator.of(context).pushNamed("/result-screen");
+      }
     });
   }
 

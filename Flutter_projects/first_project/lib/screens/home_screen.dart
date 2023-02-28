@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int questionIdx = 0;
 
   void answerClicked() {
@@ -30,12 +30,9 @@ class _MainScreenState extends State<MainScreen> {
         AppConstants.questions[questionIdx]["answers"];
     return Scaffold(
       appBar: AppBar(
-        title: const SizedBox(
-          width: double.infinity,
-          child: Text(
-            "Starter App",
-            textAlign: TextAlign.center,
-          ),
+        centerTitle: true,
+        title: Text(
+          "Starter App",
         ),
         backgroundColor: Colors.indigo,
       ),

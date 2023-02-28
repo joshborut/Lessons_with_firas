@@ -1,4 +1,4 @@
-import 'package:first_project/screens/main_screen.dart';
+import 'package:first_project/screens/home_screen.dart';
 import 'package:first_project/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(),
       initialRoute: '/',
       routes: {
-        '/': (context) => MainScreen(),
+        '/': (context) => HomeScreen(),
         '/result-screen': (context) => ResultScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => MainScreen(),
+          builder: (context) => HomeScreen(),
         );
       },
     );

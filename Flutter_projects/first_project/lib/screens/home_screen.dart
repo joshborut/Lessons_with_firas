@@ -12,12 +12,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int questionIdx = 0;
+  int _questionIdx = 0;
 
-  void answerClicked() {
+  void _answerClicked() {
     setState(() {
-      if (questionIdx < AppConstants.questions.length - 1) {
-        questionIdx++;
+      if (_questionIdx < AppConstants.questions.length - 1) {
+        _questionIdx++;
       } else {
         Navigator.of(context).pushNamed("/result-screen");
       }
@@ -27,8 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> answers =
-        AppConstants.questions[questionIdx]["answers"];
+        AppConstants.questions[_questionIdx]["answers"];
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Question(questionText: AppConstants.questions[questionIdx]["text"]),
+          Question(questionText: AppConstants.questions[_questionIdx]["text"]),
           const SizedBox(
             height: 20,
           ),
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ...answers
               .map((e) => Answer(
                     answerText: e["ans"],
-                    selectHan: answerClicked,
+                    selectHan: _answerClicked,
                   ))
               .toList(),
         ],

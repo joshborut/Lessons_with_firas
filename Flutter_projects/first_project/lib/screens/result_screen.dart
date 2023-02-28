@@ -6,6 +6,7 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -30,12 +31,15 @@ class ResultScreen extends StatelessWidget {
             width: double.infinity,
           ),
           ElevatedButton(
-            onPressed: null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey[300],
+            ),
+            onPressed: () {},
             child: Text(
               "Restart Quiz",
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.amber[800],
+                color: Colors.lightBlue[300],
               ),
             ),
           )

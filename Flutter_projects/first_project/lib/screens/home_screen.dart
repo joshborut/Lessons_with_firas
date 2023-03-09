@@ -13,13 +13,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _questionIdx = 0;
+  int _totalScore = 0;
 
-  void _answerClicked() {
+  void _resetQuiz() {
+    Navigator.of(context).pop();
+    setState(() {
+      _totalScore = 0;
+      _questionIdx = 0;
+    });
+  }
+
+  void _answerClicked(int score) {
+    _totalScore += score;
     setState(() {
       if (_questionIdx < AppConstants.questions.length - 1) {
         _questionIdx++;
       } else {
-        Navigator.of(context).pushNamed("/result-screen");
+        Navigator.of(context).pushNamed(
+          "/result-screen",
+          arguments: [_resetQuiz, _totalScore],
+        );
       }
     });
   }
@@ -51,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ...answers
               .map((e) => Answer(
                     answerText: e["ans"],
-                    selectHan: _answerClicked,
+                    answerClicked: _answerClicked,
+                    answerScore: e["score"],
                   ))
               .toList(),
         ],

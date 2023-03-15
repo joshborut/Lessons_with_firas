@@ -4,7 +4,7 @@ class Answer extends StatelessWidget {
   const Answer({
     required this.answerText,
     required this.answerClicked,
-    required this.answerScore,
+    required this.accuracy,
     super.key,
   });
 
@@ -17,7 +17,7 @@ class Answer extends StatelessWidget {
   // When a parameter is final, it must be required in the constructor
   final String answerText;
   final void Function(int) answerClicked;
-  final int answerScore;
+  final int accuracy;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class Answer extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.grey[300],
         ),
-        onPressed: () => answerClicked(answerScore),
+        onPressed: () => answerClicked(accuracy),
         child: Text(
           answerText,
           style: TextStyle(

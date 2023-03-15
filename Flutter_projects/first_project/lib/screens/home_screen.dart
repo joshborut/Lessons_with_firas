@@ -1,8 +1,9 @@
+import 'package:first_project/model/question_model.dart';
+import 'package:first_project/model/screen_arguments.dart';
+import 'package:first_project/utility/home_functions.dart';
 import 'package:first_project/widgets/answer.dart';
 import 'package:first_project/widgets/question.dart';
 import 'package:flutter/material.dart';
-
-import '../app_constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,8 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // late final means that the data will be intialized eventually,
+  // and once it is initalized, it can never change.
+  late final List<QuestionModel> questionList;
   int _questionIdx = 0;
   int _totalScore = 0;
+
+// initState() is called when the widget is first created.
+// initState() is never called again afterwards.
+  @override
+  void initState() {
+    questionList = getQuizQuestions();
+    super.initState();
+  }
 
   void _resetQuiz() {
     Navigator.of(context).pop();
@@ -26,12 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void _answerClicked(int score) {
     _totalScore += score;
     setState(() {
-      if (_questionIdx < AppConstants.questions.length - 1) {
+      if (_questionIdx < questionList.length - 1) {
         _questionIdx++;
       } else {
         Navigator.of(context).pushNamed(
           "/result-screen",
-          arguments: [_resetQuiz, _totalScore],
+          // arguments: [_resetQuiz, _totalScore, questionList],
+          arguments: ScreenArguments(
+            resetHandler: _resetQuiz,
+            quizQuestions: questionList,
+            totalScore: _totalScore,
+          ),
         );
       }
     });
@@ -39,8 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> answers =
-        AppConstants.questions[_questionIdx]["answers"];
+    // final List<Map<String, dynamic>> answers =
+    //     AppConstants.questions[_questionIdx]["answers"];
+    final currentQuestion = questionList[_questionIdx];
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -54,18 +72,18 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Question(questionText: AppConstants.questions[_questionIdx]["text"]),
+          // Question(questionText: AppConstants.questions[_questionIdx]["text"]),
+          Question(questionText: currentQuestion.qusTxt),
           const SizedBox(
             height: 20,
           ),
-          // Answer(answerText: AppConstants.questions[0]["answers"][0]["ans"])
           // ... is called the spread operator and splits
           // a list of widgets into individual widgets
-          ...answers
+          ...currentQuestion.ansList
               .map((e) => Answer(
-                    answerText: e["ans"],
+                    answerText: e.ansTxt,
                     answerClicked: _answerClicked,
-                    answerScore: e["score"],
+                    accuracy: e.accuracy,
                   ))
               .toList(),
         ],

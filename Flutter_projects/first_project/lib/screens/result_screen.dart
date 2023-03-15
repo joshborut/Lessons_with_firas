@@ -1,21 +1,22 @@
-import 'package:first_project/app_constants.dart';
+import 'package:first_project/model/screen_arguments.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
 
-  String resultPhrase(int score) {
-    if (score == AppConstants.questions.length) {
+  String resultPhrase(int totalScore, questionList) {
+    if (totalScore == questionList.length) {
       return "You have answered all questions correctly!";
     } else {
-      return "You have answered $score/"
-          "${AppConstants.questions.length} correctly";
+      return "You have answered $totalScore/"
+          "${questionList.length} correctly";
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+    final scrnArgs =
+        ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -30,7 +31,7 @@ class ResultScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            resultPhrase(args[1]),
+            resultPhrase(scrnArgs.totalScore, scrnArgs.quizQuestions),
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
@@ -46,7 +47,7 @@ class ResultScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey[300],
             ),
-            onPressed: args[0],
+            onPressed: scrnArgs.resetHandler,
             child: Text(
               "Restart Quiz",
               style: TextStyle(

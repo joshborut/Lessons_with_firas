@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Food Boxes",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ),
+        primarySwatch: Colors.deepOrange,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -26,12 +24,15 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           bodyLarge: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w900,
-          ),
+              fontSize: 40, fontWeight: FontWeight.w900, color: Colors.black),
           bodyMedium: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
+            color: Colors.grey,
+          ),
+          bodySmall: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
             color: Colors.grey,
           ),
         ),
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             minimumSize: Size(30, 30),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.all(5),
+            minimumSize: Size.zero,
           ),
         ),
       ),

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/home_screen.dart';
-import 'package:food_boxes/screens/reg_screen.dart';
-import 'package:food_boxes/screens/reset_pw_screen.dart';
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
-  static const String routeName = "reg";
+import 'auth_screen.dart';
+
+class RegScreen extends StatefulWidget {
+  const RegScreen({super.key});
+  static const String routeName = "auth";
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<RegScreen> createState() => _RegScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _RegScreenState extends State<RegScreen> {
   @override
   Widget build(BuildContext context) {
     final scrnSize = MediaQuery.of(context).size;
@@ -31,11 +30,11 @@ class _AuthScreenState extends State<AuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Login",
+                  "Sign Up",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  "Please sign in to proceed",
+                  "Please sign up to proceed",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 SizedBox(
@@ -52,13 +51,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   decoration: InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.question_mark),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(ResetPwScreen.routeName);
-                      },
-                    ),
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -67,31 +59,28 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(HomeScreen.routeName);
+              Navigator.of(context).pushNamed(AuthScreen.routeName);
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Text("Login"), Icon(Icons.arrow_forward_ios_rounded)],
+              children: [
+                Text("Register"),
+                Icon(Icons.arrow_forward_ios_rounded)
+              ],
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(ResetPwScreen.routeName);
-            },
-            child: Text("Forgot Password"),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "New here?",
+                "Already have an Account?",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RegScreen.routeName);
+                  Navigator.of(context).pushNamed(AuthScreen.routeName);
                 },
-                child: Text("Create an Account"),
+                child: Text("Login"),
               ),
             ],
           )

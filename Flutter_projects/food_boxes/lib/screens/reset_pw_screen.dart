@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/home_screen.dart';
-import 'package:food_boxes/screens/reg_screen.dart';
-import 'package:food_boxes/screens/reset_pw_screen.dart';
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
-  static const String routeName = "reg";
+import 'auth_screen.dart';
+
+class ResetPwScreen extends StatefulWidget {
+  const ResetPwScreen({super.key});
+  static const String routeName = "reset";
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<ResetPwScreen> createState() => _ResetPwScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _ResetPwScreenState extends State<ResetPwScreen> {
   @override
   Widget build(BuildContext context) {
     final scrnSize = MediaQuery.of(context).size;
@@ -31,11 +30,11 @@ class _AuthScreenState extends State<AuthScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Login",
+                  "Reset Password",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  "Please sign in to proceed",
+                  "Please enter your email to proceed",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 SizedBox(
@@ -48,50 +47,30 @@ class _AuthScreenState extends State<AuthScreen> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.question_mark),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(ResetPwScreen.routeName);
-                      },
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
               ],
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(HomeScreen.routeName);
+              Navigator.of(context).pushNamed(AuthScreen.routeName);
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Text("Login"), Icon(Icons.arrow_forward_ios_rounded)],
+              children: [Text("Submit"), Icon(Icons.arrow_forward_ios_rounded)],
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(ResetPwScreen.routeName);
-            },
-            child: Text("Forgot Password"),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "New here?",
+                "Remembered your Password?",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RegScreen.routeName);
+                  Navigator.of(context).pushNamed(AuthScreen.routeName);
                 },
-                child: Text("Create an Account"),
+                child: Text("Login"),
               ),
             ],
           )

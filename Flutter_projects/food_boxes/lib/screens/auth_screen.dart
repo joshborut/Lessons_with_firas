@@ -12,6 +12,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool _hidePassword = true;
   @override
   Widget build(BuildContext context) {
     final scrnSize = MediaQuery.of(context).size;
@@ -42,24 +43,32 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: scrnSize.height * 0.05,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
                   ),
                 ),
+                SizedBox(
+                  height: scrnSize.height * 0.01,
+                ),
                 TextFormField(
+                  obscureText: _hidePassword,
                   decoration: InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(Icons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.question_mark),
+                      icon: _hidePassword
+                          ? Icon(Icons.visibility)
+                          : Icon(Icons.visibility_off),
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(ResetPwScreen.routeName);
+                        setState(
+                          () {
+                            _hidePassword = !_hidePassword;
+                          },
+                        );
                       },
                     ),
-                    border: OutlineInputBorder(),
                   ),
                 ),
               ],
@@ -71,7 +80,10 @@ class _AuthScreenState extends State<AuthScreen> {
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Text("Login"), Icon(Icons.arrow_forward_ios_rounded)],
+              children: [
+                Text("Login"),
+                Icon(Icons.arrow_forward_ios_rounded),
+              ],
             ),
           ),
           TextButton(

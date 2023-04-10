@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'auth_screen.dart';
-
 class ResetPwScreen extends StatefulWidget {
   const ResetPwScreen({super.key});
   static const String routeName = "reset";
@@ -22,7 +20,7 @@ class _ResetPwScreenState extends State<ResetPwScreen> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.only(
-                top: scrnSize.height * 0.1,
+                top: scrnSize.height * 0.05,
                 left: scrnSize.width * 0.1,
                 right: scrnSize.width * 0.1,
                 bottom: scrnSize.height * 0.01),
@@ -41,10 +39,10 @@ class _ResetPwScreenState extends State<ResetPwScreen> {
                   height: scrnSize.height * 0.05,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
                   ),
                 ),
               ],
@@ -52,7 +50,7 @@ class _ResetPwScreenState extends State<ResetPwScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(AuthScreen.routeName);
+              Navigator.of(context).pop();
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -68,9 +66,9 @@ class _ResetPwScreenState extends State<ResetPwScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AuthScreen.routeName);
+                  Navigator.of(context).pop();
                 },
-                child: Text("Login"),
+                child: Text("Go back"),
               ),
             ],
           )

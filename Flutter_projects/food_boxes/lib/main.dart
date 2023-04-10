@@ -13,44 +13,47 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Food Boxes",
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-        ),
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(
-              fontSize: 40, fontWeight: FontWeight.w900, color: Colors.black),
-          bodyMedium: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey,
-          ),
-          bodySmall: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w300,
-            color: Colors.grey,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+          primarySwatch: Colors.blueGrey,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
             ),
-            minimumSize: Size(30, 30),
           ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(5),
-            minimumSize: Size.zero,
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(
+                fontSize: 40, fontWeight: FontWeight.w900, color: Colors.black),
+            bodyMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+            bodySmall: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w300,
+              color: Colors.grey,
+            ),
           ),
-        ),
-      ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              minimumSize: Size(30, 30),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(5),
+              minimumSize: Size.zero,
+            ),
+          ),
+          iconTheme: IconThemeData(color: Colors.grey)),
       initialRoute: AuthScreen.routeName,
       onGenerateRoute: (generateRoute),
     );

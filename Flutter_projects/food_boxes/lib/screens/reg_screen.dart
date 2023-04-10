@@ -44,14 +44,15 @@ class _RegScreenState extends State<RegScreen> {
                   decoration: InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
                   ),
+                ),
+                SizedBox(
+                  height: scrnSize.height * 0.01,
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(),
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_boxes/screens/reset_pw_screen.dart';
+import '../utility/size_config.dart';
 import 'auth_screen.dart';
 import 'home_screen.dart';
 
@@ -15,7 +16,6 @@ class AcctScreen extends StatefulWidget {
 class _AcctScreenState extends State<AcctScreen> {
   @override
   Widget build(BuildContext context) {
-    final scrnSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -24,19 +24,20 @@ class _AcctScreenState extends State<AcctScreen> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.only(
-                top: scrnSize.height * 0.03,
-                left: scrnSize.width * 0.1,
-                right: scrnSize.width * 0.1,
-                bottom: scrnSize.height * 0.03),
+              top: SizeConfig.safeHeight * 0.03,
+              left: SizeConfig.safeWidth * 0.1,
+              right: SizeConfig.safeWidth * 0.1,
+              bottom: SizeConfig.safeHeight * 0.03,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.account_circle_outlined,
-                  size: scrnSize.height * 0.1,
+                  size: SizeConfig.safeHeight * 0.1,
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.03,
+                  height: SizeConfig.safeHeight * 0.03,
                 ),
                 TextFormField(
                   initialValue: AcctScreen.exampleText,
@@ -47,7 +48,7 @@ class _AcctScreenState extends State<AcctScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.01,
+                  height: SizeConfig.safeHeight * 0.01,
                 ),
                 TextFormField(
                   initialValue: AcctScreen.exampleText,
@@ -58,7 +59,7 @@ class _AcctScreenState extends State<AcctScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.01,
+                  height: SizeConfig.safeHeight * 0.01,
                 ),
                 TextFormField(
                   initialValue: "15",
@@ -70,10 +71,10 @@ class _AcctScreenState extends State<AcctScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.01,
+                  height: SizeConfig.safeHeight * 0.01,
                 ),
                 ListTile(
-                  tileColor: Theme.of(context).primaryColor,
+                  tileColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -85,10 +86,10 @@ class _AcctScreenState extends State<AcctScreen> {
                   },
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.01,
+                  height: SizeConfig.safeHeight * 0.01,
                 ),
                 ListTile(
-                  tileColor: Theme.of(context).primaryColor,
+                  tileColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -100,10 +101,10 @@ class _AcctScreenState extends State<AcctScreen> {
                   },
                 ),
                 SizedBox(
-                  height: scrnSize.height * 0.01,
+                  height: SizeConfig.safeHeight * 0.01,
                 ),
                 ListTile(
-                  tileColor: Colors.redAccent,
+                  tileColor: Colors.red[700],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

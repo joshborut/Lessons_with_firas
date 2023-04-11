@@ -9,16 +9,28 @@ import 'screens/reg_screen.dart';
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case AuthScreen.routeName:
-      return MaterialPageRoute(builder: ((context) => AuthScreen()));
+      return MaterialPageRoute(
+        builder: (context) => AuthScreen(),
+      );
     case RegScreen.routeName:
-      return MaterialPageRoute(builder: ((context) => RegScreen()));
+      return MaterialPageRoute(
+        builder: (context) => RegScreen(),
+      );
     case ResetPwScreen.routeName:
-      return MaterialPageRoute(builder: ((context) => ResetPwScreen()));
+      return MaterialPageRoute(
+        builder: (context) => ResetPwScreen(),
+      );
     case HomeScreen.routeName:
-      return MaterialPageRoute(builder: ((context) => HomeScreen()));
+      return MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      );
     case AcctScreen.routeName:
-      return MaterialPageRoute(builder: ((context) => AcctScreen()));
+      return MaterialPageRoute(
+        builder: (context) => AcctScreen(),
+      );
     default:
-      return MaterialPageRoute(builder: ((context) => AuthScreen()));
+      return MaterialPageRoute(
+        builder: (context) => AuthScreen(),
+      );
   }
 }

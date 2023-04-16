@@ -3,6 +3,7 @@ import 'package:food_boxes/screens/home_screen.dart';
 import 'package:food_boxes/screens/reg_screen.dart';
 import 'package:food_boxes/screens/reset_pw_screen.dart';
 import 'package:food_boxes/utility/size_config.dart';
+import 'package:food_boxes/widgets/custom_txt_field.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -13,13 +14,21 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   void didChangeDependencies() {
-    SizeConfig().int(context);
+    if (!SizeConfig.initialized) SizeConfig().int(context);
     super.didChangeDependencies();
   }
 
-  bool _hidePassword = true;
+  void _submitFormData() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,97 +43,94 @@ class _AuthScreenState extends State<AuthScreen> {
           right: SizeConfig.safeWidth * 0.1,
           bottom: SizeConfig.safeHeight * 0.01,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Login",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Text(
-              "Please sign in to proceed",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            SizedBox(
-              height: SizeConfig.safeHeight * 0.05,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Email",
-                prefixIcon: Icon(Icons.email),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Login",
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.safeHeight * 0.01,
-            ),
-            TextFormField(
-              obscureText: _hidePassword,
-              decoration: InputDecoration(
-                hintText: "Password",
-                prefixIcon: Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: _hidePassword
-                      ? Icon(Icons.visibility)
-                      : Icon(Icons.visibility_off),
-                  onPressed: () {
-                    setState(
-                      () {
-                        _hidePassword = !_hidePassword;
-                      },
-                    );
-                  },
-                ),
+              Text(
+                "Please sign in to proceed",
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(HomeScreen.routeName);
+              SizedBox(
+                height: SizeConfig.safeHeight * 0.05,
+              ),
+              CustomTxtFormField(
+                validator: (value) {
+                  final email = _emailController.text;
+                  if (email.isEmpty) return "Please enter your email.";
+                  return null;
                 },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Login"),
-                    Icon(Icons.arrow_forward_ios_rounded),
-                  ],
-                ),
+                prefixIconWidget: Icon(Icons.email),
+                controller: _emailController,
+                label: "Email",
               ),
-            ),
-            Spacer(),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(ResetPwScreen.routeName);
-              },
-              child: Container(
+              SizedBox(
+                height: SizeConfig.safeHeight * 0.01,
+              ),
+              CustomTxtFormField(
+                validator: (value) {
+                  final password = _passwordController.text;
+                  if (password.isEmpty) return "Please enter your password.";
+                  return null;
+                },
+                prefixIconWidget: Icon(Icons.lock),
+                controller: _passwordController,
+                obscureText: true,
+                label: "Password",
+              ),
+              Container(
+                padding: EdgeInsets.only(top: SizeConfig.scaledHeight(1)),
                 alignment: Alignment.center,
-                width: SizeConfig.safeWidth,
-                child: Text(
-                  "Forgot Password",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).colorScheme.primary,
+                child: ElevatedButton(
+                  onPressed: _submitFormData,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Login"),
+                      Icon(Icons.arrow_forward_ios_rounded),
+                    ],
                   ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "New here?",
-                  style: Theme.of(context).textTheme.bodySmall,
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(ResetPwScreen.routeName);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: SizeConfig.safeWidth,
+                  child: Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(RegScreen.routeName);
-                  },
-                  child: Text("Create an Account"),
-                ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "New here?",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(RegScreen.routeName);
+                    },
+                    child: Text("Create an Account"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

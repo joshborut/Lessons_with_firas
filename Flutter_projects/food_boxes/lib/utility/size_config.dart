@@ -8,6 +8,7 @@ class SizeConfig {
   static late final double screenHeight;
   static late final double safeWidth;
   static late final double safeHeight;
+  static bool initialized = false;
 
   void int(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -21,5 +22,14 @@ class SizeConfig {
 
     safeWidth = screenWidth - _unsafeAreaHorizontal;
     safeHeight = screenHeight - _unsafeAreaVertical;
+    initialized = true;
+  }
+
+  static double scaledWidth(double percentage) {
+    return safeWidth * percentage / 100;
+  }
+
+  static double scaledHeight(double percentage) {
+    return safeHeight * percentage / 100;
   }
 }

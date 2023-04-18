@@ -7,7 +7,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const routeName = "/";
   static const List<String> routeNames = [
-    AcctScreen.routeName,
+    AccountScreen.routeName,
     HomeScreen.routeName
   ];
 

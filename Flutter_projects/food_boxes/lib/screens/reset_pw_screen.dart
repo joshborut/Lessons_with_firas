@@ -1,79 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:food_boxes/screens/auth_screen.dart';
+import 'package:food_boxes/widgets/custom_txt_field.dart';
 
 import '../utility/size_config.dart';
 
-class ResetPwScreen extends StatefulWidget {
-  const ResetPwScreen({super.key});
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
   static const String routeName = "reset";
 
   @override
-  State<ResetPwScreen> createState() => _ResetPwScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _ResetPwScreenState extends State<ResetPwScreen> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
+  void _submitFormData() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(
-                top: SizeConfig.safeHeight * 0.05,
-                left: SizeConfig.safeWidth * 0.1,
-                right: SizeConfig.safeWidth * 0.1,
-                bottom: SizeConfig.safeHeight * 0.01),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Reset Password",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                Text(
-                  "Please enter your email to proceed",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                SizedBox(
-                  height: SizeConfig.safeHeight * 0.05,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    prefixIcon: Icon(Icons.email),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [Text("Submit"), Icon(Icons.arrow_forward_ios_rounded)],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          vertical: SizeConfig.scaledHeight(5),
+          horizontal: SizeConfig.scaledWidth(10),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Remembered your Password?",
-                style: Theme.of(context).textTheme.bodySmall,
+                "Reset Password",
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
+              Text(
+                "Please enter your email to proceed",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              SizedBox(
+                height: SizeConfig.scaledHeight(5),
+              ),
+              CustomTxtFormField(
+                validator: (value) {
+                  if (value.isEmpty) return "Please enter your email";
+                  return null;
                 },
-                child: Text("Go back"),
+                prefixIconWidget: Icon(Icons.email),
+                label: "Email",
               ),
+              Container(
+                padding: EdgeInsets.only(top: SizeConfig.scaledHeight(1)),
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: _submitFormData,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Submit"),
+                      Icon(Icons.arrow_forward_ios_rounded)
+                    ],
+                  ),
+                ),
+              ),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Remembered your Password?",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Go back"),
+                  ),
+                ],
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

@@ -26,7 +26,7 @@ class SizeConfig {
   }
 
   static double scaledWidth(double percentage) {
-    return safeWidth * percentage / 100;
+    return safeWidth * (percentage / 100);
   }
 
   static double scaledHeight(double percentage) {

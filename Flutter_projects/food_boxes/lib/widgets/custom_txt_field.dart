@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class CustomTxtFormField extends StatefulWidget {
   const CustomTxtFormField({
-    required this.controller,
     required this.label,
     this.errorLabelColor = const Color(0xFFB71C1C),
     this.labelFocusColor = Colors.blue,
@@ -14,10 +13,12 @@ class CustomTxtFormField extends StatefulWidget {
     this.initialValue,
     this.validator,
     this.onChanged,
+    this.controller,
     this.onSaved,
     super.key,
   });
 
+  final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSaved;
   final Function(String)? validator;
@@ -25,7 +26,6 @@ class CustomTxtFormField extends StatefulWidget {
   final String? initialValue;
   final Color errorLabelColor;
   final Color labelFocusColor;
-  final TextEditingController controller;
   final TextInputType inputType;
   final bool hideLabelOnFocus;
   final bool obscureText;

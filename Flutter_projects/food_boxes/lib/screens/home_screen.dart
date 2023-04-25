@@ -1,39 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-import 'acct_screen.dart';
+import '../app_constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const routeName = "/";
-  static const List<String> routeNames = [
-    AccountScreen.routeName,
-    HomeScreen.routeName
-  ];
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int pageIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          TableCalendar(
-            headerStyle: HeaderStyle(),
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            enabledDayPredicate: (day) => day.isAfter(
-              DateTime.now(),
-            ),
-            focusedDay: DateTime.now(),
-          ),
-        ],
-      ),
+      body: AppConstants.menuItemList[pageIndex].bodyBuild,
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) => setState(() => pageIndex = index),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
@@ -48,10 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: "Tickets",
           ),
         ],
-        currentIndex: 1,
-        onTap: (int index) {
-          Navigator.of(context).pushNamed(HomeScreen.routeNames[index]);
-        },
+        currentIndex: pageIndex,
       ),
     );
   }

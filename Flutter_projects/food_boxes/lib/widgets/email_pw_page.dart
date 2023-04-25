@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/reg_screen.dart';
+
+import '../screens/reg_screen.dart';
 import '../utility/size_config.dart';
 import 'custom_txt_field.dart';
 
@@ -43,7 +44,10 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           ),
           Text(
             widget.subtitle,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Colors.grey),
           ),
           SizedBox(
             height: SizeConfig.scaledHeight(5),

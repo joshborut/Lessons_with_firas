@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/home_screen.dart';
-import 'package:food_boxes/screens/reg_screen.dart';
-import 'package:food_boxes/screens/reset_pw_screen.dart';
-import 'package:food_boxes/utility/size_config.dart';
-import 'package:food_boxes/widgets/email_pw_page.dart';
+
+import '../utility/size_config.dart';
+import '../widgets/email_pw_page.dart';
+import 'home_screen.dart';
+import 'reg_screen.dart';
+import 'reset_pw_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -51,7 +52,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
@@ -62,7 +63,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               children: [
                 Text(
                   "New here?",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.grey,
+                      ),
                 ),
                 TextButton(
                   onPressed: () {

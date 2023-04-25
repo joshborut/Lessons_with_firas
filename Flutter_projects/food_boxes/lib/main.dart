@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_boxes/routes.dart';
-import 'package:food_boxes/screens/auth_screen.dart';
+
+import 'routes.dart';
+import 'screens/auth_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,12 +34,12 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           bodySmall: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w300,
-            color: Colors.grey,
+            color: Colors.black,
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

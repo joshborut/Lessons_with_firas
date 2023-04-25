@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'screens/acct_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/reset_pw_screen.dart';
 import 'screens/home_screen.dart';
@@ -27,11 +26,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => HomeScreen(),
-      );
-    case AccountScreen.routeName:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (context) => AccountScreen(),
       );
     default:
       return MaterialPageRoute(

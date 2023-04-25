@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/auth_screen.dart';
-import 'package:food_boxes/widgets/custom_txt_field.dart';
 
+import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
+import '../widgets/custom_txt_field.dart';
+import 'auth_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -16,6 +17,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   void _submitFormData() {
     if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        messegeSnackBar("Please follow the directions sent to your email"),
+      );
       Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
     }
   }
@@ -42,7 +46,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
               Text(
                 "Please enter your email to proceed",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
               ),
               SizedBox(
                 height: SizeConfig.scaledHeight(5),
@@ -75,7 +83,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 children: [
                   Text(
                     "Remembered your Password?",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.grey,
+                        ),
                   ),
                   TextButton(
                     onPressed: () {

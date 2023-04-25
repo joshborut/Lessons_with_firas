@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_boxes/widgets/email_pw_page.dart';
 
 import '../utility/size_config.dart';
+import '../widgets/email_pw_page.dart';
 import 'auth_screen.dart';
 
 class RegisterationScreen extends StatelessWidget {
@@ -33,7 +33,9 @@ class RegisterationScreen extends StatelessWidget {
               children: [
                 Text(
                   "Already have an Account?",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.grey,
+                      ),
                 ),
                 TextButton(
                   onPressed: () {

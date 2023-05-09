@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
 import '../widgets/custom_txt_field.dart';
-import 'auth_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -14,13 +14,39 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  void _submitFormData() {
+
+  Future<void> _submitFormData() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        messegeSnackBar("Please follow the directions sent to your email"),
-      );
-      Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+      try {
+        await FirebaseAuth.instance
+            .sendPasswordResetEmail(email: _emailController.text);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            messegeSnackBar("Please follow the directions sent to your email"),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        print("Failed with error code: ${e.code}");
+        FocusManager.instance.primaryFocus?.unfocus();
+        String snackBarMessege;
+        if (e.code == "user-not-found") {
+          snackBarMessege = "User does not exist";
+        } else if (e.code == "invalid-email") {
+          snackBarMessege = "Invalid email";
+        } else {
+          snackBarMessege = e.message!;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          messegeSnackBar(
+            snackBarMessege,
+            timeUp: 2000,
+          ),
+        );
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -61,6 +87,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   return null;
                 },
                 prefixIconWidget: Icon(Icons.email),
+                controller: _emailController,
                 label: "Email",
               ),
               Container(

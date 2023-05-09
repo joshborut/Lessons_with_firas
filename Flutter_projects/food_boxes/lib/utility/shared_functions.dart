@@ -51,7 +51,7 @@ void yesNoDialogue(BuildContext context) {
   );
 }
 
-SnackBar messegeSnackBar(String messege, {int? timeUp = 2000}) {
+SnackBar messegeSnackBar(String messege, {int? timeUp = 1000}) {
   return SnackBar(
     shape: RoundedRectangleBorder(borderRadius: AppConstants.circleRadius),
     duration: Duration(milliseconds: timeUp!),

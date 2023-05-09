@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
@@ -12,6 +13,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 1;
+
+  @override
+  void initState() {
+    FirebaseAuth.instance.authStateChanges().listen(
+      (User? user) {
+        if (user != null) {
+          print(user.uid);
+        }
+      },
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

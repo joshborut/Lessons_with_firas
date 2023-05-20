@@ -3,6 +3,7 @@ import 'package:food_boxes/model/bottom_bar_items.dart';
 import 'package:food_boxes/widgets/account_page.dart';
 
 import 'widgets/schedule_page.dart';
+import 'widgets/tickets_page.dart';
 
 class AppConstants {
   AppConstants._();
@@ -22,7 +23,7 @@ class AppConstants {
     ),
     BottomBarItems(
       iconData: Icons.receipt,
-      bodyBuild: SchedulePage(),
+      bodyBuild: TicketsPage(),
       labelText: "Tickets",
     )
   ];

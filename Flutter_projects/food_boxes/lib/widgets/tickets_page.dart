@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:food_boxes/app_constants.dart';
 
+import '../app_icons.dart';
 import '../utility/size_config.dart';
 
 class TicketsPage extends StatelessWidget {
   const TicketsPage({super.key});
+
+  Widget innerRow(IconData iconData, String text) {
+    return Row(
+      children: [
+        Icon(
+          iconData,
+          color: Colors.black,
+        ),
+        SizedBox(
+          width: SizeConfig.scaledWidth(3),
+        ),
+        Text(
+          text,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +49,20 @@ class TicketsPage extends StatelessWidget {
                   child: Image.network(
                     'https://cdn.pixabay.com/photo/2018/07/'
                     '11/21/51/toast-3532016_1280.jpg',
-                    height: 200,
+                    height: SizeConfig.scaledHeight(30),
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Positioned(
-                  bottom: 20,
-                  right: 10,
+                  bottom: SizeConfig.scaledHeight(2),
+                  right: SizeConfig.scaledWidth(1),
                   child: Container(
-                    width: 300,
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    width: SizeConfig.scaledWidth(70),
+                    padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.scaledHeight(1),
+                      horizontal: SizeConfig.scaledWidth(1.5),
+                    ),
                     color: Colors.black54,
                     child: Text(
                       "Hawaii Toast",
@@ -50,6 +71,19 @@ class TicketsPage extends StatelessWidget {
                   ),
                 )
               ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 5,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  innerRow(AppIcons.calendar, "5/23/23"),
+                  innerRow(Icons.attach_money, "5.00"),
+                ],
+              ),
             )
           ]),
         );

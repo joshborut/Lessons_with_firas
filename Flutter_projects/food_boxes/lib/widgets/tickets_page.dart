@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:food_boxes/app_constants.dart';
+import 'dart:math';
 
 import '../app_icons.dart';
 import '../utility/size_config.dart';
+
+final _rng = Random();
+
+int randomValue(int min, int max) {
+  return min + _rng.nextInt(max - min);
+}
 
 class TicketsPage extends StatelessWidget {
   const TicketsPage({super.key});
@@ -41,17 +48,20 @@ class TicketsPage extends StatelessWidget {
           child: Column(children: [
             Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  child: Image.network(
-                    'https://cdn.pixabay.com/photo/2018/07/'
-                    '11/21/51/toast-3532016_1280.jpg',
-                    height: SizeConfig.scaledHeight(30),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                Container(
+                  height: SizeConfig.scaledHeight(30),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        AppConstants.ticketImages[randomValue(0, 7)],
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Positioned(

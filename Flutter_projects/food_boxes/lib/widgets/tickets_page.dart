@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_boxes/app_constants.dart';
+import 'package:food_boxes/utility/shared_functions.dart';
 import 'dart:math';
 
 import '../app_icons.dart';
@@ -35,67 +36,73 @@ class TicketsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 3,
-      itemBuilder: (context, index) {
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: AppConstants.circleRadius,
+      itemBuilder: (_, index) {
+        return GestureDetector(
+          onTap: () => orderDetailsDialogue(
+            context,
+            orderNumber: "${index + 1}",
           ),
-          elevation: 4,
-          margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.scaledHeight(1.5),
-            horizontal: SizeConfig.scaledWidth(3),
-          ),
-          child: Column(children: [
-            Stack(
-              children: [
-                Container(
-                  height: SizeConfig.scaledHeight(30),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        AppConstants.ticketImages[randomValue(0, 7)],
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: SizeConfig.scaledHeight(2),
-                  right: SizeConfig.scaledWidth(1),
-                  child: Container(
-                    width: SizeConfig.scaledWidth(70),
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.scaledHeight(1),
-                      horizontal: SizeConfig.scaledWidth(1.5),
-                    ),
-                    color: Colors.black54,
-                    child: Text(
-                      "Hawaii Toast",
-                      style: TextStyle(fontSize: 26, color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: AppConstants.circleRadius,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 5,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            elevation: 4,
+            margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.scaledHeight(1.5),
+              horizontal: SizeConfig.scaledWidth(3),
+            ),
+            child: Column(children: [
+              Stack(
                 children: [
-                  innerRow(AppIcons.calendar, "5/23/23"),
-                  innerRow(Icons.attach_money, "5.00"),
+                  Container(
+                    height: SizeConfig.scaledHeight(30),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(
+                          AppConstants.ticketImages[randomValue(0, 7)],
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: SizeConfig.scaledHeight(2),
+                    right: SizeConfig.scaledWidth(1),
+                    child: Container(
+                      width: SizeConfig.scaledWidth(70),
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.scaledHeight(1),
+                        horizontal: SizeConfig.scaledWidth(1.5),
+                      ),
+                      color: Colors.black54,
+                      child: Text(
+                        "Hawaii Toast",
+                        style: TextStyle(fontSize: 26, color: Colors.white),
+                      ),
+                    ),
+                  )
                 ],
               ),
-            )
-          ]),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 5,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    innerRow(AppIcons.calendar, "5/23/23"),
+                    innerRow(Icons.attach_money, "5.00"),
+                  ],
+                ),
+              )
+            ]),
+          ),
         );
       },
     );

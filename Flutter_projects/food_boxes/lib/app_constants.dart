@@ -8,6 +8,8 @@ import 'widgets/tickets_page.dart';
 class AppConstants {
   AppConstants._();
 
+  static const boxName = 'myBox';
+
   static const circleRadius = BorderRadius.all(Radius.circular(20));
   static const List<String> ticketImages = [
     "assets/images/dark_veggies.jpg",

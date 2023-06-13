@@ -21,7 +21,7 @@ class AppConstants {
     "assets/images/veggies_on_table.jpg",
   ];
 
-  static const menuItemList = [
+  static const menuItemList = <BottomBarItems>[
     BottomBarItems(
       iconData: Icons.account_circle_outlined,
       bodyBuild: AccountPage(),

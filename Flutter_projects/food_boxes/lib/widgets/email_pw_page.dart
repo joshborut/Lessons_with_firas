@@ -47,6 +47,8 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           );
         }
         if (context.mounted) {
+          _emailController.clear();
+          _passwordController.clear();
           Navigator.of(context).pushNamed(widget.passedRouteName);
         }
       } on FirebaseAuthException catch (e) {

@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: AppConstants.menuItemList[pageIndex].bodyBuild,
       bottomNavigationBar: BottomNavigationBar(

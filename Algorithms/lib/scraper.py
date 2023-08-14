@@ -2,7 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import time
 import concurrent.futures
+from selenium import webdriver
 
+# Headers reduce the chances of the scraper being detected by making it seem more "human"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9,ja;q=0.8",
@@ -12,12 +14,19 @@ HEADERS = {
 URL = "https://pub.dev"
 MAX_THREADS = 10
 
+# Used when dealing with webpages that need js to load
+DRIVER = webdriver.Safari()
+
 sub_pages = []
 
 
 def parse_main_page():
-    response = requests.get(URL, timeout=5, headers=HEADERS)
-    soup = BeautifulSoup(response.text, "html.parser")
+    DRIVER.get(URL)
+    time.sleep(0.5)
+
+    # response = requests.get(URL, timeout=5, headers=HEADERS)
+    # soup = BeautifulSoup(response.text, "html.parser")
+    soup = BeautifulSoup(DRIVER.page_source, "html.parser")
 
     for element in soup.find_all(attrs={"class": "mini-list-item"}):
         page_extension = element.find("a")["href"]

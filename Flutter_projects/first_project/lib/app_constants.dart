@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   // ._ makes the constructor private
   AppConstants._();
   // const means that the variable will never change (like final in java)
   // dynamic can represent any type
+  static const circleRadius = BorderRadius.all(Radius.circular(20));
+
   static const List<Map<String, dynamic>> questions = [
     {
       "text": "What's the capital of Japan?",

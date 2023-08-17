@@ -1,7 +1,9 @@
 import 'package:first_project/model/question_model.dart';
 import 'package:first_project/model/screen_arguments.dart';
 import 'package:first_project/utility/home_functions.dart';
-import 'package:first_project/widgets/answer.dart';
+import 'package:first_project/utility/size_config.dart';
+import 'package:first_project/widgets/choice_option.dart';
+import 'package:first_project/widgets/gradient_container.dart';
 import 'package:first_project/widgets/question.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     questionList = getQuizQuestions();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (!SizeConfig.initialized) {
+      SizeConfig(context);
+    }
+    super.didChangeDependencies();
   }
 
   void _resetQuiz() {
@@ -60,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //     AppConstants.questions[_questionIdx]["answers"];
     final currentQuestion = questionList[_questionIdx];
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -68,25 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: Colors.indigo,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Question(questionText: AppConstants.questions[_questionIdx]["text"]),
-          Question(questionText: currentQuestion.qusTxt),
-          const SizedBox(
-            height: 20,
-          ),
-          // ... is called the spread operator and splits
-          // a list of widgets into individual widgets
-          ...currentQuestion.ansList
-              .map((e) => Answer(
-                    answerText: e.ansTxt,
-                    answerClicked: _answerClicked,
-                    accuracy: e.accuracy,
-                  ))
-              .toList(),
-        ],
+      body: GradientContainer(
+        childWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Question(questionText: AppConstants.questions[_questionIdx]["text"]),
+            Question(questionText: currentQuestion.qusTxt),
+            const SizedBox(
+              height: 20,
+            ),
+            // ... is called the spread operator and splits
+            // a list of widgets into individual widgets
+            ...currentQuestion.ansList
+                .map((e) => ChoiceOption(
+                      answerText: e.ansTxt,
+                      accuracy: e.accuracy,
+                    ))
+                .toList(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.scaledHeight(10),
+              ),
+              child: SizedBox(
+                height: SizeConfig.scaledHeight(6),
+                width: SizeConfig.scaledWidth(30),
+                child: ElevatedButton(
+                  onPressed: () => _answerClicked,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(3),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

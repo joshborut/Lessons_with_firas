@@ -1,5 +1,10 @@
-import 'package:first_project/model/screen_arguments.dart';
 import 'package:flutter/material.dart';
+
+import '../model/screen_arguments.dart';
+import '../utility/size_config.dart';
+import '../widgets/gesture_container.dart';
+import '../widgets/gradient_container.dart';
+import '../widgets/text_container.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
@@ -18,45 +23,31 @@ class ResultScreen extends StatelessWidget {
     final scrnArgs =
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           "Result Screen",
         ),
-        backgroundColor: Colors.indigo,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            resultPhrase(scrnArgs.totalScore, scrnArgs.quizQuestions),
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              fontFamily: "Lato",
+      body: GradientContainer(
+        childWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextContainer(
+              textToShow:
+                  resultPhrase(scrnArgs.totalScore, scrnArgs.quizQuestions),
             ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 100,
-            width: double.infinity,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[300],
+            SizedBox(
+              height: SizeConfig.scaledHeight(5),
+              width: double.infinity,
             ),
-            onPressed: scrnArgs.resetHandler,
-            child: Text(
-              "Restart Quiz",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.lightBlue[300],
-              ),
+            GestureContainer(
+              passedFunction: scrnArgs.resetHandler,
+              textToShow: "Restart Quiz",
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

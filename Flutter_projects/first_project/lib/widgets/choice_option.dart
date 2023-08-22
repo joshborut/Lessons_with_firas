@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../utility/shared_providers.dart';
 import '../app_constants.dart';
 import '../utility/size_config.dart';
 
-class ChoiceOption extends StatefulWidget {
+class ChoiceOption extends ConsumerWidget {
   const ChoiceOption({
     required this.answerText,
     required this.accuracy,
@@ -21,23 +23,17 @@ class ChoiceOption extends StatefulWidget {
   final int accuracy;
 
   @override
-  State<ChoiceOption> createState() => _ChoiceOptionState();
-}
-
-class _ChoiceOptionState extends State<ChoiceOption> {
-  bool _isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedAnswer = ref.watch(selectedAnswerProvider);
+    final isSelected = selectedAnswer == answerText;
     return InkWell(
       onTap: () {
-        setState(() {
-          _isSelected = !_isSelected;
-        });
+        ref.read(selectedAnswerProvider.notifier).state = answerText;
+        ref.read(selectedAnsAccuracyProvider.notifier).state = accuracy;
       },
       child: Container(
         decoration: BoxDecoration(
-          color: _isSelected ? Colors.blue : Colors.white,
+          color: isSelected ? Colors.blue : Colors.white,
           border: Border.all(
             color: Colors.blue,
             width: 2,
@@ -56,12 +52,26 @@ class _ChoiceOptionState extends State<ChoiceOption> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              widget.answerText,
+              answerText,
               style: TextStyle(
-                color: _isSelected ? Colors.white : Colors.black,
+                color: isSelected ? Colors.white : Colors.black,
                 fontSize: SizeConfig.scaledHeight(2),
               ),
             ),
+            isSelected
+                ? Row(
+                    children: [
+                      SizedBox(
+                        width: SizeConfig.scaledWidth(2.5),
+                      ),
+                      Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: SizeConfig.scaledHeight(2.5),
+                      )
+                    ],
+                  )
+                : SizedBox.shrink()
           ],
         ),
       ),

@@ -1,8 +1,16 @@
-import 'package:first_project/screens/home_screen.dart';
-import 'package:first_project/screens/result_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(MyApp());
+import '../screens/home_screen.dart';
+import '../screens/result_screen.dart';
+
+void main() {
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -10,6 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "myfirstapp",
       // home: MyHomePage(),
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF883B96),
+        ),
+      ),
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),

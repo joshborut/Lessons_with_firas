@@ -36,8 +36,8 @@ linter:
     type_annotate_public_apis: false
     avoid_types_on_closure_parameters: false
     sort_constructors_first: false
-    prefer_generic_function_type_aliases: true
-    unnecessary_lambdas: true
+    prefer_generic_function_type_aliases: false
+    unnecessary_lambdas: false
     use_key_in_widget_constructors: false
     avoid_print: false
 

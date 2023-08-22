@@ -1,4 +1,4 @@
-import 'package:first_project/model/question_model.dart';
+import '../model/question_model.dart';
 
 class ScreenArguments {
   const ScreenArguments({

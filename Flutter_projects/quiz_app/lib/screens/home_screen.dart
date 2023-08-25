@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../utility/shared_providers.dart';
-import '../widgets/text_container.dart';
 import '../model/question_model.dart';
 import '../model/screen_arguments.dart';
+import '../utility/shared_providers.dart';
 import '../utility/home_functions.dart';
 import '../utility/size_config.dart';
 import '../widgets/choice_option.dart';
+import '../widgets/text_container.dart';
 import '../widgets/gesture_container.dart';
 import '../widgets/gradient_container.dart';
+import '../widgets/home_top_section.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -85,7 +86,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Spacer(),
+            HomeTopSection(
+              numOfQuestions: questionList.length,
+              questionIdx: _questionIdx,
+            ),
             // Question(questionText: AppConstants.questions[_questionIdx]["text"]),
             TextContainer(textToShow: currentQuestion.qusTxt),
             Spacer(),

@@ -4,7 +4,7 @@ import '../model/question_model.dart';
 import '../utility/size_config.dart';
 import '../app_constants.dart';
 
-SnackBar messageSnackBar(String message, {timeUp = 750}) {
+SnackBar messageSnackBar(String message, {timeUp = 950}) {
   return SnackBar(
     shape: RoundedRectangleBorder(
       borderRadius: AppConstants.circleRadius,

@@ -52,21 +52,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _answerClicked() {
     final accuracy = ref.read(selectedAnsAccuracyProvider);
     _totalScore += accuracy;
-    setState(() {
-      if (_questionIdx < questionList.length - 1) {
-        _questionIdx++;
-      } else {
-        Navigator.of(context).pushNamed(
-          "/result-screen",
-          // arguments: [_resetQuiz, _totalScore, questionList],
-          arguments: ScreenArguments(
-            resetHandler: _resetQuiz,
-            quizQuestions: questionList,
-            totalScore: _totalScore,
-          ),
-        );
-      }
-    });
+    if (_questionIdx < questionList.length - 1) {
+      ref.read(selectedAnswerProvider.notifier).state = "";
+      setState(() => _questionIdx++);
+    } else {
+      Navigator.of(context).pushNamed(
+        "/result-screen",
+        // arguments: [_resetQuiz, _totalScore, questionList],
+        arguments: ScreenArguments(
+          resetHandler: _resetQuiz,
+          quizQuestions: questionList,
+          totalScore: _totalScore,
+        ),
+      );
+    }
   }
 
   @override

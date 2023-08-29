@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quiz_app/utility/home_functions.dart';
 
 import '../app_constants.dart';
+import '../utility/home_functions.dart';
 import '../utility/shared_providers.dart';
 import '../utility/size_config.dart';
 

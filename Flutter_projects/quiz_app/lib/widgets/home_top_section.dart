@@ -27,36 +27,45 @@ class HomeTopSection extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              SizedBox(
-                width: SizeConfig.scaledWidth(5),
-              ),
-              Text(
-                "Lives: ",
-                style: TextStyle(
-                  fontSize: SizeConfig.scaledHeight(3),
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              for (int i = 1; i <= mistakesCounter; i++)
-                Icon(
-                  AppIcons.heart3,
-                  size: SizeConfig.scaledHeight(3.5),
-                )
-            ],
-          ),
-          Spacer(),
           Expanded(
-            child: Text(
-              counterDisplay(
-                questionIdx,
-                numOfQuestions,
-              ),
-              style: TextStyle(
-                fontSize: SizeConfig.scaledHeight(3),
-                fontWeight: FontWeight.w300,
-              ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: SizeConfig.scaledWidth(5),
+                ),
+                Text(
+                  "Lives: ",
+                  style: TextStyle(
+                    fontSize: SizeConfig.scaledHeight(3),
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                for (int i = 1; i <= mistakesCounter; i++)
+                  Icon(
+                    AppIcons.heart3,
+                    size: SizeConfig.scaledHeight(3.5),
+                  )
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  counterDisplay(
+                    questionIdx,
+                    numOfQuestions,
+                  ),
+                  style: TextStyle(
+                    fontSize: SizeConfig.scaledHeight(3),
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.scaledWidth(5),
+                ),
+              ],
             ),
           )
         ],

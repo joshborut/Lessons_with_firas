@@ -21,7 +21,7 @@ SnackBar messageSnackBar(String message, {timeUp = 950}) {
     margin: EdgeInsets.only(
       left: SizeConfig.scaledWidth(20),
       right: SizeConfig.scaledWidth(20),
-      bottom: SizeConfig.scaledHeight(5),
+      bottom: SizeConfig.scaledHeight(2),
     ),
   );
 }

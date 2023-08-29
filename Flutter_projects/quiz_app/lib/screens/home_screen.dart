@@ -43,29 +43,44 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _resetQuiz() {
-    Navigator.of(context).pop();
     setState(() {
       _totalScore = 0;
       _questionIdx = 0;
     });
+    ref.read(mistakeAttemptsProvider.notifier).state = 4;
+    ref.read(selectedAnswerProvider.notifier).state = "";
+    Navigator.of(context).pop();
+  }
+
+  void _navToResultScrn(String msg) {
+    ref.read(resultScrnMsgProvider.notifier).state = msg;
+    Navigator.of(context).pushNamed(
+      "/result-screen",
+      // arguments: [_resetQuiz, _totalScore, questionList],
+      arguments: ScreenArguments(
+        resetHandler: _resetQuiz,
+        quizQuestions: questionList,
+        totalScore: _totalScore,
+      ),
+    );
   }
 
   void _answerClicked() {
     final accuracy = ref.read(selectedAnsAccuracyProvider);
-    _totalScore += accuracy;
-    if (_questionIdx < questionList.length - 1) {
-      ref.read(selectedAnswerProvider.notifier).state = "";
-      setState(() => _questionIdx++);
+    final mistakes = ref.read(mistakeAttemptsProvider);
+    if (accuracy == 0) {
+      ref.read(mistakeAttemptsProvider.notifier).state = mistakes - 1;
+      if (mistakes <= 1) {
+        _navToResultScrn(
+            "Game over. You reached question ${_questionIdx + 1}!");
+      }
     } else {
-      Navigator.of(context).pushNamed(
-        "/result-screen",
-        // arguments: [_resetQuiz, _totalScore, questionList],
-        arguments: ScreenArguments(
-          resetHandler: _resetQuiz,
-          quizQuestions: questionList,
-          totalScore: _totalScore,
-        ),
-      );
+      if (_questionIdx < questionList.length - 1) {
+        ref.read(selectedAnswerProvider.notifier).state = "";
+        setState(() => _questionIdx++);
+      } else {
+        _navToResultScrn("Congratulations! You are a quiz master!");
+      }
     }
   }
 

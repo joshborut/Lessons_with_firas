@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_app/utility/enum_land.dart';
 
 import '../model/question_model.dart';
 import '../model/screen_arguments.dart';
@@ -73,7 +74,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     stopPlayingSound(ref);
     if (accuracy == 0) {
       // Incorrect choice
-      startPlayingSound(ref, playCorrect: false);
+      startPlayingSound(ref, SoundEffect.incorrect);
       ref.read(mistakeAttemptsProvider.notifier).state = mistakes - 1;
       if (mistakes <= 1) {
         _navToResultScrn(
@@ -81,7 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       }
     } else {
       // Correct choice
-      startPlayingSound(ref);
+      startPlayingSound(ref, SoundEffect.correct);
       if (_questionIdx < questionList.length - 1) {
         ref.read(selectedAnswerProvider.notifier).state = "";
         setState(() => _questionIdx++);

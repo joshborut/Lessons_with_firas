@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_app/utility/enum_land.dart';
 
 import '../model/question_model.dart';
 import '../utility/shared_providers.dart';
@@ -11,7 +12,7 @@ void initializeAudioPlayers(WidgetRef ref) {
   if (ref.read(correctPlayerProvider) == null) {
     final correctPlayer = AudioPlayer();
     correctPlayer.setReleaseMode(ReleaseMode.stop);
-    correctPlayer.setSourceAsset("sounds/correct_chime.mp3");
+    correctPlayer.setSourceAsset(SoundEffect.correct.address);
     Future.delayed(Duration(milliseconds: 100), () {
       ref.read(correctPlayerProvider.notifier).state = correctPlayer;
     });
@@ -19,7 +20,7 @@ void initializeAudioPlayers(WidgetRef ref) {
   if (ref.read(incorrectPlayerProvider) == null) {
     final incorrectPlayer = AudioPlayer();
     incorrectPlayer.setReleaseMode(ReleaseMode.stop);
-    incorrectPlayer.setSourceAsset("sounds/incorrect_chime.mp3");
+    incorrectPlayer.setSourceAsset(SoundEffect.incorrect.address);
     Future.delayed(Duration(milliseconds: 100), () {
       ref.read(incorrectPlayerProvider.notifier).state = incorrectPlayer;
     });
@@ -37,12 +38,12 @@ Future<void> stopPlayingSound(WidgetRef ref) async {
   }
 }
 
-Future<void> startPlayingSound(WidgetRef ref, {playCorrect = true}) async {
+Future<void> startPlayingSound(WidgetRef ref, SoundEffect effect) async {
   final correctPlayer = ref.read(correctPlayerProvider);
   final incorrectPlayer = ref.read(incorrectPlayerProvider);
-  if (playCorrect) {
+  if (effect == SoundEffect.correct) {
     correctPlayer?.resume();
-  } else {
+  } else if (effect == SoundEffect.incorrect) {
     incorrectPlayer?.resume();
   }
 }

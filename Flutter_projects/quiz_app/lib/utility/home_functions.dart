@@ -1,8 +1,51 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/question_model.dart';
+import '../utility/shared_providers.dart';
 import '../utility/size_config.dart';
 import '../app_constants.dart';
+
+void initializeAudioPlayers(WidgetRef ref) {
+  if (ref.read(correctPlayerProvider) == null) {
+    final correctPlayer = AudioPlayer();
+    correctPlayer.setReleaseMode(ReleaseMode.stop);
+    correctPlayer.setSourceAsset("sounds/correct_chime.mp3");
+    Future.delayed(Duration(milliseconds: 100), () {
+      ref.read(correctPlayerProvider.notifier).state = correctPlayer;
+    });
+  }
+  if (ref.read(incorrectPlayerProvider) == null) {
+    final incorrectPlayer = AudioPlayer();
+    incorrectPlayer.setReleaseMode(ReleaseMode.stop);
+    incorrectPlayer.setSourceAsset("sounds/incorrect_chime.mp3");
+    Future.delayed(Duration(milliseconds: 100), () {
+      ref.read(incorrectPlayerProvider.notifier).state = incorrectPlayer;
+    });
+  }
+}
+
+Future<void> stopPlayingSound(WidgetRef ref) async {
+  final correctPlayer = ref.read(correctPlayerProvider);
+  final incorrectPlayer = ref.read(incorrectPlayerProvider);
+  if (correctPlayer?.state == PlayerState.playing) {
+    correctPlayer?.stop();
+  }
+  if (incorrectPlayer?.state == PlayerState.playing) {
+    incorrectPlayer?.stop();
+  }
+}
+
+Future<void> startPlayingSound(WidgetRef ref, {playCorrect = true}) async {
+  final correctPlayer = ref.read(correctPlayerProvider);
+  final incorrectPlayer = ref.read(incorrectPlayerProvider);
+  if (playCorrect) {
+    correctPlayer?.resume();
+  } else {
+    incorrectPlayer?.resume();
+  }
+}
 
 SnackBar messageSnackBar(String message, {timeUp = 950}) {
   return SnackBar(

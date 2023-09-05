@@ -31,6 +31,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     questionList = getQuizQuestions();
+    initializeAudioPlayers(ref);
     super.initState();
   }
 
@@ -68,13 +69,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _answerClicked() {
     final accuracy = ref.read(selectedAnsAccuracyProvider);
     final mistakes = ref.read(mistakeAttemptsProvider);
+    // Prevents overlapping audio
+    stopPlayingSound(ref);
     if (accuracy == 0) {
+      // Incorrect choice
+      startPlayingSound(ref, playCorrect: false);
       ref.read(mistakeAttemptsProvider.notifier).state = mistakes - 1;
       if (mistakes <= 1) {
         _navToResultScrn(
             "Game over. You reached question ${_questionIdx + 1}!");
       }
     } else {
+      // Correct choice
+      startPlayingSound(ref);
       if (_questionIdx < questionList.length - 1) {
         ref.read(selectedAnswerProvider.notifier).state = "";
         setState(() => _questionIdx++);

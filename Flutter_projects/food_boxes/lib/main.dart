@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_boxes/app_constants.dart';
-import 'package:food_boxes/firebase_options.dart';
-import 'package:food_boxes/screens/home_screen.dart';
-import 'package:food_boxes/utility/user_info_box.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import 'routes.dart';
+import 'app_constants.dart';
+import 'firebase_options.dart';
+import 'screens/home_screen.dart';
 import 'screens/auth_screen.dart';
+import 'utility/user_info_box.dart';
+import 'utility/size_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,18 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void didChangeDependencies() {
+    if (!SizeConfig.initialized) SizeConfig().int(context);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,17 +52,17 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           bodyLarge: TextStyle(
-            fontSize: 40,
+            fontSize: SizeConfig.scaledHeight(5),
             fontWeight: FontWeight.w900,
             color: Colors.black,
           ),
           bodyMedium: TextStyle(
-            fontSize: 20,
+            fontSize: SizeConfig.scaledHeight(2.5),
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
           bodySmall: TextStyle(
-            fontSize: 16,
+            fontSize: SizeConfig.scaledHeight(2),
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),

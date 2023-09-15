@@ -6,20 +6,9 @@ import 'home_screen.dart';
 import 'reg_screen.dart';
 import 'reset_pw_screen.dart';
 
-class AuthenticationScreen extends StatefulWidget {
+class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({super.key});
   static const String routeName = "auth";
-
-  @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
-}
-
-class _AuthenticationScreenState extends State<AuthenticationScreen> {
-  @override
-  void didChangeDependencies() {
-    if (!SizeConfig.initialized) SizeConfig().int(context);
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -51,8 +51,15 @@ void orderDetailsDialogue(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[700],
                 ),
-                onPressed: () {},
-                child: Text("Cancel Order"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  "Cancel Order",
+                  style: TextStyle(
+                    fontSize: SizeConfig.scaledHeight(2),
+                  ),
+                ),
               ),
             ),
           ],
@@ -62,7 +69,7 @@ void orderDetailsDialogue(
   );
 }
 
-void yesNoDialogue(BuildContext context) {
+void yesNoDialogue(BuildContext context, String messageToDisplay) {
   showDialog(
     context: context,
     builder: (_) => CupertinoAlertDialog(
@@ -76,19 +83,18 @@ void yesNoDialogue(BuildContext context) {
             child: Text(
               "Are you sure?",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: SizeConfig.scaledHeight(2.75),
                 fontWeight: FontWeight.w900,
-                color: Colors.red,
               ),
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: SizeConfig.scaledHeight(0.5),
+              vertical: SizeConfig.scaledHeight(1.5),
             ),
             child: Text(
-              "Deleting your account is "
-              "permanent and irreversible",
+              messageToDisplay,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         ],
@@ -97,11 +103,23 @@ void yesNoDialogue(BuildContext context) {
         CupertinoDialogAction(
           onPressed: () =>
               Navigator.of(context).pushNamed(AuthenticationScreen.routeName),
-          child: Text("Yes"),
+          child: Text(
+            "Yes",
+            style: TextStyle(
+              fontSize: SizeConfig.scaledHeight(2.25),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         CupertinoDialogAction(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text("No"),
+          child: Text(
+            "No",
+            style: TextStyle(
+              fontSize: SizeConfig.scaledHeight(2.25),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ],
     ),

@@ -38,12 +38,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         } else {
           snackBarMessege = e.message!;
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          messegeSnackBar(
-            snackBarMessege,
-            timeUp: 2000,
-          ),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            messegeSnackBar(
+              snackBarMessege,
+              timeUp: 2000,
+            ),
+          );
+        }
       } catch (e) {
         print(e);
       }
@@ -66,17 +68,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Spacer(),
               Text(
                 "Reset Password",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
                 "Please enter your email to proceed",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.grey,
+                    ),
               ),
               SizedBox(
                 height: SizeConfig.scaledHeight(5),
@@ -88,40 +89,57 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 },
                 prefixIconWidget: Icon(Icons.email),
                 controller: _emailController,
-                label: "Email",
+                decorationLabel: "Email",
               ),
               Container(
-                padding: EdgeInsets.only(top: SizeConfig.scaledHeight(1)),
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.scaledHeight(1),
+                ),
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: _submitFormData,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Submit"),
-                      Icon(Icons.arrow_forward_ios_rounded)
+                      Text(
+                        "Submit",
+                        style: TextStyle(
+                          fontSize: SizeConfig.scaledHeight(2),
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: SizeConfig.scaledHeight(2),
+                      )
                     ],
                   ),
                 ),
               ),
-              Spacer(),
+              Spacer(
+                flex: 3,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Remembered your Password?",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.grey,
-                        ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("Go back"),
+                    child: Text(
+                      "Go back",
+                      style: TextStyle(
+                        fontSize: SizeConfig.scaledHeight(2),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
                   ),
                 ],
-              )
+              ),
+              Spacer(),
             ],
           ),
         ),

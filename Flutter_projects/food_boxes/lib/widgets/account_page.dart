@@ -74,7 +74,7 @@ class _AccountPageState extends State<AccountPage> {
                 },
                 inputType: TextInputType.text,
                 prefixIconWidget: Icon(Icons.face),
-                label: "First Name",
+                decorationLabel: "First Name",
               ),
               SizedBox(
                 height: SizeConfig.scaledHeight(1),
@@ -89,7 +89,7 @@ class _AccountPageState extends State<AccountPage> {
                 },
                 inputType: TextInputType.text,
                 prefixIconWidget: Icon(Icons.face),
-                label: "Last Name",
+                decorationLabel: "Last Name",
               ),
               SizedBox(
                 height: SizeConfig.scaledHeight(1),
@@ -104,7 +104,7 @@ class _AccountPageState extends State<AccountPage> {
                 },
                 inputType: TextInputType.number,
                 prefixIconWidget: Icon(Icons.numbers),
-                label: "Age",
+                decorationLabel: "Age",
               ),
               SizedBox(
                 height: SizeConfig.scaledHeight(1),

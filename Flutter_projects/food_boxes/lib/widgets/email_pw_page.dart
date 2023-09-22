@@ -66,12 +66,14 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
         } else {
           snackBarMessege = e.message!;
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          messegeSnackBar(
-            snackBarMessege,
-            timeUp: 5000,
-          ),
-        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            messegeSnackBar(
+              snackBarMessege,
+              timeUp: 5000,
+            ),
+          );
+        }
         setState(() => submitClicked = false);
       } catch (e) {
         setState(() => submitClicked = false);
@@ -94,10 +96,9 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           ),
           Text(
             widget.subtitle,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Colors.grey),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Colors.grey,
+                ),
           ),
           SizedBox(
             height: SizeConfig.scaledHeight(5),
@@ -109,7 +110,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
               return null;
             },
             prefixIconWidget: Icon(Icons.email),
-            label: "Email",
+            decorationLabel: "Email",
           ),
           SizedBox(
             height: SizeConfig.scaledHeight(1),
@@ -126,7 +127,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
             },
             prefixIconWidget: Icon(Icons.lock),
             obscureText: true,
-            label: "Password",
+            decorationLabel: "Password",
           ),
           Container(
             padding: EdgeInsets.only(top: SizeConfig.scaledHeight(1)),

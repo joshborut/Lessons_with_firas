@@ -39,20 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
       body: AppConstants.menuItemList[pageIndex].bodyBuild,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => setState(() => pageIndex = index),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: "Account",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: "Schedule",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt),
-            label: "Tickets",
-          ),
-        ],
+        items: AppConstants.menuItemList
+            .map(
+              (e) => BottomNavigationBarItem(
+                label: e.labelText,
+                icon: Icon(e.iconData),
+              ),
+            )
+            .toList(),
         currentIndex: pageIndex,
       ),
     );

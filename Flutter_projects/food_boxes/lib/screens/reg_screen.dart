@@ -33,16 +33,20 @@ class RegisterationScreen extends StatelessWidget {
               children: [
                 Text(
                   "Already have an Account?",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.grey,
-                      ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(AuthenticationScreen.routeName);
                   },
-                  child: Text("Login"),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(2),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ],
             ),

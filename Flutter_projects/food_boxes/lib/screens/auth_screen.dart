@@ -41,7 +41,7 @@ class AuthenticationScreen extends StatelessWidget {
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: SizeConfig.scaledHeight(2),
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
@@ -52,16 +52,20 @@ class AuthenticationScreen extends StatelessWidget {
               children: [
                 Text(
                   "New here?",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.grey,
-                      ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(RegisterationScreen.routeName);
                   },
-                  child: Text("Create an Account"),
+                  child: Text(
+                    "Create an Account",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(2),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ],
             ),

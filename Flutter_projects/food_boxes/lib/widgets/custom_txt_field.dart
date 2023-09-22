@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTxtFormField extends StatefulWidget {
   const CustomTxtFormField({
-    required this.label,
+    required this.decorationLabel,
     this.errorLabelColor = const Color(0xFFB71C1C),
     this.labelFocusColor = Colors.blue,
     this.inputType = TextInputType.text,
@@ -29,7 +29,7 @@ class CustomTxtFormField extends StatefulWidget {
   final TextInputType inputType;
   final bool hideLabelOnFocus;
   final bool obscureText;
-  final String label;
+  final String decorationLabel;
   final int maxLines;
 
   @override
@@ -81,7 +81,8 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
       },
       keyboardType: widget.inputType,
       decoration: InputDecoration(
-        labelText: _focused && widget.hideLabelOnFocus ? null : widget.label,
+        labelText:
+            _focused && widget.hideLabelOnFocus ? null : widget.decorationLabel,
         labelStyle: TextStyle(
           color: _focused ? widget.labelFocusColor : Colors.grey,
         ),

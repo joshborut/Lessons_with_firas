@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:math';
 
 import '../app_constants.dart';
-import '../screens/auth_screen.dart';
 import 'size_config.dart';
+
+final _rng = Random();
+
+int randomValue(int min, int max) {
+  return min + _rng.nextInt(max - min);
+}
 
 void orderDetailsDialogue(
   BuildContext context, {
@@ -42,6 +48,7 @@ void orderDetailsDialogue(
               version: QrVersions.auto,
               size: SizeConfig.scaledHeight(30),
             ),
+            // TODO: Cancel order when clicked
             Container(
               padding: EdgeInsets.only(
                 bottom: SizeConfig.scaledHeight(3),
@@ -69,8 +76,8 @@ void orderDetailsDialogue(
   );
 }
 
-void yesNoDialogue(BuildContext context, String messageToDisplay) {
-  showDialog(
+Future<bool?> yesNoDialogue(BuildContext context, String messageToDisplay) {
+  return showDialog<bool>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
       content: Column(
@@ -101,8 +108,7 @@ void yesNoDialogue(BuildContext context, String messageToDisplay) {
       ),
       actions: [
         CupertinoDialogAction(
-          onPressed: () =>
-              Navigator.of(context).pushNamed(AuthenticationScreen.routeName),
+          onPressed: () => Navigator.of(context).pop(true),
           child: Text(
             "Yes",
             style: TextStyle(
@@ -112,7 +118,7 @@ void yesNoDialogue(BuildContext context, String messageToDisplay) {
           ),
         ),
         CupertinoDialogAction(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(false),
           child: Text(
             "No",
             style: TextStyle(

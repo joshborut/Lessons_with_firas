@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:table_calendar/table_calendar.dart';
+
+import '../utility/size_config.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -14,7 +15,9 @@ class SchedulePage extends StatelessWidget {
           lastDay: DateTime.utc(2030, 3, 14),
           focusedDay: DateTime.now(),
           calendarStyle: CalendarStyle(
-            cellMargin: EdgeInsets.all(10),
+            cellMargin: EdgeInsets.symmetric(
+              vertical: SizeConfig.scaledHeight(1),
+            ),
           ),
           daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: Theme.of(context).textTheme.bodySmall!,

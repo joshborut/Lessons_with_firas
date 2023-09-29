@@ -73,7 +73,7 @@ class _AccountPageState extends State<AccountPage> {
                     }
                     return null;
                   },
-                  inputType: TextInputType.text,
+                  keyboardType: TextInputType.text,
                   prefixIconWidget: Icon(Icons.face),
                   decorationLabel: "First Name",
                 ),
@@ -86,21 +86,26 @@ class _AccountPageState extends State<AccountPage> {
                   }
                   return null;
                 },
-                inputType: TextInputType.text,
+                keyboardType: TextInputType.text,
                 prefixIconWidget: Icon(Icons.face),
                 decorationLabel: "Last Name",
               ),
-              CustomTxtFormField(
-                controller: _ageController,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter your age.";
-                  }
-                  return null;
-                },
-                inputType: TextInputType.number,
-                prefixIconWidget: Icon(Icons.numbers),
-                decorationLabel: "Age",
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.scaledHeight(1),
+                ),
+                child: CustomTxtFormField(
+                  controller: _ageController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Please enter your age.";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number,
+                  prefixIconWidget: Icon(Icons.numbers),
+                  decorationLabel: "Age",
+                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -128,8 +133,16 @@ class _AccountPageState extends State<AccountPage> {
                   borderRadius: AppConstants.circleRadius,
                 ),
                 leading: Icon(Icons.logout),
-                title: Text("Logout"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontSize: SizeConfig.scaledHeight(2),
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: SizeConfig.scaledHeight(2),
+                ),
                 onTap: () {
                   UserInfoBox.setUserId("");
                   Navigator.of(context)
@@ -146,8 +159,16 @@ class _AccountPageState extends State<AccountPage> {
                     borderRadius: AppConstants.circleRadius,
                   ),
                   leading: Icon(Icons.key),
-                  title: Text("Reset Password"),
-                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  title: Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(2),
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: SizeConfig.scaledHeight(2),
+                  ),
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(ResetPasswordScreen.routeName);
@@ -160,12 +181,24 @@ class _AccountPageState extends State<AccountPage> {
                   borderRadius: AppConstants.circleRadius,
                 ),
                 leading: Icon(Icons.delete_forever),
-                title: Text("Delete Account"),
-                trailing: Icon(Icons.arrow_forward_ios_rounded),
-                onTap: () => yesNoDialogue(
-                  context,
-                  "Deleting your account is permanent and irreversible",
+                title: Text(
+                  "Delete Account",
+                  style: TextStyle(
+                    fontSize: SizeConfig.scaledHeight(2),
+                  ),
                 ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: SizeConfig.scaledHeight(2),
+                ),
+                onTap: () async {
+                  final value = await yesNoDialogue(
+                        context,
+                        "Deleting your account is permanent and irreversible",
+                      ) ??
+                      false;
+                  print("value: $value");
+                },
               ),
             ],
           ),

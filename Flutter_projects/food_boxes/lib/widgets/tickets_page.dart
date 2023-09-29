@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_boxes/app_constants.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
-import 'dart:math';
 
 import '../app_icons.dart';
 import '../utility/size_config.dart';
-
-final _rng = Random();
-
-int randomValue(int min, int max) {
-  return min + _rng.nextInt(max - min);
-}
 
 class TicketsPage extends StatelessWidget {
   const TicketsPage({super.key});
@@ -21,12 +14,16 @@ class TicketsPage extends StatelessWidget {
         Icon(
           iconData,
           color: Colors.black,
+          size: SizeConfig.scaledHeight(2.5),
         ),
         SizedBox(
           width: SizeConfig.scaledWidth(3),
         ),
         Text(
           text,
+          style: TextStyle(
+            fontSize: SizeConfig.scaledHeight(2.5),
+          ),
         ),
       ],
     );
@@ -83,7 +80,10 @@ class TicketsPage extends StatelessWidget {
                       color: Colors.black54,
                       child: Text(
                         "Hawaii Toast",
-                        style: TextStyle(fontSize: 26, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: SizeConfig.scaledHeight(3.5),
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )
@@ -91,8 +91,8 @@ class TicketsPage extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 5,
+                  vertical: SizeConfig.scaledHeight(3),
+                  horizontal: SizeConfig.scaledWidth(5),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

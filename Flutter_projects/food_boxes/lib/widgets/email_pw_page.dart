@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_boxes/screens/home_screen.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
 
 import '../screens/auth_screen.dart';
@@ -9,13 +10,11 @@ import 'custom_txt_field.dart';
 
 class EmailPasswordPage extends StatefulWidget {
   const EmailPasswordPage({
-    required this.passedRouteName,
     required this.titleText,
     required this.subtitle,
     super.key,
   });
 
-  final String passedRouteName;
   final String titleText;
   final String subtitle;
 
@@ -27,7 +26,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool submitClicked = false;
+  bool submitClickable = true;
   String? currentRoute;
 
   void _submitFormData() async {
@@ -40,7 +39,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           );
         }
         if (currentRoute == RegisterationScreen.routeName) {
-          setState(() => submitClicked = true);
+          setState(() => submitClickable = false);
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: _emailController.text,
             password: _passwordController.text,
@@ -49,7 +48,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
         if (context.mounted) {
           _emailController.clear();
           _passwordController.clear();
-          Navigator.of(context).pushNamed(widget.passedRouteName);
+          Navigator.of(context).pushNamed(HomeScreen.routeName);
         }
       } on FirebaseAuthException catch (e) {
         print("Failed with error code: ${e.code}");
@@ -70,14 +69,14 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             messegeSnackBar(
               snackBarMessege,
-              timeUp: 5000,
+              timeUp: 1750,
             ),
           );
         }
-        setState(() => submitClicked = false);
       } catch (e) {
-        setState(() => submitClicked = false);
         print(e);
+      } finally {
+        setState(() => submitClickable = true);
       }
     }
   }
@@ -100,28 +99,31 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
                   color: Colors.grey,
                 ),
           ),
-          SizedBox(
-            height: SizeConfig.scaledHeight(5),
-          ),
-          CustomTxtFormField(
-            controller: _emailController,
-            validator: (value) {
-              if (value.isEmpty) return "Please enter your email";
-              return null;
-            },
-            prefixIconWidget: Icon(Icons.email),
-            decorationLabel: "Email",
-          ),
-          SizedBox(
-            height: SizeConfig.scaledHeight(1),
+          Padding(
+            padding: EdgeInsets.only(
+              top: SizeConfig.scaledHeight(5),
+              bottom: SizeConfig.scaledHeight(1),
+            ),
+            child: CustomTxtFormField(
+              controller: _emailController,
+              validator: (value) {
+                if (value.trim().isEmpty || !value.contains('@')) {
+                  return "Please enter your email";
+                }
+                return null;
+              },
+              prefixIconWidget: Icon(Icons.email),
+              decorationLabel: "Email",
+            ),
           ),
           CustomTxtFormField(
             controller: _passwordController,
             validator: (value) {
-              if (value.isEmpty) return "Please enter your password";
+              if (value.trim().isEmpty) return "Please enter your password";
               if (currentRoute == RegisterationScreen.routeName &&
-                  value.length > 64) {
-                return "Password must not have more than 64 characters)";
+                  value.length > 64 &&
+                  value.length < 6) {
+                return "Password must be between 6 and 64 characters)";
               }
               return null;
             },
@@ -130,15 +132,28 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
             decorationLabel: "Password",
           ),
           Container(
-            padding: EdgeInsets.only(top: SizeConfig.scaledHeight(1)),
+            padding: EdgeInsets.only(
+              top: SizeConfig.scaledHeight(1),
+            ),
             alignment: Alignment.center,
             child: ElevatedButton(
-              onPressed: !submitClicked ? _submitFormData : null,
+              onPressed: submitClickable ? _submitFormData : null,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("Submit"),
-                  Icon(Icons.arrow_forward_ios_rounded),
+                  Text(
+                    "Submit",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(2),
+                    ),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.scaledWidth(1),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: SizeConfig.scaledHeight(2),
+                  )
                 ],
               ),
             ),

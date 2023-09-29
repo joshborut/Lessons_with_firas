@@ -107,6 +107,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           fontSize: SizeConfig.scaledHeight(2),
                         ),
                       ),
+                      SizedBox(
+                        width: SizeConfig.scaledWidth(1),
+                      ),
                       Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: SizeConfig.scaledHeight(2),

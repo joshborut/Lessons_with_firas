@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTxtFormField extends StatefulWidget {
   const CustomTxtFormField({
     required this.decorationLabel,
     this.errorLabelColor = const Color(0xFFB71C1C),
     this.labelFocusColor = Colors.blue,
-    this.inputType = TextInputType.text,
+    this.keyboardType = TextInputType.text,
     this.hideLabelOnFocus = false,
     this.obscureText = false,
     this.maxLines = 1,
@@ -15,22 +16,28 @@ class CustomTxtFormField extends StatefulWidget {
     this.onChanged,
     this.controller,
     this.onSaved,
+    this.inputFormatters,
+    this.autocorrect = false,
+    this.textCapitalization = TextCapitalization.none,
     super.key,
   });
 
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSaved;
+  final List<TextInputFormatter>? inputFormatters;
   final Function(String)? validator;
   final Widget? prefixIconWidget;
   final String? initialValue;
   final Color errorLabelColor;
   final Color labelFocusColor;
-  final TextInputType inputType;
+  final TextInputType keyboardType;
   final bool hideLabelOnFocus;
   final bool obscureText;
   final String decorationLabel;
   final int maxLines;
+  final bool autocorrect;
+  final TextCapitalization textCapitalization;
 
   @override
   State<CustomTxtFormField> createState() => _CustomTxtFormFieldState();
@@ -67,6 +74,7 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.inputFormatters,
       controller: widget.controller,
       focusNode: _focusNode,
       onChanged: (value) {
@@ -79,7 +87,7 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
         if (value != null) return widget.validator?.call(value);
         return null;
       },
-      keyboardType: widget.inputType,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         labelText:
             _focused && widget.hideLabelOnFocus ? null : widget.decorationLabel,

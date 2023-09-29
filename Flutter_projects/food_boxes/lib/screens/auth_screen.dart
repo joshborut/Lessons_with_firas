@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../utility/size_config.dart';
 import '../widgets/email_pw_page.dart';
-import 'home_screen.dart';
 import 'reg_screen.dart';
 import 'reset_pw_screen.dart';
 
@@ -26,7 +25,6 @@ class AuthenticationScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             EmailPasswordPage(
-              passedRouteName: HomeScreen.routeName,
               titleText: "Login",
               subtitle: "Please sign in to proceed",
             ),

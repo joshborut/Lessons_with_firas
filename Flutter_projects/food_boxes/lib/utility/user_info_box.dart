@@ -5,7 +5,6 @@ class UserInfoBox {
   static const _userFirstNameKey = "userFirstNameKey";
   static const _userLastNameKey = "userLastNameKey";
   static const _userAgeKey = "userAgeKey";
-  static const _userIdKey = "userIdKey";
 
   static late final Box<dynamic> _box;
 
@@ -20,10 +19,6 @@ class UserInfoBox {
 
   // Setters
 
-  static Future<void> setUserId(String value) {
-    return _setValue(_userIdKey, value);
-  }
-
   static Future<void> setFirstName(String value) {
     return _setValue(_userFirstNameKey, value);
   }
@@ -37,13 +32,6 @@ class UserInfoBox {
   }
 
   // Getters
-
-  static String getUserId() {
-    if (_getValue(_userIdKey) == null) {
-      return "";
-    }
-    return _getValue<String>(_userIdKey);
-  }
 
   static String getFirstName() {
     if (_getValue(_userFirstNameKey) == null) {

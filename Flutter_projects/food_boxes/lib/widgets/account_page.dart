@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
@@ -144,9 +145,7 @@ class _AccountPageState extends State<AccountPage> {
                   size: SizeConfig.scaledHeight(2),
                 ),
                 onTap: () {
-                  UserInfoBox.setUserId("");
-                  Navigator.of(context)
-                      .pushReplacementNamed(AuthenticationScreen.routeName);
+                  FirebaseAuth.instance.signOut();
                 },
               ),
               Padding(
@@ -198,6 +197,34 @@ class _AccountPageState extends State<AccountPage> {
                       ) ??
                       false;
                   print("value: $value");
+                  if (value) {
+                    try {
+                      await FirebaseAuth.instance.currentUser!.delete();
+                      if (context.mounted) {
+                        Navigator.of(context)
+                            .pushNamed(AuthenticationScreen.routeName);
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      print("Failed with error code: ${e.code}");
+                      String snackBarMessege;
+                      if (e.code == "requires-recent-login") {
+                        snackBarMessege = "Recent login is required. "
+                            "Please logout and log back in.";
+                      } else {
+                        snackBarMessege = e.message!;
+                      }
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          messegeSnackBar(
+                            snackBarMessege,
+                            timeUp: 1750,
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      print("Caught exception: $e");
+                    }
+                  }
                 },
               ),
             ],

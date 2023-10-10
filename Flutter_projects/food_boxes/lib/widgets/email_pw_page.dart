@@ -74,7 +74,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           );
         }
       } catch (e) {
-        print(e);
+        print("Caught exception: $e");
       } finally {
         setState(() => submitClickable = true);
       }

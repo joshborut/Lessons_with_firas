@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_boxes/screens/home_screen.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
 
-import '../screens/auth_screen.dart';
 import '../screens/reg_screen.dart';
 import '../utility/size_config.dart';
 import 'custom_txt_field.dart';
@@ -26,29 +24,26 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool submitClickable = true;
+  bool isLoading = false;
   String? currentRoute;
 
   void _submitFormData() async {
     if (_formKey.currentState!.validate()) {
       try {
-        if (currentRoute == AuthenticationScreen.routeName) {
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
-        }
+        setState(() => isLoading = true);
         if (currentRoute == RegisterationScreen.routeName) {
-          setState(() => submitClickable = false);
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: _emailController.text,
             password: _passwordController.text,
           );
-        }
-        if (context.mounted) {
-          _emailController.clear();
-          _passwordController.clear();
-          Navigator.of(context).pushNamed(HomeScreen.routeName);
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        } else {
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
         }
       } on FirebaseAuthException catch (e) {
         print("Failed with error code: ${e.code}");
@@ -76,7 +71,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
       } catch (e) {
         print("Caught exception: $e");
       } finally {
-        setState(() => submitClickable = true);
+        setState(() => isLoading = false);
       }
     }
   }
@@ -136,27 +131,32 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
               top: SizeConfig.scaledHeight(1),
             ),
             alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: submitClickable ? _submitFormData : null,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Submit",
-                    style: TextStyle(
-                      fontSize: SizeConfig.scaledHeight(2),
+            child: isLoading
+                ? CircularProgressIndicator(
+                    color: Colors.black,
+                    strokeWidth: 2,
+                  )
+                : ElevatedButton(
+                    onPressed: _submitFormData,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Submit",
+                          style: TextStyle(
+                            fontSize: SizeConfig.scaledHeight(2),
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.scaledWidth(1),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: SizeConfig.scaledHeight(2),
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: SizeConfig.scaledWidth(1),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: SizeConfig.scaledHeight(2),
-                  )
-                ],
-              ),
-            ),
           ),
         ],
       ),

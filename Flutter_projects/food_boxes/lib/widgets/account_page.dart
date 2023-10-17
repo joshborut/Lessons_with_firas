@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../app_constants.dart';
-import '../screens/auth_screen.dart';
 import '../screens/reset_pw_screen.dart';
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
 import '../utility/user_info_box.dart';
 import 'custom_txt_field.dart';
+import 'small_list_tile.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -115,16 +115,18 @@ class _AccountPageState extends State<AccountPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    smallListTile(
-                      Icons.clear_rounded,
-                      "Clear",
-                      () {
-                        _firstNameController.clear();
-                        _lastNameController.clear();
-                        _ageController.clear();
-                      },
-                    ),
-                    smallListTile(Icons.save, "Save", _submitFormData),
+                    SmallListTile(
+                        icon: Icons.clear_rounded,
+                        text: "Clear",
+                        function: () {
+                          _firstNameController.clear();
+                          _lastNameController.clear();
+                          _ageController.clear();
+                        }),
+                    SmallListTile(
+                        icon: Icons.save,
+                        text: "Save",
+                        function: _submitFormData),
                   ],
                 ),
               ),
@@ -190,81 +192,10 @@ class _AccountPageState extends State<AccountPage> {
                   Icons.arrow_forward_ios_rounded,
                   size: SizeConfig.scaledHeight(2),
                 ),
-                onTap: () async {
-                  final value = await yesNoDialogue(
-                        context,
-                        "Deleting your account is permanent and irreversible",
-                      ) ??
-                      false;
-                  print("value: $value");
-                  if (value) {
-                    try {
-                      await FirebaseAuth.instance.currentUser!.delete();
-                      if (context.mounted) {
-                        Navigator.of(context)
-                            .pushNamed(AuthenticationScreen.routeName);
-                      }
-                    } on FirebaseAuthException catch (e) {
-                      print("Failed with error code: ${e.code}");
-                      String snackBarMessege;
-                      if (e.code == "requires-recent-login") {
-                        snackBarMessege = "Recent login is required. "
-                            "Please logout and log back in.";
-                      } else {
-                        snackBarMessege = e.message!;
-                      }
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          messegeSnackBar(
-                            snackBarMessege,
-                            timeUp: 1750,
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      print("Caught exception: $e");
-                    }
-                  }
-                },
+                onTap: () => deleteAccount(context),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  GestureDetector smallListTile(
-      IconData icon, String text, void Function() function) {
-    return GestureDetector(
-      onTap: function,
-      child: Container(
-        height: SizeConfig.scaledHeight(7),
-        width: SizeConfig.scaledWidth(39),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.green[500],
-          borderRadius: AppConstants.circleRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
-            SizedBox(
-              width: SizeConfig.scaledWidth(4),
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: SizeConfig.scaledHeight(2.25),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
         ),
       ),
     );

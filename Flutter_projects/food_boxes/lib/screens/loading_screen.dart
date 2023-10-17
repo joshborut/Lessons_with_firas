@@ -10,8 +10,20 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text(
-          "Loading",
+        child: Column(
+          children: [
+            Spacer(),
+            Text(
+              "Loading",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Spacer(),
+            CircularProgressIndicator(
+              color: Colors.black,
+              strokeWidth: 4,
+            ),
+            Spacer(),
+          ],
         ),
       ),
     );

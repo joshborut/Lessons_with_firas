@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_constants.dart';
 import '../screens/reset_pw_screen.dart';
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
-import '../utility/user_info_box.dart';
 import 'custom_txt_field.dart';
 import 'small_list_tile.dart';
 
@@ -22,22 +23,39 @@ class _AccountPageState extends State<AccountPage> {
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
 
+  void getUserDate() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get();
+    _firstNameController.text = userData.data()?["firstName"] ?? "";
+    _lastNameController.text = userData.data()?["lastName"] ?? "";
+    _ageController.text = userData.data()?["age"] ?? "";
+  }
+
   @override
   void initState() {
-    _firstNameController.text = UserInfoBox.getFirstName();
-    _lastNameController.text = UserInfoBox.getLastName();
-    _ageController.text = "${UserInfoBox.getAge()}";
+    getUserDate();
     super.initState();
   }
 
-  void _submitFormData() {
+  void _submitFormData() async {
     if (_formKey.currentState!.validate()) {
-      UserInfoBox.setFirstName(_firstNameController.text);
-      UserInfoBox.setLastName(_lastNameController.text);
-      UserInfoBox.setAge(_ageController.text);
-      ScaffoldMessenger.of(context).showSnackBar(
-        messegeSnackBar("User data has been updated", timeUp: 1000),
+      final user = FirebaseAuth.instance.currentUser;
+      await FirebaseFirestore.instance.collection("users").doc(user?.uid).set(
+        {
+          "firstName": _firstNameController.text,
+          "lastName": _lastNameController.text,
+          "age": _ageController.text,
+        },
       );
+      FocusManager.instance.primaryFocus?.unfocus();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          messegeSnackBar("User data has been updated", timeUp: 1000),
+        );
+      }
     }
   }
 
@@ -98,14 +116,19 @@ class _AccountPageState extends State<AccountPage> {
                 child: CustomTxtFormField(
                   controller: _ageController,
                   validator: (value) {
-                    if (value.isEmpty) {
-                      return "Please enter your age.";
+                    if (value.trim().length > 3 || value.isEmpty) {
+                      return "Please enter an accurate age.";
                     }
                     return null;
                   },
                   keyboardType: TextInputType.number,
                   prefixIconWidget: Icon(Icons.numbers),
                   decorationLabel: "Age",
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]'),
+                    ),
+                  ],
                 ),
               ),
               Padding(

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_boxes/utility/shared_providers.dart';
 
 import '../app_constants.dart';
 import '../screens/reset_pw_screen.dart';
@@ -10,33 +12,24 @@ import '../utility/size_config.dart';
 import 'custom_txt_field.dart';
 import 'small_list_tile.dart';
 
-class AccountPage extends StatefulWidget {
+class AccountPage extends ConsumerStatefulWidget {
   const AccountPage({super.key});
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  ConsumerState<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends ConsumerState<AccountPage> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
 
-  void getUserDate() async {
-    final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(user?.uid)
-        .get();
-    _firstNameController.text = userData.data()?["firstName"] ?? "";
-    _lastNameController.text = userData.data()?["lastName"] ?? "";
-    _ageController.text = userData.data()?["age"] ?? "";
-  }
-
   @override
   void initState() {
-    getUserDate();
+    _firstNameController.text = ref.read(firstNameProvider);
+    _lastNameController.text = ref.read(lastNameProvider);
+    _ageController.text = ref.read(ageProvider);
     super.initState();
   }
 

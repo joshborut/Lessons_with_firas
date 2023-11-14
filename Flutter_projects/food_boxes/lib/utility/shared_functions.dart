@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_boxes/utility/shared_providers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:math';
 
@@ -14,12 +16,12 @@ int randomValue(int min, int max) {
 }
 
 void orderDetailsDialogue(
-  BuildContext context, {
+  WidgetRef ref, {
   required String orderNumber,
   String? orderDetails,
 }) {
   showDialog(
-    context: context,
+    context: ref.context,
     builder: (_) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -49,7 +51,6 @@ void orderDetailsDialogue(
               version: QrVersions.auto,
               size: SizeConfig.scaledHeight(30),
             ),
-            // TODO: Cancel order when clicked
             Container(
               padding: EdgeInsets.only(
                 bottom: SizeConfig.scaledHeight(3),
@@ -60,7 +61,9 @@ void orderDetailsDialogue(
                   backgroundColor: Colors.red[700],
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  ref.read(ticketListProvider.notifier).update((state) =>
+                      [...state..removeAt(int.parse(orderNumber) - 1)]);
+                  Navigator.of(ref.context).pop();
                 },
                 child: Text(
                   "Cancel Order",

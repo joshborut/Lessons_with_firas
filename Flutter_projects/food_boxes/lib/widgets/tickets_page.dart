@@ -39,7 +39,7 @@ class TicketsPage extends ConsumerWidget {
       itemBuilder: (_, index) {
         return GestureDetector(
           onTap: () => orderDetailsDialogue(
-            context,
+            ref,
             orderNumber: "${index + 1}",
           ),
           child: Card(

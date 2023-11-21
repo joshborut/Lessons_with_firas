@@ -63,7 +63,7 @@ class TicketsPage extends ConsumerWidget {
                         topRight: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(ticketList[index].imageURL),
+                        image: AssetImage(ticketList[index].imageURL!),
                         fit: BoxFit.cover,
                       ),
                     ),

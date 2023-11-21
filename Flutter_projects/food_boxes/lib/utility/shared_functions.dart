@@ -22,7 +22,7 @@ void orderDetailsDialogue(
 }) {
   showDialog(
     context: ref.context,
-    builder: (_) {
+    builder: (BuildContext ctx) {
       return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.circleRadius,
@@ -60,10 +60,17 @@ void orderDetailsDialogue(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[700],
                 ),
-                onPressed: () {
-                  ref.read(ticketListProvider.notifier).update((state) =>
-                      [...state..removeAt(int.parse(orderNumber) - 1)]);
-                  Navigator.of(ref.context).pop();
+                onPressed: () async {
+                  final cancelOrder = await yesNoDialogue(ref.context,
+                          "Canceling an order is permanent and irreversible") ??
+                      false;
+                  if (cancelOrder) {
+                    ref.read(ticketListProvider.notifier).update((state) =>
+                        [...state..removeAt(int.parse(orderNumber) - 1)]);
+                  }
+                  if (ctx.mounted) {
+                    Navigator.of(ref.context).pop();
+                  }
                 },
                 child: Text(
                   "Cancel Order",

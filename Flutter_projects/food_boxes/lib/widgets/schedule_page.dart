@@ -6,6 +6,7 @@ import 'package:food_boxes/utility/shared_providers.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
+import '../model/event_model.dart';
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
 
@@ -37,6 +38,14 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         SizedBox(
           height: SizeConfig.scaledHeight(55),
           child: TableCalendar(
+            eventLoader: (day) {
+              return day.day == 10
+                  ? [
+                      Event('Today\'s Event 1'),
+                      Event('Today\'s Event 2'),
+                    ]
+                  : [];
+            },
             selectedDayPredicate: (day) {
               return day == _selectedDay;
             },

@@ -52,6 +52,13 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               cellMargin: EdgeInsets.symmetric(
                 vertical: SizeConfig.scaledHeight(1),
               ),
+              todayTextStyle: TextStyle(
+                color: Color.fromARGB(255, 0, 17, 255),
+              ),
+              todayDecoration: BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.circle,
+              ),
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
               weekdayStyle: Theme.of(context).textTheme.bodySmall!,

@@ -3,10 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/app_constants.dart';
 import 'package:food_boxes/model/tickets_info.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
+import 'package:food_boxes/widgets/food_box_tile.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
-import '../model/event_model.dart';
+import '../model/food_box.dart';
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
 
@@ -19,10 +20,18 @@ class SchedulePage extends ConsumerStatefulWidget {
 
 class _SchedulePageState extends ConsumerState<SchedulePage> {
   late DateTime _selectedDay;
+  late List<FoodBox> foodBoxes;
 
   @override
   void initState() {
     _selectedDay = DateTime.now();
+    foodBoxes = [
+      FoodBox(
+          name: "Large Box",
+          price: 20.00,
+          date: DateTime(2023, 12, 10),
+          description: "This is a large box of veggies")
+    ];
     super.initState();
   }
 
@@ -41,8 +50,11 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             eventLoader: (day) {
               return day.day == 10
                   ? [
-                      Event('Today\'s Event 1'),
-                      Event('Today\'s Event 2'),
+                      FoodBox(
+                          name: "Large Box",
+                          price: 20.00,
+                          date: DateTime(2023, 12, 10),
+                          description: "This is a large box of veggies")
                     ]
                   : [];
             },
@@ -99,6 +111,15 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             style: TextStyle(
               fontSize: SizeConfig.scaledHeight(2),
             ),
+          ),
+        ),
+        ListTile(
+          tileColor: Colors.red,
+          title: Text(
+            foodBoxes[0].name,
+          ),
+          subtitle: Text(
+            foodBoxes[0].description,
           ),
         ),
         Spacer(

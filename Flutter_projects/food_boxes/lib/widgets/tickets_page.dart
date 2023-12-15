@@ -35,6 +35,9 @@ class TicketsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ticketList = ref.watch(ticketListProvider);
     return ListView.builder(
+      padding: EdgeInsets.only(
+        top: SizeConfig.scaledHeight(10),
+      ),
       itemCount: ticketList.length,
       itemBuilder: (_, index) {
         return GestureDetector(

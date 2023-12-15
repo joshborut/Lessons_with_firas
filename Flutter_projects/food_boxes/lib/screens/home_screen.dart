@@ -24,7 +24,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
       body: AppConstants.menuItemList[pageIndex].bodyBuild,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => setState(() => pageIndex = index),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_boxes/app_constants.dart';
-import 'package:food_boxes/model/tickets_info.dart';
-import 'package:food_boxes/utility/shared_providers.dart';
-import 'package:food_boxes/widgets/food_box_tile.dart';
+import 'package:food_boxes/utility/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
+import '../app_constants.dart';
 import '../model/food_box.dart';
+import '../model/tickets_info.dart';
 import '../utility/shared_functions.dart';
+import '../utility/shared_providers.dart';
 import '../utility/size_config.dart';
+import 'food_box_tile.dart';
 
 class SchedulePage extends ConsumerStatefulWidget {
   const SchedulePage({super.key});
@@ -25,13 +26,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   @override
   void initState() {
     _selectedDay = DateTime.now();
-    foodBoxes = [
-      FoodBox(
-          name: "Large Box",
-          price: 20.00,
-          date: DateTime(2023, 12, 10),
-          description: "This is a large box of veggies")
-    ];
+    foodBoxes = getkEvents(_selectedDay);
     super.initState();
   }
 
@@ -45,49 +40,50 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
     return Column(
       children: [
         SizedBox(
-          height: SizeConfig.scaledHeight(55),
-          child: TableCalendar(
-            eventLoader: (day) {
-              return day.day == 10
-                  ? [
-                      FoodBox(
-                          name: "Large Box",
-                          price: 20.00,
-                          date: DateTime(2023, 12, 10),
-                          description: "This is a large box of veggies")
-                    ]
-                  : [];
-            },
-            selectedDayPredicate: (day) {
-              return day == _selectedDay;
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-              });
-            },
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: DateTime.now(),
-            calendarStyle: CalendarStyle(
-              cellMargin: EdgeInsets.symmetric(
-                vertical: SizeConfig.scaledHeight(1),
-              ),
-              todayTextStyle: TextStyle(
-                color: Color.fromARGB(255, 0, 17, 255),
-              ),
-              todayDecoration: BoxDecoration(
-                color: Colors.transparent,
-                shape: BoxShape.circle,
-              ),
+          height: SizeConfig.scaledHeight(10),
+        ),
+        TableCalendar(
+          eventLoader: getkEvents,
+          selectedDayPredicate: (day) {
+            return day == _selectedDay;
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              _selectedDay = selectedDay;
+              foodBoxes = getkEvents(_selectedDay);
+            });
+          },
+          firstDay: DateTime.utc(2010, 10, 16),
+          lastDay: DateTime.utc(2030, 3, 14),
+          focusedDay: DateTime.now(),
+          calendarStyle: CalendarStyle(
+            cellMargin: EdgeInsets.symmetric(
+              vertical: SizeConfig.scaledHeight(1),
             ),
-            daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: Theme.of(context).textTheme.bodySmall!,
-              weekendStyle: Theme.of(context).textTheme.bodySmall!,
+            todayTextStyle: TextStyle(
+              color: Color.fromARGB(255, 0, 17, 255),
             ),
-            headerStyle: HeaderStyle(
-              formatButtonVisible: false,
+            todayDecoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
             ),
+          ),
+          daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle: Theme.of(context).textTheme.bodySmall!,
+            weekendStyle: Theme.of(context).textTheme.bodySmall!,
+          ),
+          headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: foodBoxes.length,
+            itemBuilder: (_, index) {
+              return FoodBoxTile(
+                foodBox: foodBoxes[index],
+              );
+            },
           ),
         ),
         Spacer(),
@@ -113,18 +109,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             ),
           ),
         ),
-        ListTile(
-          tileColor: Colors.red,
-          title: Text(
-            foodBoxes[0].name,
-          ),
-          subtitle: Text(
-            foodBoxes[0].description,
-          ),
-        ),
-        Spacer(
-          flex: 3,
-        )
+        Spacer(),
       ],
     );
   }

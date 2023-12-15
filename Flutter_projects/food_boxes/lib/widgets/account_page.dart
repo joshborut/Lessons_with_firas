@@ -64,6 +64,9 @@ class _AccountPageState extends ConsumerState<AccountPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                height: SizeConfig.scaledHeight(10),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.scaledHeight(2),

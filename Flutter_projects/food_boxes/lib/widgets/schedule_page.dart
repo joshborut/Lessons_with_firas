@@ -20,19 +20,20 @@ class SchedulePage extends ConsumerStatefulWidget {
 }
 
 class _SchedulePageState extends ConsumerState<SchedulePage> {
+  final PageController _controller = PageController(viewportFraction: 0.9);
   late DateTime _selectedDay;
-  late List<FoodBox> foodBoxes;
+  late List<FoodBox> _foodBoxes;
 
   @override
   void initState() {
     _selectedDay = DateTime.now();
-    foodBoxes = getkEvents(_selectedDay);
+    _foodBoxes = getkEvents(_selectedDay);
     super.initState();
   }
 
   String _fixTimeZone(DateTime time) {
-    final _dateFormater = DateFormat('dd/MM/yyyy');
-    return _dateFormater.format(time);
+    final dateFormater = DateFormat('dd/MM/yyyy');
+    return dateFormater.format(time);
   }
 
   @override
@@ -50,7 +51,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           onDaySelected: (selectedDay, focusedDay) {
             setState(() {
               _selectedDay = selectedDay;
-              foodBoxes = getkEvents(_selectedDay);
+              _foodBoxes = getkEvents(_selectedDay);
             });
           },
           firstDay: DateTime.utc(2010, 10, 16),
@@ -76,14 +77,21 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             formatButtonVisible: false,
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: foodBoxes.length,
-            itemBuilder: (_, index) {
-              return FoodBoxTile(
-                foodBox: foodBoxes[index],
-              );
-            },
+        Container(
+          margin: EdgeInsets.symmetric(
+            vertical: SizeConfig.scaledHeight(2),
+          ),
+          height: SizeConfig.scaledHeight(12.5),
+          child: PageView(
+            controller: _controller,
+            children: List.generate(
+              _foodBoxes.length,
+              (index) {
+                return FoodBoxTile(
+                  foodBox: _foodBoxes[index],
+                );
+              },
+            ),
           ),
         ),
         Spacer(),

@@ -29,11 +29,9 @@ class _FoodBoxTileState extends State<FoodBoxTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: SizeConfig.scaledHeight(1),
-        horizontal: SizeConfig.scaledWidth(3),
-      ),
+    return Card(
+      color: Theme.of(context).colorScheme.background,
+      elevation: 0,
       child: ListTile(
         onTap: () {
           setState(() {
@@ -51,8 +49,13 @@ class _FoodBoxTileState extends State<FoodBoxTile> {
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.circleRadius,
         ),
-        title: Text(
-          widget.foodBox.name,
+        title: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: SizeConfig.scaledHeight(0.5),
+          ),
+          child: Text(
+            widget.foodBox.name,
+          ),
         ),
         subtitle: Text(
           widget.foodBox.description,

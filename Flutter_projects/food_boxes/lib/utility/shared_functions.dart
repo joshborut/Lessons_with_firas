@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:math';
 
 import '../app_constants.dart';
+import '../model/food_box.dart';
 import 'size_config.dart';
 
 final _rng = Random();
@@ -161,6 +163,38 @@ SnackBar messegeSnackBar(String messege, {int? timeUp = 1000}) {
       bottom: SizeConfig.scaledHeight(5),
     ),
   );
+}
+
+String formatDate(DateTime time) {
+  final dateFormater = DateFormat('dd/MM/yyyy');
+  return dateFormater.format(time);
+}
+
+List<FoodBox> getDateBoxes(DateTime day) {
+  if (day.day == 10) {
+    return [
+      FoodBox(
+        name: "Large Box",
+        price: 20.00,
+        date: DateTime(2023, 12, 10),
+        description: "This is a large box of veggies",
+      ),
+      FoodBox(
+        name: "Medium Box",
+        price: 15.00,
+        date: DateTime(2023, 12, 10),
+        description: "This is a medium box of veggies",
+      ),
+      FoodBox(
+        name: "Small Box",
+        price: 10.00,
+        date: DateTime(2023, 12, 10),
+        description: "This is a small box of veggies",
+      )
+    ];
+  } else {
+    return [];
+  }
 }
 
 Future<void> deleteAccount(BuildContext context) async {

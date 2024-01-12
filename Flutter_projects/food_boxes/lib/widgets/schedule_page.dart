@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_boxes/utility/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 import '../app_constants.dart';
 import '../model/food_box.dart';
-import '../model/tickets_info.dart';
 import '../utility/shared_functions.dart';
 import '../utility/shared_providers.dart';
 import '../utility/size_config.dart';
@@ -27,31 +24,27 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   @override
   void initState() {
     _selectedDay = DateTime.now();
-    _foodBoxes = getkEvents(_selectedDay);
+    _foodBoxes = getDateBoxes(_selectedDay);
     super.initState();
-  }
-
-  String _fixTimeZone(DateTime time) {
-    final dateFormater = DateFormat('dd/MM/yyyy');
-    return dateFormater.format(time);
   }
 
   @override
   Widget build(BuildContext context) {
+    final selectedBoxes = ref.watch(selectedBoxesProvider);
     return Column(
       children: [
         SizedBox(
           height: SizeConfig.scaledHeight(10),
         ),
         TableCalendar(
-          eventLoader: getkEvents,
+          eventLoader: getDateBoxes,
           selectedDayPredicate: (day) {
             return day == _selectedDay;
           },
           onDaySelected: (selectedDay, focusedDay) {
             setState(() {
               _selectedDay = selectedDay;
-              _foodBoxes = getkEvents(_selectedDay);
+              _foodBoxes = getDateBoxes(_selectedDay);
             });
           },
           firstDay: DateTime.utc(2010, 10, 16),
@@ -62,7 +55,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               vertical: SizeConfig.scaledHeight(1),
             ),
             todayTextStyle: TextStyle(
-              color: Color.fromARGB(255, 0, 17, 255),
+              color: Color(0xFF5C6BC0),
             ),
             todayDecoration: BoxDecoration(
               color: Colors.transparent,
@@ -77,6 +70,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             formatButtonVisible: false,
           ),
         ),
+        Spacer(),
         Container(
           margin: EdgeInsets.symmetric(
             vertical: SizeConfig.scaledHeight(2),
@@ -88,36 +82,44 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               _foodBoxes.length,
               (index) {
                 return FoodBoxTile(
-                  foodBox: _foodBoxes[index],
+                  passedFoodBox: _foodBoxes[index],
                 );
               },
             ),
           ),
         ),
         Spacer(),
-        ElevatedButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             ref.read(ticketListProvider.notifier).update((state) => [
                   ...state,
-                  TicketsInfo(
-                    date: _fixTimeZone(_selectedDay),
-                    name: "Crossant",
-                    imageURL: AppConstants.ticketImages[randomValue(0, 7)],
-                    price: 5,
-                  ),
+                  ...selectedBoxes,
                 ]);
             ScaffoldMessenger.of(context).showSnackBar(
               messegeSnackBar("Ticket successfully created."),
             );
           },
-          child: Text(
-            "Create Ticket",
-            style: TextStyle(
-              fontSize: SizeConfig.scaledHeight(2),
+          child: Container(
+            width: SizeConfig.scaledWidth(30),
+            height: SizeConfig.scaledHeight(7),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: AppConstants.circleRadius,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            child: Text(
+              "Create Ticket",
+              style: TextStyle(
+                fontSize: SizeConfig.scaledHeight(2),
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
-        Spacer(),
+        Spacer(
+          flex: 3,
+        ),
       ],
     );
   }

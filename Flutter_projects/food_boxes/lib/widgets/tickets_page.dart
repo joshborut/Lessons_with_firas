@@ -100,8 +100,14 @@ class TicketsPage extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    innerRow(AppIcons.calendar, ticketList[index].date),
-                    innerRow(Icons.attach_money, "${ticketList[index].price}"),
+                    innerRow(
+                      AppIcons.calendar,
+                      formatDate(ticketList[index].date),
+                    ),
+                    innerRow(
+                      Icons.attach_money,
+                      "${ticketList[index].price}",
+                    ),
                   ],
                 ),
               )

@@ -42,6 +42,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             return day == _selectedDay;
           },
           onDaySelected: (selectedDay, focusedDay) {
+            ref.read(selectedBoxesProvider.notifier).state = [];
             setState(() {
               _selectedDay = selectedDay;
               _foodBoxes = getDateBoxes(_selectedDay);
@@ -82,7 +83,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               _foodBoxes.length,
               (index) {
                 return FoodBoxTile(
-                  passedFoodBox: _foodBoxes[index],
+                  passedBox: _foodBoxes[index],
                 );
               },
             ),
@@ -90,22 +91,27 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         ),
         Spacer(),
         GestureDetector(
-          onTap: () {
-            ref.read(ticketListProvider.notifier).update((state) => [
-                  ...state,
-                  ...selectedBoxes,
-                ]);
-            ScaffoldMessenger.of(context).showSnackBar(
-              messegeSnackBar("Ticket successfully created."),
-            );
-          },
+          onTap: selectedBoxes.isNotEmpty
+              ? () {
+                  ref.read(ticketListProvider.notifier).update((state) => [
+                        ...state,
+                        ...selectedBoxes,
+                      ]);
+                  ref.read(selectedBoxesProvider.notifier).state = [];
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    messegeSnackBar("Ticket successfully created."),
+                  );
+                }
+              : null,
           child: Container(
             width: SizeConfig.scaledWidth(30),
             height: SizeConfig.scaledHeight(7),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: AppConstants.circleRadius,
-              color: Theme.of(context).colorScheme.primary,
+              color: selectedBoxes.isNotEmpty
+                  ? Theme.of(context).colorScheme.primary
+                  : AppConstants.grey500,
             ),
             child: Text(
               "Create Ticket",

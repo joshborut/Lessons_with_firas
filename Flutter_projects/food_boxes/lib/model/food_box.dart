@@ -1,15 +1,21 @@
+import 'package:uuid/uuid.dart';
+
 class FoodBox {
-  const FoodBox({
+  FoodBox({
     required this.name,
     required this.price,
     required this.date,
     this.description = "",
     this.imageURL = "assets/images/veggie_scale.jpg",
-  });
+  }) {
+    var uuid = Uuid();
+    id = uuid.v4();
+  }
 
   final String name;
   final double price;
   final DateTime date;
   final String description;
   final String? imageURL;
+  late final String id;
 }

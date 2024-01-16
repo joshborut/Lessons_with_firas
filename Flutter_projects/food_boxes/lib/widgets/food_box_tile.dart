@@ -9,10 +9,10 @@ import '../utility/size_config.dart';
 class FoodBoxTile extends ConsumerStatefulWidget {
   const FoodBoxTile({
     super.key,
-    required this.passedFoodBox,
+    required this.passedBox,
   });
 
-  final FoodBox passedFoodBox;
+  final FoodBox passedBox;
 
   @override
   ConsumerState<FoodBoxTile> createState() => _FoodBoxTileState();
@@ -25,7 +25,7 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
   @override
   void initState() {
     tileIsSelected = false;
-    tileBgColor = Colors.grey;
+    tileBgColor = AppConstants.grey500;
     super.initState();
   }
 
@@ -37,15 +37,16 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
       elevation: 0,
       child: ListTile(
         onTap: () {
-          if (selectedBoxes.contains(widget.passedFoodBox)) {
+          if (tileIsSelected &&
+              selectedBoxes.any((e) => e.id == widget.passedBox.id)) {
             ref.read(selectedBoxesProvider.notifier).update((state) => [
-                  ...state..remove(widget.passedFoodBox),
+                  ...state..remove(widget.passedBox),
                 ]);
           }
           if (!tileIsSelected) {
             ref.read(selectedBoxesProvider.notifier).update((state) => [
                   ...state,
-                  widget.passedFoodBox,
+                  widget.passedBox,
                 ]);
           }
           setState(() {
@@ -68,11 +69,11 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
             vertical: SizeConfig.scaledHeight(0.5),
           ),
           child: Text(
-            widget.passedFoodBox.name,
+            widget.passedBox.name,
           ),
         ),
         subtitle: Text(
-          widget.passedFoodBox.description,
+          widget.passedBox.description,
         ),
       ),
     );

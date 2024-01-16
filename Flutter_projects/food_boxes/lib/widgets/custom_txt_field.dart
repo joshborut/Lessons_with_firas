@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../app_constants.dart';
+
 class CustomTxtFormField extends StatefulWidget {
   const CustomTxtFormField({
     required this.decorationLabel,
@@ -92,7 +94,7 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
         labelText:
             _focused && widget.hideLabelOnFocus ? null : widget.decorationLabel,
         labelStyle: TextStyle(
-          color: _focused ? widget.labelFocusColor : Colors.grey,
+          color: _focused ? widget.labelFocusColor : AppConstants.grey500,
         ),
         errorStyle: TextStyle(
           color: widget.errorLabelColor,

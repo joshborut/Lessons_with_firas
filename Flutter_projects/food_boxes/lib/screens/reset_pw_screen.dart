@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../app_constants.dart';
 import '../utility/shared_functions.dart';
 import '../utility/size_config.dart';
 import '../widgets/custom_txt_field.dart';
@@ -76,7 +77,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               Text(
                 "Please enter your email to proceed",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.grey,
+                      color: AppConstants.grey500,
                     ),
               ),
               SizedBox(

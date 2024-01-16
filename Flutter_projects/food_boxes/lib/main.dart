@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
             minimumSize: Size.zero,
           ),
         ),
-        iconTheme: IconThemeData(color: Colors.grey),
+        iconTheme: IconThemeData(color: AppConstants.grey500),
       ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
 
+import '../app_constants.dart';
 import '../screens/reg_screen.dart';
 import '../utility/size_config.dart';
 import 'custom_txt_field.dart';
@@ -91,7 +92,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           Text(
             widget.subtitle,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Colors.grey,
+                  color: AppConstants.grey500,
                 ),
           ),
           Padding(

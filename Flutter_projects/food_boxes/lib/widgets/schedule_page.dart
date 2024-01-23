@@ -92,15 +92,25 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         Spacer(),
         GestureDetector(
           onTap: selectedBoxes.isNotEmpty
-              ? () {
-                  ref.read(ticketListProvider.notifier).update((state) => [
-                        ...state,
-                        ...selectedBoxes,
-                      ]);
-                  ref.read(selectedBoxesProvider.notifier).state = [];
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    messegeSnackBar("Ticket successfully created."),
-                  );
+              ? () async {
+                  final orderConfirmed = await yesNoDialogue(
+                        context,
+                        "Example Message Example Message",
+                        orderSummary(selectedBoxes),
+                      ) ??
+                      false;
+                  if (orderConfirmed) {
+                    ref.read(ticketListProvider.notifier).update((state) => [
+                          ...state,
+                          ...selectedBoxes,
+                        ]);
+                    ref.read(selectedBoxesProvider.notifier).state = [];
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        messegeSnackBar("Ticket successfully created."),
+                      );
+                    }
+                  }
                 }
               : null,
           child: Container(

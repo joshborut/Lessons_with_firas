@@ -89,7 +89,97 @@ void orderDetailsDialogue(
   );
 }
 
-Future<bool?> yesNoDialogue(BuildContext context, String messageToDisplay) {
+Widget orderSummary(List<FoodBox> boxes) {
+  return Container(
+    height: SizeConfig.scaledHeight(30),
+    width: double.infinity,
+    decoration: BoxDecoration(
+        // color: AppConstants.grey500.withOpacity(0.2),
+        border: Border(
+      top: BorderSide(
+        color: AppConstants.grey600,
+        width: 2,
+      ),
+    )),
+    child: ListView.builder(
+      padding: EdgeInsets.only(
+        top: SizeConfig.scaledHeight(1.3),
+      ),
+      itemCount: boxes.length,
+      itemBuilder: (_, index) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    right: SizeConfig.scaledWidth(1),
+                  ),
+                  height: SizeConfig.scaledHeight(2.75),
+                  width: SizeConfig.scaledWidth(5),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppConstants.grey400,
+                  ),
+                  child: Text(
+                    "3",
+                    style: TextStyle(
+                      fontSize: SizeConfig.scaledHeight(1.75),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.scaledWidth(40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        boxes[index].name,
+                        style: TextStyle(
+                          fontSize: SizeConfig.scaledHeight(2),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        boxes[index].description,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: AppConstants.grey600,
+                          fontSize: SizeConfig.scaledHeight(1.75),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    "\$${boxes[index].price}",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppConstants.grey800,
+                      fontSize: SizeConfig.scaledHeight(1.75),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              color: AppConstants.grey500,
+              thickness: 1,
+            )
+          ],
+        );
+      },
+    ),
+  );
+}
+
+Future<bool?> yesNoDialogue(BuildContext context, String messageToDisplay,
+    [Widget? childWidget]) {
   return showDialog<bool>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
@@ -117,6 +207,7 @@ Future<bool?> yesNoDialogue(BuildContext context, String messageToDisplay) {
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
+          if (childWidget != null) childWidget
         ],
       ),
       actions: [

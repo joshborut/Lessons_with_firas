@@ -19,14 +19,22 @@ class FoodBoxTile extends ConsumerStatefulWidget {
 }
 
 class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
-  late bool tileIsSelected;
   late Color tileBgColor;
 
   @override
   void initState() {
-    tileIsSelected = false;
     tileBgColor = AppConstants.grey500;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (ref
+        .read(selectedBoxesProvider)
+        .any((e) => e.id == widget.passedBox.id)) {
+      tileBgColor = Theme.of(context).colorScheme.primary;
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -36,31 +44,22 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
       color: Theme.of(context).colorScheme.background,
       elevation: 0,
       child: ListTile(
+        visualDensity: VisualDensity(vertical: 3), // to expand
         onTap: () {
-          if (tileIsSelected &&
-              selectedBoxes.any((e) => e.id == widget.passedBox.id)) {
+          if (selectedBoxes.any((e) => e.id == widget.passedBox.id)) {
             ref.read(selectedBoxesProvider.notifier).update((state) => [
                   ...state..remove(widget.passedBox),
                 ]);
-          }
-          if (!tileIsSelected) {
+            setState(() => tileBgColor = AppConstants.grey500);
+          } else {
             ref.read(selectedBoxesProvider.notifier).update((state) => [
                   ...state,
                   widget.passedBox,
                 ]);
+            setState(() => tileBgColor = Theme.of(context).colorScheme.primary);
           }
-          setState(() {
-            tileBgColor = tileIsSelected
-                ? Colors.grey
-                : Theme.of(context).colorScheme.primary;
-            tileIsSelected = !tileIsSelected;
-          });
         },
         tileColor: tileBgColor,
-        leading: Icon(
-          Icons.verified_user,
-          size: SizeConfig.scaledHeight(5),
-        ),
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.circleRadius,
         ),
@@ -74,6 +73,37 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
         ),
         subtitle: Text(
           widget.passedBox.description,
+        ),
+        trailing: Column(
+          children: [
+            Icon(
+              Icons.add,
+              size: SizeConfig.scaledHeight(2.5),
+            ),
+            Container(
+              height: SizeConfig.scaledHeight(3),
+              width: SizeConfig.scaledWidth(5),
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(
+                vertical: SizeConfig.scaledHeight(0.5),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Text(
+                "0",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: SizeConfig.scaledHeight(2),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Icon(
+              Icons.remove,
+              size: SizeConfig.scaledHeight(2.5),
+            ),
+          ],
         ),
       ),
     );

@@ -76,7 +76,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           margin: EdgeInsets.symmetric(
             vertical: SizeConfig.scaledHeight(2),
           ),
-          height: SizeConfig.scaledHeight(12.5),
+          height: SizeConfig.scaledHeight(14),
           child: PageView(
             controller: _controller,
             children: List.generate(

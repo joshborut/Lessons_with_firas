@@ -140,7 +140,7 @@ Widget orderSummary(List<FoodBox> boxes) {
                         boxes[index].name,
                         style: TextStyle(
                           fontSize: SizeConfig.scaledHeight(2),
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(

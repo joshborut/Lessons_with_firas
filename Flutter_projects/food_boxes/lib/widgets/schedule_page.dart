@@ -72,23 +72,53 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           ),
         ),
         Spacer(),
-        Container(
-          margin: EdgeInsets.symmetric(
-            vertical: SizeConfig.scaledHeight(2),
-          ),
-          height: SizeConfig.scaledHeight(14),
-          child: PageView(
-            controller: _controller,
-            children: List.generate(
-              _foodBoxes.length,
-              (index) {
-                return FoodBoxTile(
-                  passedBox: _foodBoxes[index],
-                );
-              },
+        if (_foodBoxes.isEmpty)
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: AppConstants.circleRadius,
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary,
+                width: 2,
+              ),
+            ),
+            margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.scaledHeight(2),
+              horizontal: SizeConfig.scaledWidth(7.5),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.scaledWidth(4),
+                vertical: SizeConfig.scaledHeight(2),
+              ),
+              child: Text(
+                "No food boxes available for the selected date. Please choose another date.",
+                style: TextStyle(
+                  fontSize: SizeConfig.scaledHeight(2.5),
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        else
+          Container(
+            margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.scaledHeight(2),
+            ),
+            height: SizeConfig.scaledHeight(14),
+            child: PageView(
+              controller: _controller,
+              children: List.generate(
+                _foodBoxes.length,
+                (index) {
+                  return FoodBoxTile(
+                    passedBox: _foodBoxes[index],
+                  );
+                },
+              ),
             ),
           ),
-        ),
         Spacer(),
         GestureDetector(
           onTap: selectedBoxes.isNotEmpty

@@ -39,26 +39,23 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedBoxes = ref.watch(selectedBoxesProvider);
+    final boxQuantity = ref.watch(numberOfBoxesProvider(widget.passedBox.id));
     return Card(
       color: Theme.of(context).colorScheme.background,
       elevation: 0,
       child: ListTile(
         visualDensity: VisualDensity(vertical: 3), // to expand
-        onTap: () {
-          if (selectedBoxes.any((e) => e.id == widget.passedBox.id)) {
-            ref.read(selectedBoxesProvider.notifier).update((state) => [
-                  ...state..remove(widget.passedBox),
-                ]);
-            setState(() => tileBgColor = AppConstants.grey500);
-          } else {
-            ref.read(selectedBoxesProvider.notifier).update((state) => [
-                  ...state,
-                  widget.passedBox,
-                ]);
-            setState(() => tileBgColor = Theme.of(context).colorScheme.primary);
-          }
-        },
+        onTap: boxQuantity != 0
+            ? null
+            : () {
+                ref.read(selectedBoxesProvider.notifier).update((state) => [
+                      ...state,
+                      widget.passedBox,
+                    ]);
+                setState(
+                  () => tileBgColor = Theme.of(context).colorScheme.primary,
+                );
+              },
         tileColor: tileBgColor,
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.circleRadius,
@@ -76,9 +73,22 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
         ),
         trailing: Column(
           children: [
-            Icon(
-              Icons.add,
-              size: SizeConfig.scaledHeight(2.5),
+            GestureDetector(
+              onTap: (() {
+                if (boxQuantity == 0) {
+                  setState(
+                    () => tileBgColor = Theme.of(context).colorScheme.primary,
+                  );
+                }
+                ref.read(selectedBoxesProvider.notifier).update((state) => [
+                      ...state,
+                      widget.passedBox,
+                    ]);
+              }),
+              child: Icon(
+                Icons.add,
+                size: SizeConfig.scaledHeight(2.5),
+              ),
             ),
             Container(
               height: SizeConfig.scaledHeight(3),
@@ -91,7 +101,7 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
                 color: Colors.white,
               ),
               child: Text(
-                "0",
+                boxQuantity.toString(),
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: SizeConfig.scaledHeight(2),
@@ -99,9 +109,21 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
                 ),
               ),
             ),
-            Icon(
-              Icons.remove,
-              size: SizeConfig.scaledHeight(2.5),
+            GestureDetector(
+              onTap: () {
+                if (boxQuantity == 1) {
+                  setState(() => tileBgColor = AppConstants.grey500);
+                }
+                if (boxQuantity >= 1) {
+                  ref.read(selectedBoxesProvider.notifier).update((state) => [
+                        ...state..remove(widget.passedBox),
+                      ]);
+                }
+              },
+              child: Icon(
+                Icons.remove,
+                size: SizeConfig.scaledHeight(2.5),
+              ),
             ),
           ],
         ),

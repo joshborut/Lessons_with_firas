@@ -34,3 +34,8 @@ final ageProvider = StateProvider<String>((ref) => "");
 final ticketListProvider = StateProvider<List<FoodBox>>((ref) => []);
 
 final selectedBoxesProvider = StateProvider<List<FoodBox>>((ref) => []);
+
+final numberOfBoxesProvider = Provider.family<int, String>((ref, id) {
+  final selectedBoxes = ref.watch(selectedBoxesProvider);
+  return selectedBoxes.where((element) => element.id == id).length;
+});

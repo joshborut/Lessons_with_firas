@@ -74,17 +74,22 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
         trailing: Column(
           children: [
             GestureDetector(
-              onTap: (() {
-                if (boxQuantity == 0) {
-                  setState(
-                    () => tileBgColor = Theme.of(context).colorScheme.primary,
-                  );
-                }
-                ref.read(selectedBoxesProvider.notifier).update((state) => [
-                      ...state,
-                      widget.passedBox,
-                    ]);
-              }),
+              onTap: boxQuantity == 99
+                  ? null
+                  : () {
+                      if (boxQuantity == 0) {
+                        setState(
+                          () => tileBgColor =
+                              Theme.of(context).colorScheme.primary,
+                        );
+                      }
+                      ref
+                          .read(selectedBoxesProvider.notifier)
+                          .update((state) => [
+                                ...state,
+                                widget.passedBox,
+                              ]);
+                    },
               child: Icon(
                 Icons.add,
                 size: SizeConfig.scaledHeight(2.5),

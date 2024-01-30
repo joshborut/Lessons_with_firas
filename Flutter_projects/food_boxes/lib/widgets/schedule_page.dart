@@ -126,7 +126,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   final orderConfirmed = await yesNoDialogue(
                         context,
                         "Example Message Example Message",
-                        orderSummary(selectedBoxes),
+                        orderSummary(ref, selectedBoxes),
                       ) ??
                       false;
                   if (orderConfirmed) {

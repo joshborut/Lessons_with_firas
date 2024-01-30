@@ -89,12 +89,12 @@ void orderDetailsDialogue(
   );
 }
 
-Widget orderSummary(List<FoodBox> boxes) {
+Widget orderSummary(WidgetRef ref, List<FoodBox> boxes) {
+  final uniqueItems = Set.from(boxes);
   return Container(
     height: SizeConfig.scaledHeight(30),
     width: double.infinity,
     decoration: BoxDecoration(
-        // color: AppConstants.grey500.withOpacity(0.2),
         border: Border(
       top: BorderSide(
         color: AppConstants.grey600,
@@ -105,8 +105,11 @@ Widget orderSummary(List<FoodBox> boxes) {
       padding: EdgeInsets.only(
         top: SizeConfig.scaledHeight(1.3),
       ),
-      itemCount: boxes.length,
+      itemCount: uniqueItems.length,
       itemBuilder: (_, index) {
+        final boxQuantity = ref.read(
+          numberOfBoxesProvider(uniqueItems.elementAt(index).id),
+        );
         return Column(
           children: [
             Row(
@@ -124,7 +127,7 @@ Widget orderSummary(List<FoodBox> boxes) {
                     color: AppConstants.grey400,
                   ),
                   child: Text(
-                    "3",
+                    boxQuantity.toString(),
                     style: TextStyle(
                       fontSize: SizeConfig.scaledHeight(1.75),
                       fontWeight: FontWeight.w500,
@@ -137,14 +140,14 @@ Widget orderSummary(List<FoodBox> boxes) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        boxes[index].name,
+                        uniqueItems.elementAt(index).name,
                         style: TextStyle(
                           fontSize: SizeConfig.scaledHeight(2),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
-                        boxes[index].description,
+                        uniqueItems.elementAt(index).description,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: AppConstants.grey600,
@@ -156,7 +159,7 @@ Widget orderSummary(List<FoodBox> boxes) {
                 ),
                 Expanded(
                   child: Text(
-                    "\$${boxes[index].price}",
+                    "\$${uniqueItems.elementAt(index).price * boxQuantity}",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppConstants.grey800,

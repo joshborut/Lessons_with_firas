@@ -34,6 +34,38 @@ class TicketsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ticketList = ref.watch(ticketListProvider);
+    if (ticketList.isEmpty) {
+      return Center(
+        child: Container(
+          height: SizeConfig.scaledHeight(14),
+          width: SizeConfig.scaledWidth(75),
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.scaledWidth(10),
+          ),
+          margin: EdgeInsets.only(
+            top: SizeConfig.scaledHeight(5),
+          ),
+          decoration: BoxDecoration(
+            borderRadius: AppConstants.circleRadius,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary,
+              width: 2,
+            ),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            "No active tickets. Please visit the schedule page to place an order.",
+            style: TextStyle(
+              fontSize: SizeConfig.scaledHeight(2.5),
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+    // TODO: Make it such that tickets of the same kind for the same date combine (e.g. Large Box x4)
     return ListView.builder(
       padding: EdgeInsets.only(
         top: SizeConfig.scaledHeight(10),

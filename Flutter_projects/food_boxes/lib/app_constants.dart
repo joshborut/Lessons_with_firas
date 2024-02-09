@@ -12,6 +12,8 @@ class AppConstants {
 
   static const circleRadius = BorderRadius.all(Radius.circular(20));
 
+  static const maxBoxQuantity = 99;
+
   static const List<String> ticketImages = [
     "assets/images/dark_veggies.jpg",
     "assets/images/light_veggies.jpg",

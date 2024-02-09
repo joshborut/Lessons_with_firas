@@ -43,6 +43,7 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
     return Card(
       color: Theme.of(context).colorScheme.background,
       elevation: 0,
+      // TODO: Use a combination of containers and rows to create our own list tile
       child: ListTile(
         visualDensity: VisualDensity(vertical: 3), // to expand
         onTap: boxQuantity != 0
@@ -74,7 +75,7 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
         trailing: Column(
           children: [
             GestureDetector(
-              onTap: boxQuantity == 99
+              onTap: boxQuantity == AppConstants.maxBoxQuantity
                   ? null
                   : () {
                       if (boxQuantity == 0) {
@@ -115,16 +116,20 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                if (boxQuantity == 1) {
-                  setState(() => tileBgColor = AppConstants.grey500);
-                }
-                if (boxQuantity >= 1) {
-                  ref.read(selectedBoxesProvider.notifier).update((state) => [
-                        ...state..remove(widget.passedBox),
-                      ]);
-                }
-              },
+              onTap: boxQuantity == 0
+                  ? null
+                  : () {
+                      if (boxQuantity == 1) {
+                        setState(() => tileBgColor = AppConstants.grey500);
+                      }
+                      if (boxQuantity >= 1) {
+                        ref.read(selectedBoxesProvider.notifier).update(
+                              (state) => [
+                                ...state..remove(widget.passedBox),
+                              ],
+                            );
+                      }
+                    },
               child: Icon(
                 Icons.remove,
                 size: SizeConfig.scaledHeight(2.5),

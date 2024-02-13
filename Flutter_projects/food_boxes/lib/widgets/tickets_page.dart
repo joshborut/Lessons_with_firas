@@ -34,6 +34,7 @@ class TicketsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ticketList = ref.watch(ticketListProvider);
+    final uniqueTickets = Set.from(ticketList);
     if (ticketList.isEmpty) {
       return Center(
         child: Container(
@@ -65,13 +66,15 @@ class TicketsPage extends ConsumerWidget {
         ),
       );
     }
-    // TODO: Make it such that tickets of the same kind for the same date combine (e.g. Large Box x4)
     return ListView.builder(
       padding: EdgeInsets.only(
         top: SizeConfig.scaledHeight(10),
       ),
-      itemCount: ticketList.length,
+      itemCount: uniqueTickets.length,
       itemBuilder: (_, index) {
+        final ticketQuantity = ref.read(
+          numberOfTicketsProvider(uniqueTickets.elementAt(index).id),
+        );
         return GestureDetector(
           onTap: () => orderDetailsDialogue(
             ref,
@@ -114,7 +117,7 @@ class TicketsPage extends ConsumerWidget {
                       ),
                       color: Colors.black54,
                       child: Text(
-                        ticketList[index].name,
+                        "${ticketList[index].name} x${ticketQuantity}",
                         style: TextStyle(
                           fontSize: SizeConfig.scaledHeight(3.5),
                           color: Colors.white,
@@ -138,7 +141,7 @@ class TicketsPage extends ConsumerWidget {
                     ),
                     innerRow(
                       Icons.attach_money,
-                      "${ticketList[index].price}",
+                      "${ticketList[index].price * ticketQuantity}",
                     ),
                   ],
                 ),

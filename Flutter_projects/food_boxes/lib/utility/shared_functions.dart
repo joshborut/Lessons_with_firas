@@ -22,6 +22,7 @@ void orderDetailsDialogue(
   required String orderNumber,
   String? orderDetails,
 }) {
+  // TODO: Finish exit button
   showDialog(
     context: ref.context,
     builder: (BuildContext ctx) {
@@ -33,53 +34,17 @@ void orderDetailsDialogue(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
+            IconButton(
+              onPressed: () {},
               padding: EdgeInsets.only(
-                top: SizeConfig.scaledHeight(4),
+                top: SizeConfig.scaledHeight(1),
+                left: SizeConfig.scaledWidth(66),
+                bottom: SizeConfig.scaledHeight(1),
               ),
-              child: Text(
-                "Order Number: #$orderNumber",
-                style: TextStyle(
-                  fontSize: SizeConfig.scaledHeight(4),
-                ),
-              ),
-            ),
-            QrImageView(
-              padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.scaledHeight(4),
-                horizontal: SizeConfig.scaledWidth(6),
-              ),
-              data: orderDetails ?? "Not available",
-              version: QrVersions.auto,
-              size: SizeConfig.scaledHeight(30),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.scaledHeight(3),
-              ),
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[700],
-                ),
-                onPressed: () async {
-                  final cancelOrder = await yesNoDialogue(ref.context,
-                          "Canceling an order is permanent and irreversible") ??
-                      false;
-                  if (cancelOrder) {
-                    ref.read(ticketListProvider.notifier).update((state) =>
-                        [...state..removeAt(int.parse(orderNumber) - 1)]);
-                  }
-                  if (ctx.mounted) {
-                    Navigator.of(ref.context).pop();
-                  }
-                },
-                child: Text(
-                  "Cancel Order",
-                  style: TextStyle(
-                    fontSize: SizeConfig.scaledHeight(2),
-                  ),
-                ),
+              icon: Icon(
+                Icons.close_rounded,
+                size: SizeConfig.scaledHeight(4),
+                color: Colors.red[700],
               ),
             ),
           ],

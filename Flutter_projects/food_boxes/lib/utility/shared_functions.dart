@@ -1,11 +1,12 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:math';
 
 import '../app_constants.dart';
 import '../model/food_box.dart';
@@ -22,7 +23,6 @@ void orderDetailsDialogue(
   required String orderNumber,
   String? orderDetails,
 }) {
-  // TODO: Finish exit button
   showDialog(
     context: ref.context,
     builder: (BuildContext ctx) {
@@ -34,17 +34,89 @@ void orderDetailsDialogue(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              onPressed: () {},
+            Padding(
               padding: EdgeInsets.only(
-                top: SizeConfig.scaledHeight(1),
-                left: SizeConfig.scaledWidth(66),
-                bottom: SizeConfig.scaledHeight(1),
+                top: SizeConfig.scaledHeight(2),
               ),
-              icon: Icon(
-                Icons.close_rounded,
-                size: SizeConfig.scaledHeight(4),
-                color: Colors.red[700],
+              child: Text(
+                "Order Number: #$orderNumber",
+                style: TextStyle(
+                  fontSize: SizeConfig.scaledHeight(3.5),
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ),
+            QrImageView(
+              padding: EdgeInsets.only(
+                top: SizeConfig.scaledHeight(3),
+                bottom: SizeConfig.scaledHeight(3),
+                left: SizeConfig.scaledWidth(3.5),
+              ),
+              data: orderDetails ?? "Not available",
+              version: QrVersions.auto,
+              size: SizeConfig.scaledHeight(25),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.scaledHeight(2),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: SizeConfig.scaledWidth(25),
+                    height: SizeConfig.scaledHeight(5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(ref.context).colorScheme.primary,
+                      ),
+                      onPressed: () => Navigator.of(ref.context).pop(),
+                      child: Text(
+                        "Back",
+                        style: TextStyle(
+                            fontSize: SizeConfig.scaledHeight(2),
+                            color: Theme.of(ref.context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.scaledWidth(10),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.scaledWidth(25),
+                    height: SizeConfig.scaledHeight(5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(ref.context).colorScheme.primary,
+                      ),
+                      onPressed: () async {
+                        final cancelOrder = await yesNoDialogue(ref.context,
+                                "Canceling an order is permanent and irreversible") ??
+                            false;
+                        if (cancelOrder) {
+                          ref.read(ticketListProvider.notifier).update(
+                              (state) => [
+                                    ...state
+                                      ..removeAt(int.parse(orderNumber) - 1)
+                                  ]);
+                        }
+                        if (ctx.mounted) {
+                          Navigator.of(ref.context).pop();
+                        }
+                      },
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(
+                            fontSize: SizeConfig.scaledHeight(2),
+                            color: Theme.of(ref.context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

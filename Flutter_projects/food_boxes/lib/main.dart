@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 
-import 'routes.dart';
 import 'app_constants.dart';
 import 'firebase_options.dart';
-import 'screens/home_screen.dart';
+import 'routes.dart';
 import 'screens/auth_screen.dart';
-import 'utility/user_info_box.dart';
+import 'screens/home_screen.dart';
 import 'utility/size_config.dart';
+import 'utility/user_info_box.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

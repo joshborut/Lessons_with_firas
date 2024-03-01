@@ -117,7 +117,7 @@ class TicketsPage extends ConsumerWidget {
                       ),
                       color: Colors.black54,
                       child: Text(
-                        "${ticketList[index].name} x${ticketQuantity}",
+                        "${ticketList[index].name} x$ticketQuantity",
                         style: TextStyle(
                           fontSize: SizeConfig.scaledHeight(3.5),
                           color: Colors.white,

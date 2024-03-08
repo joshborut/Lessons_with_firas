@@ -27,10 +27,18 @@ class _AccountPageState extends ConsumerState<AccountPage> {
 
   @override
   void initState() {
+    super.initState();
     _firstNameController.text = ref.read(firstNameProvider);
     _lastNameController.text = ref.read(lastNameProvider);
     _ageController.text = ref.read(ageProvider);
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _ageController.dispose();
+    super.dispose();
   }
 
   void _submitFormData() async {
@@ -143,9 +151,10 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                           _ageController.clear();
                         }),
                     SmallListTile(
-                        icon: Icons.save,
-                        text: "Save",
-                        function: _submitFormData),
+                      icon: Icons.save,
+                      text: "Save",
+                      function: _submitFormData,
+                    ),
                   ],
                 ),
               ),

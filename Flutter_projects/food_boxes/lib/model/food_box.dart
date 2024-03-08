@@ -19,3 +19,15 @@ class FoodBox {
   final String? imageURL;
   late final String id;
 }
+
+// class ExampleBoxes {
+//   factory ProdHttpClient() => _instance;
+
+//   ProdHttpClient._internal();
+
+//   static final _instance = ProdHttpClient._internal();
+
+//   final Client client = Client();
+
+//   void close() => client.close();
+// }

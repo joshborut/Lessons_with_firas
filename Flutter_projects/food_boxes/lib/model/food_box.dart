@@ -20,14 +20,12 @@ class FoodBox {
   late final String id;
 }
 
-// class ExampleBoxes {
-//   factory ProdHttpClient() => _instance;
+class ExampleBoxes {
+  factory ExampleBoxes() {
+    return _instance;
+  }
 
-//   ProdHttpClient._internal();
+  ExampleBoxes._internal();
 
-//   static final _instance = ProdHttpClient._internal();
-
-//   final Client client = Client();
-
-//   void close() => client.close();
-// }
+  static final _instance = ExampleBoxes._internal();
+}

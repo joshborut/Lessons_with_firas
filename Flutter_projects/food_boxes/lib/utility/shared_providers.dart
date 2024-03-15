@@ -31,16 +31,9 @@ final lastNameProvider = StateProvider<String>((ref) => "");
 
 final ageProvider = StateProvider<String>((ref) => "");
 
-final ticketListProvider = StateProvider<List<FoodBox>>((ref) => []);
-
 final selectedBoxesProvider = StateProvider<List<FoodBox>>((ref) => []);
 
 final numberOfBoxesProvider = Provider.family<int, String>((ref, id) {
   final selectedBoxes = ref.watch(selectedBoxesProvider);
   return selectedBoxes.where((element) => element.id == id).length;
-});
-
-final numberOfTicketsProvider = Provider.family<int, String>((ref, id) {
-  final ticketList = ref.watch(ticketListProvider);
-  return ticketList.where((element) => element.id == id).length;
 });

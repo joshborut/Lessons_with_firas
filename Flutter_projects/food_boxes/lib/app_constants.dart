@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_boxes/model/bottom_bar_items.dart';
 import 'package:food_boxes/widgets/account_page.dart';
 
+import 'model/food_box.dart';
 import 'widgets/schedule_page.dart';
 import 'widgets/tickets_page.dart';
 
@@ -22,6 +23,27 @@ class AppConstants {
     "assets/images/veggie_plates.jpg",
     "assets/images/veggie_scale.jpg",
     "assets/images/veggies_on_table.jpg",
+  ];
+
+  static final exampleBoxes = [
+    FoodBox(
+      name: "Large Box",
+      price: 20.00,
+      date: DateTime(2023, 12, 10),
+      description: "This is a large box of veggies",
+    ),
+    FoodBox(
+      name: "Medium Box",
+      price: 15.00,
+      date: DateTime(2023, 12, 10),
+      description: "This is a medium box of veggies",
+    ),
+    FoodBox(
+      name: "Small Box",
+      price: 10.00,
+      date: DateTime(2023, 12, 10),
+      description: "This is a small box of veggies",
+    )
   ];
 
   static const grey100 = Color(0xFFF5F5F5);

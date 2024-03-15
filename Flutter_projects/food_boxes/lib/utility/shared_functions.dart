@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
+import 'package:food_boxes/utility/ticket_list_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -97,11 +98,9 @@ void orderDetailsDialogue(
                                 "Canceling an order is permanent and irreversible") ??
                             false;
                         if (cancelOrder) {
-                          ref.read(ticketListProvider.notifier).update(
-                              (state) => [
-                                    ...state
-                                      ..removeAt(int.parse(orderNumber) - 1)
-                                  ]);
+                          ref
+                              .read(ticketListProvider.notifier)
+                              .removeElement(orderNumber);
                         }
                         if (ctx.mounted) {
                           Navigator.of(ref.context).pop();
@@ -303,26 +302,7 @@ String formatDate(DateTime time) {
 
 List<FoodBox> getDateBoxes(DateTime day) {
   if (day.day == 10) {
-    return [
-      FoodBox(
-        name: "Large Box",
-        price: 20.00,
-        date: DateTime(2023, 12, 10),
-        description: "This is a large box of veggies",
-      ),
-      FoodBox(
-        name: "Medium Box",
-        price: 15.00,
-        date: DateTime(2023, 12, 10),
-        description: "This is a medium box of veggies",
-      ),
-      FoodBox(
-        name: "Small Box",
-        price: 10.00,
-        date: DateTime(2023, 12, 10),
-        description: "This is a small box of veggies",
-      )
-    ];
+    return AppConstants.exampleBoxes;
   } else {
     return [];
   }

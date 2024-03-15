@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/app_constants.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
-import 'package:food_boxes/utility/shared_providers.dart';
 
 import '../app_icons.dart';
 import '../utility/size_config.dart';
+import '../utility/ticket_list_notifier.dart';
 
 class TicketsPage extends ConsumerWidget {
   const TicketsPage({super.key});
@@ -72,9 +72,9 @@ class TicketsPage extends ConsumerWidget {
       ),
       itemCount: uniqueTickets.length,
       itemBuilder: (_, index) {
-        final ticketQuantity = ref.read(
-          numberOfTicketsProvider(uniqueTickets.elementAt(index).id),
-        );
+        final ticketQuantity = ref
+            .read(ticketListProvider.notifier)
+            .getNumberOfTickets(uniqueTickets.elementAt(index).id);
         return GestureDetector(
           onTap: () => orderDetailsDialogue(
             ref,

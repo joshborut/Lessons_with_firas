@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/food_box.dart';
-import 'shared_providers.dart';
+import 'box_list_notifier.dart';
 
 final ticketListProvider =
     NotifierProvider<TicketListNotifier, List<FoodBox>>(TicketListNotifier.new);

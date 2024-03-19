@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_boxes/utility/shared_providers.dart';
+import 'package:food_boxes/utility/box_list_notifier.dart';
 import 'package:food_boxes/utility/ticket_list_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -143,9 +143,9 @@ Widget orderSummary(WidgetRef ref, List<FoodBox> boxes) {
       ),
       itemCount: uniqueItems.length,
       itemBuilder: (_, index) {
-        final boxQuantity = ref.read(
-          numberOfBoxesProvider(uniqueItems.elementAt(index).id),
-        );
+        final boxQuantity = ref
+            .read(selectedBoxesProvider.notifier)
+            .getNumberOfBoxes(uniqueItems.elementAt(index).id);
         return Column(
           children: [
             Row(

@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/food_box.dart';
-
 final intializeMainProviders = Provider.autoDispose(
   (ref) async {
     final user = FirebaseAuth.instance.currentUser;
@@ -30,10 +28,3 @@ final firstNameProvider = StateProvider<String>((ref) => "");
 final lastNameProvider = StateProvider<String>((ref) => "");
 
 final ageProvider = StateProvider<String>((ref) => "");
-
-final selectedBoxesProvider = StateProvider<List<FoodBox>>((ref) => []);
-
-final numberOfBoxesProvider = Provider.family<int, String>((ref, id) {
-  final selectedBoxes = ref.watch(selectedBoxesProvider);
-  return selectedBoxes.where((element) => element.id == id).length;
-});

@@ -4,8 +4,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../app_constants.dart';
 import '../model/food_box.dart';
+import '../utility/box_list_notifier.dart';
 import '../utility/shared_functions.dart';
-import '../utility/shared_providers.dart';
 import '../utility/size_config.dart';
 import '../utility/ticket_list_notifier.dart';
 import 'food_box_tile.dart';
@@ -43,7 +43,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
             return day == _selectedDay;
           },
           onDaySelected: (selectedDay, focusedDay) {
-            ref.read(selectedBoxesProvider.notifier).state = [];
+            ref.read(selectedBoxesProvider.notifier).clearList();
             setState(() {
               _selectedDay = selectedDay;
               _foodBoxes = getDateBoxes(_selectedDay);
@@ -132,7 +132,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                       false;
                   if (orderConfirmed) {
                     ref.read(ticketListProvider.notifier).updateList();
-                    ref.read(selectedBoxesProvider.notifier).state = [];
+                    ref.read(selectedBoxesProvider.notifier).clearList();
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         messegeSnackBar("Ticket successfully created."),

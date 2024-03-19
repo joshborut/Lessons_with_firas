@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_constants.dart';
 import '../model/food_box.dart';
-import '../utility/shared_providers.dart';
+import '../utility/box_list_notifier.dart';
 import '../utility/size_config.dart';
 
 class FoodBoxTile extends ConsumerStatefulWidget {
@@ -39,7 +39,9 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
 
   @override
   Widget build(BuildContext context) {
-    final boxQuantity = ref.watch(numberOfBoxesProvider(widget.passedBox.id));
+    final boxQuantity = ref
+        .watch(selectedBoxesProvider.notifier)
+        .getNumberOfBoxes(widget.passedBox.id);
     return Card(
       color: tileBgColor,
       shape: RoundedRectangleBorder(
@@ -52,10 +54,9 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
             onTap: boxQuantity != 0
                 ? null
                 : () {
-                    ref.read(selectedBoxesProvider.notifier).update((state) => [
-                          ...state,
+                    ref.read(selectedBoxesProvider.notifier).updateList(
                           widget.passedBox,
-                        ]);
+                        );
                     setState(
                       () => tileBgColor = Theme.of(context).colorScheme.primary,
                     );
@@ -107,12 +108,9 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
                                 Theme.of(context).colorScheme.primary,
                           );
                         }
-                        ref
-                            .read(selectedBoxesProvider.notifier)
-                            .update((state) => [
-                                  ...state,
-                                  widget.passedBox,
-                                ]);
+                        ref.read(selectedBoxesProvider.notifier).updateList(
+                              widget.passedBox,
+                            );
                       },
                 child: Icon(
                   Icons.add,
@@ -147,11 +145,9 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
                           setState(() => tileBgColor = AppConstants.grey500);
                         }
                         if (boxQuantity >= 1) {
-                          ref.read(selectedBoxesProvider.notifier).update(
-                                (state) => [
-                                  ...state..remove(widget.passedBox),
-                                ],
-                              );
+                          ref
+                              .read(selectedBoxesProvider.notifier)
+                              .removeBox(widget.passedBox);
                         }
                       },
                 child: Icon(

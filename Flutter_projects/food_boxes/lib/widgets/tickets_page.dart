@@ -101,7 +101,8 @@ class TicketsPage extends ConsumerWidget {
                         topRight: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(ticketList[index].imageURL!),
+                        image: AssetImage(
+                            uniqueTickets.elementAt(index).imageURL!),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -117,7 +118,7 @@ class TicketsPage extends ConsumerWidget {
                       ),
                       color: Colors.black54,
                       child: Text(
-                        "${ticketList[index].name} x$ticketQuantity",
+                        "${uniqueTickets.elementAt(index).name} x$ticketQuantity",
                         style: TextStyle(
                           fontSize: SizeConfig.scaledHeight(3.5),
                           color: Colors.white,

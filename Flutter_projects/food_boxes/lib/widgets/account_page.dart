@@ -174,8 +174,13 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                   Icons.arrow_forward_ios_rounded,
                   size: SizeConfig.scaledHeight(2),
                 ),
-                onTap: () {
-                  FirebaseAuth.instance.signOut();
+                onTap: () async {
+                  final confirmLogout = await yesNoDialogue(context,
+                          "You will have to log back in with your username and password.") ??
+                      false;
+                  if (confirmLogout) {
+                    FirebaseAuth.instance.signOut();
+                  }
                 },
               ),
               Padding(

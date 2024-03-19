@@ -2,31 +2,33 @@ import 'package:food_boxes/app_constants.dart';
 import 'package:hive/hive.dart';
 
 class PreferenceBox {
-  static const _confirmCancellationToggle = "confirmCancellationToggleKey";
+  static const _confirmLogoutToggle = "confirmLogoutToggleKey";
 
-  static late final Box<dynamic> _box;
+  late final Box<dynamic> _box;
 
-  PreferenceBox() {
-    _box = Hive.box<dynamic>(AppConstants.boxName);
+  PreferenceBox._(this._box);
+
+  static PreferenceBox getInstance() {
+    final box = Hive.box(AppConstants.boxName);
+    return PreferenceBox._(box);
   }
 
-  static T _getValue<T>(dynamic key) => _box.get(key) as T;
+  T _getValue<T>(dynamic key) => _box.get(key) as T;
 
-  static Future<void> _setValue<T>(dynamic key, T value) =>
-      _box.put(key, value);
+  Future<void> _setValue<T>(dynamic key, T value) => _box.put(key, value);
 
   // Setters
 
-  static Future<void> setConfirmCancellationToggle(bool value) {
-    return _setValue(_confirmCancellationToggle, value);
+  Future<void> setConfirmLogoutToggle(bool value) {
+    return _setValue(_confirmLogoutToggle, value);
   }
 
   // Getters
 
-  static bool getConfirmCancellationToggle() {
-    if (_getValue(_confirmCancellationToggle) == null) {
+  bool getConfirmLogoutToggle() {
+    if (_getValue(_confirmLogoutToggle) == null) {
       return false;
     }
-    return _getValue<bool>(_confirmCancellationToggle);
+    return _getValue<bool>(_confirmLogoutToggle);
   }
 }

@@ -11,13 +11,11 @@ import 'routes.dart';
 import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'utility/size_config.dart';
-import 'utility/preference_box.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox(AppConstants.boxName);
-  PreferenceBox();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

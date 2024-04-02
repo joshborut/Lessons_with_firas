@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
+import 'package:food_boxes/widgets/text_check_box.dart';
 
 import '../app_constants.dart';
 import '../screens/reset_pw_screen.dart';
@@ -62,6 +63,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final hideLogoutDialogue = ref.watch(logoutToggleProvider);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
@@ -175,9 +177,14 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                   size: SizeConfig.scaledHeight(2),
                 ),
                 onTap: () async {
-                  final confirmLogout = await yesNoDialogue(context,
-                          "You will have to log back in with your username and password.") ??
-                      false;
+                  bool confirmLogout = true;
+                  if (!hideLogoutDialogue) {
+                    confirmLogout = await yesNoDialogue(
+                            context,
+                            "You will have to log back in with your username and password.",
+                            TextCheckBox(provider: logoutToggleProvider)) ??
+                        false;
+                  }
                   if (confirmLogout) {
                     FirebaseAuth.instance.signOut();
                   }

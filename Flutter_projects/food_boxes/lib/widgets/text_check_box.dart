@@ -20,17 +20,15 @@ class TextCheckBox extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "Don't ask me again.",
-            style: TextStyle(
-              fontSize: SizeConfig.scaledHeight(2.75),
-            ),
-          ),
+          Text("Don't ask me again:",
+              style: Theme.of(context).textTheme.bodySmall),
           Material(
             color: Colors.transparent,
             child: Checkbox(
-              value: !showAlert,
-              onChanged: (value) {
+              activeColor: Theme.of(context).colorScheme.primary,
+              value: showAlert,
+              onChanged: (bool? value) {
+                print("value is $value");
                 ref.read(provider.notifier).state = value!;
                 PreferenceBox.getInstance().setConfirmLogoutToggle(value);
               },

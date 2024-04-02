@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_boxes/utility/preference_box.dart';
 
 final intializeMainProviders = Provider.autoDispose(
   (ref) async {
@@ -26,5 +27,8 @@ final currentUserProvider = StateProvider<User?>((ref) => null);
 final firstNameProvider = StateProvider<String>((ref) => "");
 
 final lastNameProvider = StateProvider<String>((ref) => "");
+
+final logoutToggleProvider = StateProvider<bool>(
+    (ref) => PreferenceBox.getInstance().getConfirmLogoutToggle());
 
 final ageProvider = StateProvider<String>((ref) => "");

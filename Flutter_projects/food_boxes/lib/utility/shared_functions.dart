@@ -195,7 +195,8 @@ Widget orderSummary(WidgetRef ref, List<FoodBox> boxes) {
                 ),
                 Expanded(
                   child: Text(
-                    "\$${uniqueItems.elementAt(index).price * boxQuantity}",
+                    (uniqueItems.elementAt(index).price * boxQuantity)
+                        .toStringAsFixed(2),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppConstants.grey800,
@@ -296,16 +297,14 @@ SnackBar messegeSnackBar(String messege, {int? timeUp = 1000}) {
 }
 
 String formatDate(DateTime time) {
-  final dateFormater = DateFormat('dd/MM/yyyy');
+  final dateFormater = DateFormat('MM/dd/yyyy');
   return dateFormater.format(time);
 }
 
-List<FoodBox> getDateBoxes(DateTime day) {
-  if (day.day == 10) {
-    return AppConstants.exampleBoxes;
-  } else {
-    return [];
-  }
+List<FoodBox> getDateBoxes(DateTime date) {
+  return AppConstants.exampleBoxes
+      .where((element) => element.date.day == date.day)
+      .toList();
 }
 
 Future<void> deleteAccount(BuildContext context) async {

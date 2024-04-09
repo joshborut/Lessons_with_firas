@@ -43,6 +43,18 @@ class AppConstants {
       price: 10.00,
       date: DateTime(2023, 12, 10),
       description: "This is a small box of veggies",
+    ),
+    FoodBox(
+      name: "Small Box",
+      price: 10.00,
+      date: DateTime(2023, 12, 14),
+      description: "This is a small box of veggies",
+    ),
+    FoodBox(
+      name: "Medium Box",
+      price: 15.00,
+      date: DateTime(2023, 12, 14),
+      description: "This is a medium box of veggies",
     )
   ];
 

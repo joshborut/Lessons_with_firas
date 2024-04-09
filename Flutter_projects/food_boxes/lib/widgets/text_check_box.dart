@@ -28,7 +28,6 @@ class TextCheckBox extends ConsumerWidget {
               activeColor: Theme.of(context).colorScheme.primary,
               value: showAlert,
               onChanged: (bool? value) {
-                print("value is $value");
                 ref.read(provider.notifier).state = value!;
                 PreferenceBox.getInstance().setConfirmLogoutToggle(value);
               },

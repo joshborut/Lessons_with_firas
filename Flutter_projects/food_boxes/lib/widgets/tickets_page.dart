@@ -142,7 +142,8 @@ class TicketsPage extends ConsumerWidget {
                     ),
                     innerRow(
                       Icons.attach_money,
-                      "${ticketList[index].price * ticketQuantity}",
+                      (ticketList[index].price * ticketQuantity)
+                          .toStringAsFixed(2),
                     ),
                   ],
                 ),

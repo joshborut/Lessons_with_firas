@@ -43,7 +43,7 @@ class _FoodBoxTileState extends ConsumerState<FoodBoxTile> {
         .watch(selectedBoxesProvider.notifier)
         .getNumberOfBoxes(widget.passedBox.id);
     return Card(
-      color: tileBgColor,
+      color: boxQuantity <= 0 ? AppConstants.grey500 : tileBgColor,
       shape: RoundedRectangleBorder(
         borderRadius: AppConstants.circleRadius,
       ),

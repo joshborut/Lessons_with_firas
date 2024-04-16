@@ -27,32 +27,32 @@ class AppConstants {
 
   static final exampleBoxes = [
     FoodBox(
-      name: "Large Box",
-      price: 20.00,
-      date: DateTime(2023, 12, 10),
-      description: "This is a large box of veggies",
-    ),
-    FoodBox(
-      name: "Medium Box",
-      price: 15.00,
-      date: DateTime(2023, 12, 10),
-      description: "This is a medium box of veggies",
-    ),
-    FoodBox(
       name: "Small Box",
       price: 10.00,
       date: DateTime(2023, 12, 10),
       description: "This is a small box of veggies",
     ),
     FoodBox(
+      name: "Medium Box",
+      price: 20.00,
+      date: DateTime(2023, 12, 10),
+      description: "This is a medium box of veggies",
+    ),
+    FoodBox(
+      name: "Large Box",
+      price: 30.00,
+      date: DateTime(2023, 12, 10),
+      description: "This is a large box of veggies",
+    ),
+    FoodBox(
       name: "Small Box",
-      price: 10.00,
+      price: 14.00,
       date: DateTime(2023, 12, 14),
       description: "This is a small box of veggies",
     ),
     FoodBox(
       name: "Medium Box",
-      price: 15.00,
+      price: 24.00,
       date: DateTime(2023, 12, 14),
       description: "This is a medium box of veggies",
     )

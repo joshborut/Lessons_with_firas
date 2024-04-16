@@ -89,66 +89,68 @@ class TicketsPage extends ConsumerWidget {
               vertical: SizeConfig.scaledHeight(1.5),
               horizontal: SizeConfig.scaledWidth(3),
             ),
-            child: Column(children: [
-              Stack(
-                children: [
-                  Container(
-                    height: SizeConfig.scaledHeight(30),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage(
-                            uniqueTickets.elementAt(index).imageURL!),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: SizeConfig.scaledHeight(2),
-                    right: SizeConfig.scaledWidth(1),
-                    child: Container(
-                      width: SizeConfig.scaledWidth(70),
-                      padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.scaledHeight(1),
-                        horizontal: SizeConfig.scaledWidth(1.5),
-                      ),
-                      color: Colors.black54,
-                      child: Text(
-                        "${uniqueTickets.elementAt(index).name} x$ticketQuantity",
-                        style: TextStyle(
-                          fontSize: SizeConfig.scaledHeight(3.5),
-                          color: Colors.white,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: SizeConfig.scaledHeight(30),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              uniqueTickets.elementAt(index).imageURL!),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.scaledHeight(3),
-                  horizontal: SizeConfig.scaledWidth(5),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    innerRow(
-                      AppIcons.calendar,
-                      formatDate(ticketList[index].date),
-                    ),
-                    innerRow(
-                      Icons.attach_money,
-                      (ticketList[index].price * ticketQuantity)
-                          .toStringAsFixed(2),
-                    ),
+                    Positioned(
+                      bottom: SizeConfig.scaledHeight(2),
+                      right: SizeConfig.scaledWidth(1),
+                      child: Container(
+                        width: SizeConfig.scaledWidth(70),
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.scaledHeight(1),
+                          horizontal: SizeConfig.scaledWidth(1.5),
+                        ),
+                        color: Colors.black54,
+                        child: Text(
+                          "${uniqueTickets.elementAt(index).name} x$ticketQuantity",
+                          style: TextStyle(
+                            fontSize: SizeConfig.scaledHeight(3.5),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
-              )
-            ]),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.scaledHeight(3),
+                    horizontal: SizeConfig.scaledWidth(5),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      innerRow(
+                        AppIcons.calendar,
+                        formatDate(uniqueTickets.elementAt(index).date),
+                      ),
+                      innerRow(
+                        Icons.attach_money,
+                        (uniqueTickets.elementAt(index).price * ticketQuantity)
+                            .toStringAsFixed(2),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },

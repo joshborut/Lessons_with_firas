@@ -7,7 +7,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import 'app_constants.dart';
 import 'firebase_options.dart';
-import 'routes.dart';
+import 'app_router.dart';
 import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'utility/size_config.dart';
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
           return AuthenticationScreen();
         },
       ),
-      onGenerateRoute: generateRoute,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }

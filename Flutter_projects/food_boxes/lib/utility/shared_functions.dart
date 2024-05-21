@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/box_list_notifier.dart';
 import 'package:food_boxes/utility/ticket_list_notifier.dart';
+import 'package:food_boxes/widgets/stylized_txt_container.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -37,25 +38,25 @@ void orderDetailsDialogue(
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: SizeConfig.scaledHeight(2),
+                top: SizeConfig.scaledHeight(2.5),
               ),
               child: Text(
                 "Order Number: #$orderNumber",
                 style: TextStyle(
-                  fontSize: SizeConfig.scaledHeight(3.5),
+                  fontSize: SizeConfig.scaledHeight(2.8),
                   fontWeight: FontWeight.w300,
                 ),
               ),
             ),
             QrImageView(
               padding: EdgeInsets.only(
-                top: SizeConfig.scaledHeight(3),
-                bottom: SizeConfig.scaledHeight(3),
-                left: SizeConfig.scaledWidth(3.5),
+                top: SizeConfig.scaledHeight(3.5),
+                bottom: SizeConfig.scaledHeight(3.5),
+                left: SizeConfig.scaledWidth(6),
               ),
               data: orderDetails ?? "Not available",
               version: QrVersions.auto,
-              size: SizeConfig.scaledHeight(25),
+              size: SizeConfig.scaledHeight(22),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -64,57 +65,26 @@ void orderDetailsDialogue(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: SizeConfig.scaledWidth(25),
-                    height: SizeConfig.scaledHeight(5),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(ref.context).colorScheme.primary,
-                      ),
-                      onPressed: () => Navigator.of(ref.context).pop(),
-                      child: Text(
-                        "Back",
-                        style: TextStyle(
-                            fontSize: SizeConfig.scaledHeight(2),
-                            color: Theme.of(ref.context).colorScheme.onPrimary),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                  StylizedTxtContainer(
+                    text: "Back",
+                    onTapFunction: () => Navigator.of(ref.context).pop(),
                   ),
-                  SizedBox(
-                    width: SizeConfig.scaledWidth(10),
-                  ),
-                  SizedBox(
-                    width: SizeConfig.scaledWidth(25),
-                    height: SizeConfig.scaledHeight(5),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(ref.context).colorScheme.primary,
-                      ),
-                      onPressed: () async {
-                        final cancelOrder = await yesNoDialogue(ref.context,
-                                "Canceling an order is permanent and irreversible") ??
-                            false;
-                        if (cancelOrder) {
-                          ref
-                              .read(ticketListProvider.notifier)
-                              .removeElement(orderNumber);
-                        }
-                        if (ctx.mounted) {
-                          Navigator.of(ref.context).pop();
-                        }
-                      },
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(
-                            fontSize: SizeConfig.scaledHeight(2),
-                            color: Theme.of(ref.context).colorScheme.onPrimary),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+                  StylizedTxtContainer(
+                    text: "Cancel",
+                    onTapFunction: () async {
+                      final cancelOrder = await yesNoDialogue(ref.context,
+                              "Canceling an order is permanent and irreversible") ??
+                          false;
+                      if (cancelOrder) {
+                        ref
+                            .read(ticketListProvider.notifier)
+                            .removeElement(orderNumber);
+                      }
+                      if (ctx.mounted) {
+                        Navigator.of(ref.context).pop();
+                      }
+                    },
+                  )
                 ],
               ),
             ),

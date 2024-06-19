@@ -8,10 +8,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void addNewTransaction() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (_) {
+        return Placeholder();
+      },
+    );
+  }
+
+  AppBar systemAppropriateAppBar() {
+    return AppBar(
+      title: Text("Personal Expenses"),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

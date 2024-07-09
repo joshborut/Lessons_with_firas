@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:personal_keep/widgets/custom_txt_form_field.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -19,6 +20,8 @@ class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   // Used to check multiple fields that make up a form
   final _formKey = GlobalKey<FormState>();
+  DateTime? _selectedDate;
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -34,17 +37,47 @@ class _NewTransactionState extends State<NewTransaction> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                // TODO: Finish widgets
                 CustomTxtFormField(
-                    validator: (value) {
-                      if (value.trim().isEmpty ||
-                          (double.parse(value.trim()) < 1 &&
-                              double.parse(value.trim()) > 0)) {
-                        return "Amount greater than zero.";
-                      }
-                      return null;
-                    },
-                    decorationLabel: "Amount"),
+                  controller: _titleController,
+                  validator: (value) {
+                    if (value.trim().isEmpty) {
+                      return "Please enter a title.";
+                    }
+                    return null;
+                  },
+                  decorationLabel: "Title",
+                ),
+                CustomTxtFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]'),
+                    ),
+                  ],
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  controller: _amountController,
+                  validator: (value) {
+                    if (value.trim().isEmpty ||
+                        (double.parse(value.trim()) < 1 &&
+                            double.parse(value.trim()) > 0)) {
+                      return "Amount greater than zero.";
+                    }
+                    return null;
+                  },
+                  decorationLabel: "Amount",
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 40, bottom: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(""),
+                      )
+                    ],
+                    // TODO: Finish the rest!
+                  ),
+                )
               ],
             ),
           ),

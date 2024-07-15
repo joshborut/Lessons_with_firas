@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:personal_keep/widgets/custom_txt_form_field.dart';
+import 'package:intl/intl.dart';
+
+import 'adaptive_button.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction({
@@ -72,12 +75,20 @@ class _NewTransactionState extends State<NewTransaction> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text(""),
-                      )
+                        child: Text(
+                          _selectedDate == null
+                              ? "No date chosen"
+                              : "Picked date: ${DateFormat.yMd().format(
+                                  _selectedDate!,
+                                )}",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ),
+                      AdaptiveButton(text: "Choose date", handler: () {})
                     ],
-                    // TODO: Finish the rest!
                   ),
-                )
+                ),
+                AdaptiveButton(text: "Add transaction", handler: () {})
               ],
             ),
           ),

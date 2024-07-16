@@ -98,7 +98,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
           Padding(
             padding: EdgeInsets.only(
               top: SizeConfig.scaledHeight(5),
-              bottom: SizeConfig.scaledHeight(1),
+              bottom: SizeConfig.scaledHeight(2),
             ),
             child: CustomTxtFormField(
               controller: _emailController,

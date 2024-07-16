@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_constants.dart';
+import '../utility/size_config.dart';
 
 class CustomTxtFormField extends StatefulWidget {
   const CustomTxtFormField({
@@ -76,6 +77,10 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyle(
+        fontSize: SizeConfig.scaledHeight(2.5),
+        fontWeight: FontWeight.w300,
+      ),
       inputFormatters: widget.inputFormatters,
       controller: widget.controller,
       focusNode: _focusNode,
@@ -91,10 +96,16 @@ class _CustomTxtFormFieldState extends State<CustomTxtFormField> {
       },
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: SizeConfig.scaledHeight(2),
+          horizontal: SizeConfig.scaledWidth(2),
+        ),
         labelText:
             _focused && widget.hideLabelOnFocus ? null : widget.decorationLabel,
         labelStyle: TextStyle(
           color: _focused ? widget.labelFocusColor : AppConstants.grey500,
+          fontSize: SizeConfig.scaledHeight(2.5),
+          fontWeight: FontWeight.w300,
         ),
         errorStyle: TextStyle(
           color: widget.errorLabelColor,

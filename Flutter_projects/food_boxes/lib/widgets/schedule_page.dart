@@ -142,7 +142,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                 }
               : null,
           child: Container(
-            width: SizeConfig.scaledWidth(30),
+            width: SizeConfig.scaledWidth(40),
             height: SizeConfig.scaledHeight(7),
             alignment: Alignment.center,
             decoration: BoxDecoration(

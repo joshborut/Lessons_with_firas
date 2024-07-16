@@ -88,7 +88,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.scaledHeight(1),
+                  vertical: SizeConfig.scaledHeight(2),
                 ),
                 child: CustomTxtFormField(
                   controller: _firstNameController,
@@ -117,7 +117,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.scaledHeight(1),
+                  vertical: SizeConfig.scaledHeight(2),
                 ),
                 child: CustomTxtFormField(
                   controller: _ageController,
@@ -170,6 +170,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                   "Logout",
                   style: TextStyle(
                     fontSize: SizeConfig.scaledHeight(2),
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 trailing: Icon(
@@ -192,7 +193,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.scaledHeight(1),
+                  vertical: SizeConfig.scaledHeight(2),
                 ),
                 child: ListTile(
                   tileColor: Theme.of(context).colorScheme.primary,
@@ -204,6 +205,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                     "Reset Password",
                     style: TextStyle(
                       fontSize: SizeConfig.scaledHeight(2),
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                   trailing: Icon(
@@ -226,6 +228,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                   "Delete Account",
                   style: TextStyle(
                     fontSize: SizeConfig.scaledHeight(2),
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 trailing: Icon(

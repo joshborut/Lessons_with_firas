@@ -56,8 +56,8 @@ class _MyAppState extends State<MyApp> {
         ),
         textTheme: TextTheme(
           bodyLarge: TextStyle(
-            fontSize: SizeConfig.scaledHeight(5),
-            fontWeight: FontWeight.w900,
+            fontSize: SizeConfig.scaledHeight(4),
+            fontWeight: FontWeight.w700,
             color: Colors.black,
           ),
           bodyMedium: TextStyle(

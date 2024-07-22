@@ -13,12 +13,12 @@ class TicketCard extends ConsumerWidget {
     super.key,
     required this.uniqueTicket,
     required this.index,
-    this.ticketHeight = 42.0,
+    this.ticketHeightScale = 43,
   });
 
   final FoodBox uniqueTicket;
   final int index;
-  final double ticketHeight;
+  final double ticketHeightScale;
 
   Widget innerRow(IconData iconData, String text) {
     return Row(
@@ -48,7 +48,7 @@ class TicketCard extends ConsumerWidget {
         .read(ticketListProvider.notifier)
         .getNumberOfTickets(uniqueTicket.id);
     return SizedBox(
-      height: SizeConfig.scaledHeight(ticketHeight),
+      height: SizeConfig.scaledHeight(ticketHeightScale),
       width: SizeConfig.safeWidth,
       child: Card(
         shape: RoundedRectangleBorder(

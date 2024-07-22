@@ -33,7 +33,7 @@ class ExpandedOrderScreen extends ConsumerWidget {
             return TicketCard(
               uniqueTicket: foodBoxList[index],
               index: index,
-              ticketHeight: 45,
+              ticketHeightScale: 45,
             );
           },
         ),

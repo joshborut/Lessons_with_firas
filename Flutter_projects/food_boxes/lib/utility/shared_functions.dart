@@ -44,7 +44,7 @@ void orderDetailsDialogue(
                 "Order Number: #$orderNumber",
                 style: TextStyle(
                   fontSize: SizeConfig.scaledHeight(2.8),
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -204,7 +204,7 @@ Future<bool?> yesNoDialogue(BuildContext context, String messageToDisplay,
               "Are you sure?",
               style: TextStyle(
                 fontSize: SizeConfig.scaledHeight(2.75),
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),

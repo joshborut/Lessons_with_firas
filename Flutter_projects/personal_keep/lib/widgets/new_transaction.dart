@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:personal_keep/utils/shared_functions.dart';
 import 'package:personal_keep/widgets/custom_txt_form_field.dart';
 import 'package:intl/intl.dart';
 
@@ -10,8 +11,8 @@ class NewTransaction extends StatefulWidget {
     super.key,
     required this.function,
   });
-
-  final void Function() function;
+  // Takes title, amount, and date
+  final Function function;
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -24,6 +25,40 @@ class _NewTransactionState extends State<NewTransaction> {
   // Used to check multiple fields that make up a form
   final _formKey = GlobalKey<FormState>();
   DateTime? _selectedDate;
+
+  void _submitData() {
+    if (_formKey.currentState!.validate() == false) return;
+
+    if (_selectedDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        getSnackBar("Please select a date.", timeUp: 1000),
+      );
+      return;
+    }
+    final enteredAmount = double.parse(_amountController.text);
+    final title = _titleController.text;
+
+    widget.function(title, enteredAmount, _selectedDate);
+    Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(
+        Duration(days: 365),
+      ),
+      lastDate: DateTime.now(),
+    ).then(
+      (pickedDate) {
+        if (pickedDate == null) return;
+        setState(() {
+          _selectedDate = pickedDate;
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +119,17 @@ class _NewTransactionState extends State<NewTransaction> {
                           style: TextStyle(fontSize: 17),
                         ),
                       ),
-                      AdaptiveButton(text: "Choose date", handler: () {})
+                      AdaptiveButton(
+                        text: "Choose date",
+                        handler: _presentDatePicker,
+                      ),
                     ],
                   ),
                 ),
-                AdaptiveButton(text: "Add transaction", handler: () {})
+                AdaptiveButton(
+                  text: "Add transaction",
+                  handler: _submitData,
+                )
               ],
             ),
           ),

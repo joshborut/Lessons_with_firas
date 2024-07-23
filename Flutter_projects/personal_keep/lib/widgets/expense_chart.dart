@@ -18,6 +18,7 @@ class ExpenseChart extends StatelessWidget {
           totalSum += recentTransactions[i].amount;
         }
       }
+      // TODO: Complete this
       return {'amount': totalSum};
     });
   }

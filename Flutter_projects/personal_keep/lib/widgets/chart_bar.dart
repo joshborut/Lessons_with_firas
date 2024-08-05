@@ -11,6 +11,7 @@ class ChartBar extends StatelessWidget {
   final double spendingAmount;
   final double spendingPctOfTotal;
   final String label;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

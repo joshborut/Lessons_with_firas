@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/home_screen.dart';
+import 'utils/shared_functions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +13,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  AppBar _systemAppropriateAppBar(BuildContext context) {
+    return AppBar(
+      title: Text("Personal Expenses"),
+      actions: [
+        IconButton(
+          onPressed: () => addNewTxBottomSheet(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +33,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: Platform.isIOS
+          ? CupertinoPageScaffold(
+              // TODO: Make appbar
+              child: HomeScreen(),
+            )
+          : Scaffold(
+              appBar: _systemAppropriateAppBar(context),
+              body: HomeScreen(),
+            ),
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_keep/models/transaction.dart';
 import 'package:personal_keep/utils/shared_functions.dart';
 import 'package:personal_keep/widgets/expense_chart.dart';
-import 'package:personal_keep/widgets/new_transaction.dart';
 
 import '../app_constants.dart';
 import '../widgets/transaction_list.dart';
@@ -15,37 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _addNewTxBottomSheet() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (_) {
-        return NewTransaction(
-          function: (String title, double amount, DateTime chosenDate) {
-            final newTx = Transaction(
-              id: DateTime.now().toString(),
-              title: title,
-              amount: amount,
-              date: chosenDate,
-            );
-            setState(() => AppConstants.userTransactions.add(newTx));
-          },
-        );
-      },
-    );
-  }
-
-  AppBar _systemAppropriateAppBar() {
-    return AppBar(
-      title: Text("Personal Expenses"),
-      actions: [
-        IconButton(
-          onPressed: _addNewTxBottomSheet,
-          icon: Icon(Icons.add),
-        ),
-      ],
-    );
-  }
+  bool _showChart = false;
 
   void _deleteTransaction(String id) {
     setState(() {
@@ -55,28 +23,63 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Create appbar excluded screen height
     final mediaQuery = MediaQuery.of(context);
-    return Scaffold(
-      appBar: _systemAppropriateAppBar(),
-      body: SafeArea(
+    if (mediaQuery.orientation == Orientation.landscape) {
+      return SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: mediaQuery.size.height * 0.3,
-                child: ExpenseChart(
-                  recentTransactions: getRecentTransactions(),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Show chart",
+                    style: TextStyle(
+                      fontFamily: "OpenSans",
+                    ),
+                  ),
+                  Switch.adaptive(
+                    value: _showChart,
+                    onChanged: (val) => _showChart = val,
+                    activeColor: Colors.yellow,
+                  )
+                ],
               ),
               Container(
                 height: mediaQuery.size.height * 0.7,
-                child: TransactionList(
-                  transactions: AppConstants.userTransactions,
-                  deleteTx: _deleteTransaction,
-                ),
-              ),
+                child: _showChart
+                    ? ExpenseChart(
+                        recentTransactions: getRecentTransactions(),
+                      )
+                    : TransactionList(
+                        transactions: AppConstants.userTransactions,
+                        deleteTx: _deleteTransaction,
+                      ),
+              )
             ],
           ),
+        ),
+      );
+    }
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: mediaQuery.size.height * 0.3,
+              child: ExpenseChart(
+                recentTransactions: getRecentTransactions(),
+              ),
+            ),
+            Container(
+              height: mediaQuery.size.height * 0.7,
+              child: TransactionList(
+                transactions: AppConstants.userTransactions,
+                deleteTx: _deleteTransaction,
+              ),
+            ),
+          ],
         ),
       ),
     );

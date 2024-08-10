@@ -5,6 +5,7 @@ import 'package:personal_keep/widgets/expense_chart.dart';
 import 'package:personal_keep/widgets/new_transaction.dart';
 
 import '../app_constants.dart';
+import '../widgets/transaction_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void addNewTxBottomSheet() {
+  void _addNewTxBottomSheet() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -34,23 +35,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  AppBar systemAppropriateAppBar() {
+  AppBar _systemAppropriateAppBar() {
     return AppBar(
       title: Text("Personal Expenses"),
       actions: [
         IconButton(
-          onPressed: addNewTxBottomSheet,
+          onPressed: _addNewTxBottomSheet,
           icon: Icon(Icons.add),
         ),
       ],
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      AppConstants.userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      appBar: systemAppropriateAppBar(),
+      appBar: _systemAppropriateAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -63,8 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 height: mediaQuery.size.height * 0.7,
-                // TODO: Create necessary widget
-                child: Placeholder(),
+                child: TransactionList(
+                  transactions: AppConstants.userTransactions,
+                  deleteTx: _deleteTransaction,
+                ),
               ),
             ],
           ),

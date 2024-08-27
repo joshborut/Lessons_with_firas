@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_constants.dart';
 import '../models/transaction.dart';
 import '../widgets/new_transaction.dart';
+
+final userTransactionProvider =
+    StateProvider<List<Transaction>>((ref) => AppConstants.userTransactions);
+
+final recentTransactionsProvider = Provider<List<Transaction>>((ref) {
+  return ref.watch(userTransactionProvider).where(
+    (tx) {
+      tx.date ??= DateTime.now();
+      return tx.date!.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    },
+  ).toList();
+});
 
 SnackBar getSnackBar(String message, {int timeUp = 500}) {
   return SnackBar(
@@ -28,19 +45,10 @@ SnackBar getSnackBar(String message, {int timeUp = 500}) {
   );
 }
 
-List<Transaction> getRecentTransactions() {
-  return AppConstants.userTransactions.where(
-    (tx) {
-      tx.date ??= DateTime.now();
-      return tx.date!.isAfter(DateTime.now().subtract(Duration(days: 7)));
-    },
-  ).toList();
-}
-
-void addNewTxBottomSheet(BuildContext context) {
+void addNewTxBottomSheet(WidgetRef ref) {
   showModalBottomSheet(
     isScrollControlled: true,
-    context: context,
+    context: ref.context,
     builder: (_) {
       return NewTransaction(
         function: (String title, double amount, DateTime chosenDate) {
@@ -51,8 +59,12 @@ void addNewTxBottomSheet(BuildContext context) {
             amount: amount,
             date: chosenDate,
           );
-          // TODO: Use riverpod to update app constants
-          // setState(() => AppConstants.userTransactions.add(newTx));
+          ref.read(userTransactionProvider.notifier).update(
+                (state) => [
+                  ...state,
+                  newTx,
+                ],
+              );
         },
       );
     },

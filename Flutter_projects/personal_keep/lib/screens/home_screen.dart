@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:personal_keep/utils/shared_functions.dart';
 import 'package:personal_keep/widgets/expense_chart.dart';
 
-import '../app_constants.dart';
 import '../widgets/transaction_list.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _showChart = false;
 
   void _deleteTransaction(String id) {
-    setState(() {
-      AppConstants.userTransactions.removeWhere((tx) => tx.id == id);
-    });
+    ref.read(userTransactionProvider.notifier).update(
+          (state) => [...state..removeWhere((tx) => tx.id == id)],
+        );
   }
 
   @override
   Widget build(BuildContext context) {
+    final userTransactions = ref.watch(userTransactionProvider);
+    final recentTransactions = ref.watch(recentTransactionsProvider);
     // TODO: Create appbar excluded screen height
     final mediaQuery = MediaQuery.of(context);
     if (mediaQuery.orientation == Orientation.landscape) {
@@ -50,10 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: mediaQuery.size.height * 0.7,
                 child: _showChart
                     ? ExpenseChart(
-                        recentTransactions: getRecentTransactions(),
+                        recentTransactions: recentTransactions,
                       )
                     : TransactionList(
-                        transactions: AppConstants.userTransactions,
+                        transactions: userTransactions,
                         deleteTx: _deleteTransaction,
                       ),
               )
@@ -69,13 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               height: mediaQuery.size.height * 0.3,
               child: ExpenseChart(
-                recentTransactions: getRecentTransactions(),
+                recentTransactions: recentTransactions,
               ),
             ),
             Container(
               height: mediaQuery.size.height * 0.7,
               child: TransactionList(
-                transactions: AppConstants.userTransactions,
+                transactions: userTransactions,
                 deleteTx: _deleteTransaction,
               ),
             ),

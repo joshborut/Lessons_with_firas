@@ -66,7 +66,9 @@ class _NewTransactionState extends State<NewTransaction> {
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 10, 10, mediaQuery.viewInsets.bottom),
       child: SizedBox(
-        height: mediaQuery.size.height * 0.45,
+        height: mediaQuery.orientation == Orientation.landscape
+            ? mediaQuery.size.height * 0.70
+            : mediaQuery.size.height * 0.45,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Form(

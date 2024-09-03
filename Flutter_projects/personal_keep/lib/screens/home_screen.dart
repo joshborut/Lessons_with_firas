@@ -6,7 +6,12 @@ import 'package:personal_keep/widgets/expense_chart.dart';
 import '../widgets/transaction_list.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    required this.appBarHeight,
+    super.key,
+  });
+
+  final double appBarHeight;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -25,8 +30,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final userTransactions = ref.watch(userTransactionProvider);
     final recentTransactions = ref.watch(recentTransactionsProvider);
-    // TODO: Create appbar excluded screen height
     final mediaQuery = MediaQuery.of(context);
+    final barExcludedScrnHeight =
+        mediaQuery.size.height - mediaQuery.padding.top - widget.appBarHeight;
     if (mediaQuery.orientation == Orientation.landscape) {
       return SafeArea(
         child: SingleChildScrollView(
@@ -43,13 +49,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   Switch.adaptive(
                     value: _showChart,
-                    onChanged: (val) => _showChart = val,
+                    onChanged: (val) => setState(() => _showChart = val),
                     activeColor: Colors.yellow,
                   )
                 ],
               ),
               Container(
-                height: mediaQuery.size.height * 0.7,
+                height: barExcludedScrnHeight * 0.7,
                 child: _showChart
                     ? ExpenseChart(
                         recentTransactions: recentTransactions,
@@ -69,13 +75,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Column(
           children: [
             Container(
-              height: mediaQuery.size.height * 0.3,
+              height: barExcludedScrnHeight * 0.3,
               child: ExpenseChart(
                 recentTransactions: recentTransactions,
               ),
             ),
             Container(
-              height: mediaQuery.size.height * 0.7,
+              height: barExcludedScrnHeight * 0.7,
               child: TransactionList(
                 transactions: userTransactions,
                 deleteTx: _deleteTransaction,

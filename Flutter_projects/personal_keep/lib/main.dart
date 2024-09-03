@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,15 +22,15 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   Widget _systemAppropriateAppBar(WidgetRef ref) {
-    if (Platform.isIOS) {
-      return CupertinoNavigationBar(
-        middle: Text("Personal Expenses"),
-        trailing: IconButton(
-          onPressed: () => addNewTxBottomSheet(ref),
-          icon: Icon(Icons.add),
-        ),
-      );
-    }
+    // if (Platform.isIOS) {
+    //   return CupertinoNavigationBar(
+    //     middle: Text("Personal Expenses"),
+    //     trailing: IconButton(
+    //       onPressed: () => addNewTxBottomSheet(ref),
+    //       icon: Icon(Icons.add),
+    //     ),
+    //   );
+    // }
     return AppBar(
       title: Text("Personal Expenses"),
       actions: [
@@ -47,15 +44,12 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Platform.isIOS
-        ? CupertinoPageScaffold(
-            navigationBar:
-                _systemAppropriateAppBar(ref) as CupertinoNavigationBar,
-            child: HomeScreen(),
-          )
-        : Scaffold(
-            appBar: _systemAppropriateAppBar(ref) as AppBar,
-            body: HomeScreen(),
-          );
+    final appBar = _systemAppropriateAppBar(ref) as AppBar;
+    return Scaffold(
+      appBar: appBar,
+      body: HomeScreen(
+        appBarHeight: appBar.preferredSize.height,
+      ),
+    );
   }
 }

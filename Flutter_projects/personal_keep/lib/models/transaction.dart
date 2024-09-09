@@ -6,8 +6,8 @@ class Transaction {
     this.date,
   });
 
-  final String id;
   final String title;
   final double amount;
+  final String id;
   DateTime? date;
 }

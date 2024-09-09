@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:personal_keep/constants.dart';
+import 'package:personal_keep/widgets/new_transactions.dart';
 
-import '../app_constants.dart';
 import '../models/transaction.dart';
-import '../widgets/new_transaction.dart';
 
 final userTransactionProvider =
     StateProvider<List<Transaction>>((ref) => AppConstants.userTransactions);
@@ -69,4 +69,10 @@ void addNewTxBottomSheet(WidgetRef ref) {
       );
     },
   );
+}
+
+void deleteTransaction(WidgetRef ref, String id) {
+  ref.read(userTransactionProvider.notifier).update(
+        (state) => [...state..removeWhere((tx) => tx.id == id)],
+      );
 }

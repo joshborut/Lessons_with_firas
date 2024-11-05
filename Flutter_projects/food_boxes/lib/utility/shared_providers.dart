@@ -10,19 +10,23 @@ final intializeMainProviders = Provider.autoDispose(
         .collection("users")
         .doc(user?.uid)
         .get();
-    ref.read(firstNameProvider.notifier).state =
-        userData.data()?["firstName"] ?? "";
-    ref.read(lastNameProvider.notifier).state =
-        userData.data()?["lastName"] ?? "";
-    ref.read(ageProvider.notifier).state = userData.data()?["age"] ?? "";
-    ref.read(currentUserProvider.notifier).state = user;
+    ref.read(userIDProvider.notifier).state = user?.uid ?? "";
+    updateProviders(ref, data: userData.data());
     ref.read(appProvidersInitialized.notifier).state = true;
   },
 );
 
+void updateProviders(dynamic ref, {Map<String, dynamic>? data}) {
+  if (data != null) {
+    ref.read(firstNameProvider.notifier).state = data["firstName"];
+    ref.read(lastNameProvider.notifier).state = data["lastName"];
+    ref.read(ageProvider.notifier).state = data["age"];
+  }
+}
+
 final appProvidersInitialized = StateProvider<bool>((ref) => false);
 
-final currentUserProvider = StateProvider<User?>((ref) => null);
+final userIDProvider = StateProvider<String>((ref) => "");
 
 final firstNameProvider = StateProvider<String>((ref) => "");
 

@@ -44,16 +44,19 @@ class _AccountPageState extends ConsumerState<AccountPage> {
 
   void _submitFormData() async {
     if (_formKey.currentState!.validate()) {
-      final user = FirebaseAuth.instance.currentUser;
-      await FirebaseFirestore.instance.collection("users").doc(user?.uid).set(
-        {
-          "firstName": _firstNameController.text,
-          "lastName": _lastNameController.text,
-          "age": _ageController.text,
-        },
-      );
+      final userId = ref.read(userIDProvider);
+      final data = {
+        "firstName": _firstNameController.text,
+        "lastName": _lastNameController.text,
+        "age": _ageController.text,
+      };
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userId)
+          .set(data);
+      updateProviders(ref, data: data);
       FocusManager.instance.primaryFocus?.unfocus();
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           messegeSnackBar("User data has been updated", timeUp: 1000),
         );

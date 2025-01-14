@@ -23,7 +23,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       try {
         await FirebaseAuth.instance
             .sendPasswordResetEmail(email: _emailController.text);
-        if (context.mounted) {
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             messegeSnackBar("Please follow the directions sent to your email"),
           );
@@ -39,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         } else {
           snackBarMessege = e.message!;
         }
-        if (context.mounted) {
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             messegeSnackBar(
               snackBarMessege,

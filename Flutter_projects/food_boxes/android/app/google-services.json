@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "879597983428",
     "project_id": "food-boxes-ios",
-    "storage_bucket": "food-boxes-ios.appspot.com"
+    "storage_bucket": "food-boxes-ios.firebasestorage.app"
   },
   "client": [
     {

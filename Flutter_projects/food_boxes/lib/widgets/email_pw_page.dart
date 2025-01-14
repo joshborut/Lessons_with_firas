@@ -37,7 +37,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
             email: _emailController.text,
             password: _passwordController.text,
           );
-          if (context.mounted) {
+          if (mounted) {
             Navigator.of(context).pop();
           }
         } else {
@@ -61,7 +61,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
         } else {
           snackBarMessege = e.message!;
         }
-        if (context.mounted) {
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             messegeSnackBar(
               snackBarMessege,

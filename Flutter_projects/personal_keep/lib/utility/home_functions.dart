@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:personal_keep/constants.dart';
-import 'package:personal_keep/widgets/new_transactions.dart';
+import '../constants.dart';
+import '../widgets/new_transactions.dart';
 
 import '../models/transaction.dart';
 

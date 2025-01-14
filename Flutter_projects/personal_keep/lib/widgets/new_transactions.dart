@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:personal_keep/utility/home_functions.dart';
-import 'package:personal_keep/widgets/custom_text_field.dart';
+import '../utility/home_functions.dart';
+import 'custom_text_field.dart';
 
 import 'adaptive_button.dart';
 

@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:personal_keep/constants.dart';
-import 'package:personal_keep/utility/home_functions.dart';
+import '../constants.dart';
+import '../utility/home_functions.dart';
 
 import '../models/transaction.dart';
 

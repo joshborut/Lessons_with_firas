@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:personal_keep/utility/home_functions.dart';
-import 'package:personal_keep/widgets/expenses_chart.dart';
+import '../utility/home_functions.dart';
+import 'expenses_chart.dart';
 
 import '../widgets/transaction_list.dart';
 
 class LandscapePage extends ConsumerStatefulWidget {
   const LandscapePage({
-    required this.appBarHeight,
+    required this.pageHeight,
     super.key,
   });
 
-  final double appBarHeight;
+  final double pageHeight;
 
   @override
   ConsumerState<LandscapePage> createState() => _HomeScreenState();
@@ -24,9 +24,6 @@ class _HomeScreenState extends ConsumerState<LandscapePage> {
   Widget build(BuildContext context) {
     final userTransactions = ref.watch(userTransactionProvider);
     final recentTransactions = ref.watch(recentTransactionsProvider);
-    final mediaQuery = MediaQuery.of(context);
-    final barExcludedScrnHeight =
-        mediaQuery.size.height - mediaQuery.padding.top - widget.appBarHeight;
     return Column(
       children: [
         Row(
@@ -46,7 +43,7 @@ class _HomeScreenState extends ConsumerState<LandscapePage> {
           ],
         ),
         Container(
-          height: barExcludedScrnHeight * 0.7,
+          height: widget.pageHeight * 0.7,
           child: _showChart
               ? ExpenseChart(
                   recentTransactions: recentTransactions,

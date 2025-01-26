@@ -24,6 +24,7 @@ class ExpandedOrderScreen extends ConsumerWidget {
           horizontal: SizeConfig.scaledWidth(3),
         ),
         height: double.infinity,
+        // TODO: Show order details dialogue
         child: ListView.builder(
           padding: EdgeInsets.only(
             top: SizeConfig.scaledHeight(7.5),

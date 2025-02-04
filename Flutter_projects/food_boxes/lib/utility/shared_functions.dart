@@ -22,9 +22,11 @@ int randomValue(int min, int max) {
 
 void orderDetailsDialogue(
   WidgetRef ref, {
-  required String orderNumber,
+  required FoodBox ticket,
   String? orderDetails,
 }) {
+  final ticketList = ref.read(ticketListProvider);
+  final ticketIdx = ticketList.indexOf(ticket);
   showDialog(
     context: ref.context,
     builder: (BuildContext ctx) {
@@ -41,7 +43,7 @@ void orderDetailsDialogue(
                 top: SizeConfig.scaledHeight(2.5),
               ),
               child: Text(
-                "Order Number: #$orderNumber",
+                "Order Number: #${ticketIdx + 1}",
                 style: TextStyle(
                   fontSize: SizeConfig.scaledHeight(2.8),
                   fontWeight: FontWeight.w500,
@@ -72,16 +74,22 @@ void orderDetailsDialogue(
                   StylizedTxtContainer(
                     text: "Cancel",
                     onTapFunction: () async {
-                      final cancelOrder = await yesNoDialogue(ref.context,
-                              "Canceling an order is permanent and irreversible") ??
-                          false;
+                      final dialogueChoice = yesNoDialogue(ref.context,
+                          "Canceling an order is permanent and irreversible");
+                      final cancelOrder = await dialogueChoice ?? false;
+                      final ticketCount =
+                          ticketList.where((e) => e == ticket).length;
                       if (cancelOrder) {
                         ref
                             .read(ticketListProvider.notifier)
-                            .removeElement(orderNumber);
+                            .removeElement(ticketIdx);
                       }
                       if (ctx.mounted) {
-                        Navigator.of(ref.context).pop();
+                        if (ticketCount == 1) {
+                          Navigator.of(ctx).popUntil(ModalRoute.withName('/'));
+                        } else {
+                          Navigator.of(ctx).pop();
+                        }
                       }
                     },
                   )

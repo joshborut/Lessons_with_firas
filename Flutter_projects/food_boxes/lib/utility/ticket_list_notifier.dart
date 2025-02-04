@@ -25,8 +25,8 @@ class TicketListNotifier extends Notifier<List<FoodBox>> {
     ];
   }
 
-  void removeElement(String orderNumber) {
-    state = [...state..removeAt(int.parse(orderNumber) - 1)];
+  void removeElement(int orderNumber) {
+    state = [...state..removeAt(orderNumber - 1)];
   }
 
   Map<String, List<FoodBox>> getBoxesForDate() {

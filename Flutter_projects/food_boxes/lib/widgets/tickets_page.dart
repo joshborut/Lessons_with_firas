@@ -20,7 +20,7 @@ class TicketsPage extends ConsumerWidget {
     }
     return ListView.builder(
       padding: EdgeInsets.only(
-        top: SizeConfig.scaledHeight(7.5),
+        top: SizeConfig.scaledHeight(10),
       ),
       itemCount: groupedBoxesByDate.keys.length,
       itemBuilder: (_, index) {

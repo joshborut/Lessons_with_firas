@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_boxes/utility/shared_functions.dart';
+import 'package:food_boxes/utility/shared_providers.dart';
 
-import '../model/food_box.dart';
 import '../utility/size_config.dart';
 import '../widgets/ticket_card.dart';
 
 class ExpandedOrderScreen extends ConsumerWidget {
-  const ExpandedOrderScreen({
-    required this.foodBoxList,
-    super.key,
-  });
+  const ExpandedOrderScreen({super.key});
 
   static const routeName = "order";
 
-  final List<FoodBox> foodBoxList;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final stackedTicket = ref.read(stackedTicketProvider);
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: SizeConfig.scaledHeight(3),
-          horizontal: SizeConfig.scaledWidth(3),
+      body: ListView.builder(
+        padding: EdgeInsets.only(
+          top: SizeConfig.scaledHeight(10),
         ),
-        height: double.infinity,
-        // TODO: Show order details dialogue
-        child: ListView.builder(
-          padding: EdgeInsets.only(
-            top: SizeConfig.scaledHeight(7.5),
-          ),
-          itemCount: foodBoxList.length,
-          itemBuilder: (_, index) {
-            return TicketCard(
-              uniqueTicket: foodBoxList[index],
-              index: index,
-              ticketHeightScale: 45,
-            );
-          },
-        ),
+        itemCount: stackedTicket.length,
+        itemBuilder: (_, index) {
+          return GestureDetector(
+            onTap: () =>
+                orderDetailsDialogue(ref, ticket: stackedTicket[index]),
+            child: Center(
+              child: TicketCard(
+                uniqueTicket: stackedTicket[index],
+                index: index,
+                ticketHeightScale: 45,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

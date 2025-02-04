@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_boxes/utility/dimensions_extensions.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
 import 'package:food_boxes/utility/shared_providers.dart';
 
-import '../utility/size_config.dart';
 import '../widgets/ticket_card.dart';
 
 class ExpandedOrderScreen extends ConsumerWidget {
@@ -17,13 +17,13 @@ class ExpandedOrderScreen extends ConsumerWidget {
     return Scaffold(
       body: ListView.builder(
         padding: EdgeInsets.only(
-          top: SizeConfig.scaledHeight(10),
+          top: context.percentHeight(10),
         ),
         itemCount: stackedTicket.length,
         itemBuilder: (_, index) {
           return GestureDetector(
-            onTap: () =>
-                orderDetailsDialogue(ref, ticket: stackedTicket[index]),
+            onTap: () => orderDetailsDialogue(context, ref,
+                ticket: stackedTicket[index]),
             child: Center(
               child: TicketCard(
                 uniqueTicket: stackedTicket[index],

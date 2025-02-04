@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_boxes/utility/size_config.dart';
+import 'package:food_boxes/utility/dimensions_extensions.dart';
 import 'package:food_boxes/widgets/no_ticket_container.dart';
 import 'package:food_boxes/widgets/stacked_cards.dart';
 
@@ -20,7 +20,7 @@ class TicketsPage extends ConsumerWidget {
     }
     return ListView.builder(
       padding: EdgeInsets.only(
-        top: SizeConfig.scaledHeight(10),
+        top: context.percentHeight(10),
       ),
       itemCount: groupedBoxesByDate.keys.length,
       itemBuilder: (_, index) {

@@ -14,7 +14,7 @@ class TicketCard extends ConsumerWidget {
     super.key,
     required this.uniqueTicket,
     required this.index,
-    this.ticketHeightScale = 43,
+    this.ticketHeightScale = 35,
   });
 
   final FoodBox uniqueTicket;
@@ -27,15 +27,15 @@ class TicketCard extends ConsumerWidget {
         Icon(
           iconData,
           color: Colors.black,
-          size: SizeConfig.scaledHeight(2.5),
+          size: SizeConfig.scaledHeight(2.25),
         ),
         SizedBox(
-          width: SizeConfig.scaledWidth(3),
+          width: SizeConfig.scaledWidth(2.75),
         ),
         Text(
           text,
           style: TextStyle(
-            fontSize: SizeConfig.scaledHeight(2.5),
+            fontSize: SizeConfig.scaledHeight(2.25),
           ),
         ),
       ],
@@ -44,30 +44,27 @@ class TicketCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: Scale sizes for widgets according to ticketHeight
-    final ticketQuantity = ref
-        .read(ticketListProvider.notifier)
-        .getNumberOfTickets(uniqueTicket.id);
+    final ticketList = ref.watch(ticketListProvider);
+    final ticketQuantity =
+        ticketList.where((e) => e.id == uniqueTicket.id).length;
     final imageURL = ref.read(imageURLProvider(uniqueTicket));
     return SizedBox(
       height: SizeConfig.scaledHeight(ticketHeightScale),
-      width: SizeConfig.safeWidth,
+      width: SizeConfig.scaledWidth(90),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.circleRadius,
         ),
         elevation: 4,
-        margin: EdgeInsets.symmetric(
-          vertical: SizeConfig.scaledHeight(1.5),
-          horizontal: SizeConfig.scaledWidth(3),
+        margin: EdgeInsets.only(
+          bottom: SizeConfig.scaledHeight(2.25),
         ),
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
-                  height: SizeConfig.scaledHeight(30),
-                  width: double.infinity,
+                  height: SizeConfig.scaledHeight(25),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
@@ -92,7 +89,7 @@ class TicketCard extends ConsumerWidget {
                     child: Text(
                       "${uniqueTicket.name} x$ticketQuantity",
                       style: TextStyle(
-                        fontSize: SizeConfig.scaledHeight(3.5),
+                        fontSize: SizeConfig.scaledHeight(3),
                         color: Colors.white,
                       ),
                     ),
@@ -102,7 +99,7 @@ class TicketCard extends ConsumerWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.scaledHeight(3),
+                vertical: SizeConfig.scaledHeight(1.5),
                 horizontal: SizeConfig.scaledWidth(5),
               ),
               child: Row(

@@ -13,10 +13,6 @@ class TicketListNotifier extends Notifier<List<FoodBox>> {
   @override
   build() => [];
 
-  int getNumberOfTickets(String id) {
-    return state.where((FoodBox element) => element.id == id).length;
-  }
-
   void updateList() {
     final selectedBoxes = ref.read(selectedBoxesProvider);
     state = [
@@ -26,11 +22,10 @@ class TicketListNotifier extends Notifier<List<FoodBox>> {
   }
 
   void removeElement(int orderNumber) {
-    state = [...state..removeAt(orderNumber - 1)];
+    state = [...state..removeAt(orderNumber)];
   }
 
   Map<String, List<FoodBox>> getBoxesForDate() {
-    // return state.where((FoodBox element) => element.date == date).toList();
     return groupBy(state, (FoodBox e) => formatDate(e.date));
   }
 }

@@ -28,7 +28,6 @@ class ExpandedOrderScreen extends ConsumerWidget {
               child: TicketCard(
                 uniqueTicket: stackedTicket[index],
                 index: index,
-                ticketHeightScale: 45,
               ),
             ),
           );

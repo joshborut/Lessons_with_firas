@@ -22,20 +22,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ref.read(intializeMainProviders);
       return LoadingScreen();
     }
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: AppConstants.menuItemList[pageIndex].bodyBuild,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() => pageIndex = index),
-        items: AppConstants.menuItemList
-            .map(
-              (e) => BottomNavigationBarItem(
-                label: e.labelText,
-                icon: Icon(e.iconData),
-              ),
-            )
-            .toList(),
-        currentIndex: pageIndex,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: AppConstants.menuItemList[pageIndex].bodyBuild,
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) => setState(() => pageIndex = index),
+          items: AppConstants.menuItemList
+              .map(
+                (e) => BottomNavigationBarItem(
+                  label: e.labelText,
+                  icon: Icon(e.iconData),
+                ),
+              )
+              .toList(),
+          currentIndex: pageIndex,
+        ),
       ),
     );
   }

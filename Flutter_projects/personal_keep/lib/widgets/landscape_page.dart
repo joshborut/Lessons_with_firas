@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../utility/home_functions.dart';
-import 'expenses_chart.dart';
 
+import '../utility/user_transaction_notifier.dart';
 import '../widgets/transaction_list.dart';
+import 'expenses_chart.dart';
 
 class LandscapePage extends ConsumerStatefulWidget {
   const LandscapePage({
@@ -22,8 +22,8 @@ class _HomeScreenState extends ConsumerState<LandscapePage> {
 
   @override
   Widget build(BuildContext context) {
+    final userTxNotifier = ref.watch(userTransactionProvider.notifier);
     final userTransactions = ref.watch(userTransactionProvider);
-    final recentTransactions = ref.watch(recentTransactionsProvider);
     return Column(
       children: [
         Row(
@@ -46,7 +46,7 @@ class _HomeScreenState extends ConsumerState<LandscapePage> {
           height: widget.pageHeight * 0.7,
           child: _showChart
               ? ExpenseChart(
-                  recentTransactions: recentTransactions,
+                  recentTransactions: userTxNotifier.recentTransactionsProvider,
                 )
               : TransactionList(
                   transactions: userTransactions,

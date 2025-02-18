@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../constants.dart';
-import '../utility/home_functions.dart';
 
+import '../constants.dart';
 import '../models/transaction.dart';
+import '../utility/user_transaction_notifier.dart';
 
 class TransactionItem extends ConsumerStatefulWidget {
   const TransactionItem({
@@ -33,6 +33,7 @@ class _TransactionItemState extends ConsumerState<TransactionItem> {
 
   @override
   Widget build(BuildContext context) {
+    final userTxNotifier = ref.watch(userTransactionProvider.notifier);
     return Card(
       elevation: 5,
       margin: EdgeInsets.symmetric(
@@ -69,7 +70,8 @@ class _TransactionItemState extends ConsumerState<TransactionItem> {
         ),
         trailing: MediaQuery.of(context).size.width > 460
             ? TextButton.icon(
-                onPressed: () => deleteTransaction(ref, widget.transaction.id),
+                onPressed: () =>
+                    userTxNotifier.deleteTransaction(widget.transaction.id),
                 icon: Icon(Icons.delete),
                 label: Text(
                   "Delete",
@@ -79,7 +81,8 @@ class _TransactionItemState extends ConsumerState<TransactionItem> {
                 ),
               )
             : IconButton(
-                onPressed: () => deleteTransaction(ref, widget.transaction.id),
+                onPressed: () =>
+                    userTxNotifier.deleteTransaction(widget.transaction.id),
                 icon: Icon(Icons.delete),
                 color: Colors.red,
               ),

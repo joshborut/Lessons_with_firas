@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../utility/home_functions.dart';
-import 'expenses_chart.dart';
 
+import '../utility/user_transaction_notifier.dart';
 import '../widgets/transaction_list.dart';
+import 'expenses_chart.dart';
 
 class PortraitPage extends ConsumerWidget {
   const PortraitPage({
@@ -15,14 +15,14 @@ class PortraitPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userTxNotifier = ref.watch(userTransactionProvider.notifier);
     final userTransactions = ref.watch(userTransactionProvider);
-    final recentTransactions = ref.watch(recentTransactionsProvider);
     return Column(
       children: [
         Container(
           height: pageHeight * 0.3,
           child: ExpenseChart(
-            recentTransactions: recentTransactions,
+            recentTransactions: userTxNotifier.recentTransactionsProvider,
           ),
         ),
         Container(

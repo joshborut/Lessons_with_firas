@@ -26,7 +26,6 @@ class AuthenticationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TODO: Add unfocus feature
               EmailPasswordPage(
                 titleText: "Login",
                 subtitle: "Please sign in to proceed",

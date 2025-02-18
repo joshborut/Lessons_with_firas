@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_boxes/utility/box_list_notifier.dart';
 import 'package:food_boxes/utility/dimensions_extensions.dart';
-import 'package:food_boxes/utility/shared_providers.dart';
 import 'package:food_boxes/utility/ticket_list_notifier.dart';
 import 'package:food_boxes/widgets/stylized_txt_container.dart';
 import 'package:intl/intl.dart';
@@ -23,14 +22,15 @@ int randomValue(int min, int max) {
 
 void orderDetailsDialogue(
   BuildContext context,
-  WidgetRef ref, {
+  TicketListNotifier ticketListNotifier,
+  StateController<List<FoodBox>> stackedTicketListController,
+  List<FoodBox> ticketList, {
   required FoodBox ticket,
   String? orderDetails,
 }) {
-  final ticketList = ref.read(ticketListProvider);
   final ticketIdx = ticketList.indexOf(ticket);
   showDialog(
-    context: ref.context,
+    context: context,
     builder: (BuildContext ctx) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -71,23 +71,20 @@ void orderDetailsDialogue(
                 children: [
                   StylizedTxtContainer(
                     text: "Back",
-                    onTapFunction: () => Navigator.of(ref.context).pop(),
+                    onTapFunction: () => Navigator.of(context).pop(),
                   ),
                   StylizedTxtContainer(
                     text: "Cancel",
                     onTapFunction: () async {
-                      final dialogueChoice = yesNoDialogue(ref.context,
+                      final dialogueChoice = yesNoDialogue(context,
                           "Canceling an order is permanent and irreversible");
                       final cancelOrder = await dialogueChoice ?? false;
                       final ticketCount =
                           ticketList.where((e) => e == ticket).length;
                       if (cancelOrder) {
-                        ref
-                            .read(ticketListProvider.notifier)
-                            .removeElement(ticketIdx);
+                        ticketListNotifier.removeElement(ticketIdx);
                         if (ticketCount == 1) {
-                          ref
-                              .read(stackedTicketProvider.notifier)
+                          stackedTicketListController
                               .update((state) => [...state..remove(ticket)]);
                         }
                       }

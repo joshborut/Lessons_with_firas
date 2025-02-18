@@ -7,6 +7,7 @@ import 'package:food_boxes/widgets/ticket_card.dart';
 
 import '../model/food_box.dart';
 import '../utility/shared_functions.dart';
+import '../utility/ticket_list_notifier.dart';
 
 class StackedCards extends ConsumerWidget {
   const StackedCards({super.key, required this.uniqueTickets});
@@ -15,9 +16,19 @@ class StackedCards extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ticketListNotifier = ref.read(ticketListProvider.notifier);
+    final stackedTicketListController =
+        ref.read(stackedTicketProvider.notifier);
+    final ticketList = ref.read(ticketListProvider);
     return GestureDetector(
       onTap: uniqueTickets.length == 1
-          ? () => orderDetailsDialogue(context, ref, ticket: uniqueTickets[0])
+          ? () => orderDetailsDialogue(
+                context,
+                ticketListNotifier,
+                stackedTicketListController,
+                ticketList,
+                ticket: uniqueTickets[0],
+              )
           : () {
               ref.read(stackedTicketProvider.notifier).state = uniqueTickets;
               Navigator.pushNamed(context, ExpandedOrderScreen.routeName);

@@ -12,6 +12,8 @@ class AppConstants {
     Colors.green
   ];
 
+  static const grey500 = Color(0xFF9E9E9E);
+
   static List<Transaction> userTransactions = [
     Transaction(
       id: 't1',

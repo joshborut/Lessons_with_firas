@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_boxes/generated/locale_keys.g.dart';
 import 'package:food_boxes/utility/dimensions_extensions.dart';
 import 'package:food_boxes/utility/shared_functions.dart';
 
@@ -110,7 +112,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
                 return null;
               },
               prefixIconWidget: Icon(Icons.email),
-              decorationLabel: "Email",
+              decorationLabel: LocaleKeys.formTxtFieldEmailLabel.tr(),
             ),
           ),
           CustomTxtFormField(
@@ -126,7 +128,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
             },
             prefixIconWidget: Icon(Icons.lock),
             obscureText: true,
-            decorationLabel: "Password",
+            decorationLabel: LocaleKeys.formTxtFieldPwLabel.tr(),
           ),
           Container(
             padding: EdgeInsets.only(
@@ -144,7 +146,7 @@ class _EmailPasswordPageState extends State<EmailPasswordPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Submit",
+                          LocaleKeys.formSubmitBtn.tr(),
                           style: TextStyle(
                             fontSize: context.percentHeight(2),
                           ),

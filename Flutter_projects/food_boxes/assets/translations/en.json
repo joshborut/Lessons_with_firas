@@ -1,5 +1,10 @@
 {
     "authScrnTitle": "Login",
     "authScrnSubtitle": "Please sign in to proceed",
-    "authScrnForgotPswBtn":  "Forgot Password"
+    "authScrnForgotPwBtn":  "Forgot Password",
+    "authScrnNewHere": "New here?",
+    "authScrnCreateAcc": "Create an Account",
+    "formTxtFieldEmailLabel": "Email",
+    "formTxtFieldPwLabel": "Password",
+    "formSubmitBtn": "Submit"
 }

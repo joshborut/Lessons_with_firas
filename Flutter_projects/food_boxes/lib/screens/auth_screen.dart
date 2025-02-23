@@ -42,7 +42,7 @@ class AuthenticationScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   width: context.safeWidth,
                   child: Text(
-                    LocaleKeys.authScrnForgotPswBtn.tr(),
+                    LocaleKeys.authScrnForgotPwBtn.tr(),
                     style: TextStyle(
                       fontSize: context.percentHeight(2),
                       color: Theme.of(context).colorScheme.primary,

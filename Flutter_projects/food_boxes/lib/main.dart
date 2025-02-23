@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +10,24 @@ import 'package:hive_flutter/adapters.dart';
 import 'app_constants.dart';
 import 'app_router.dart';
 import 'firebase_options.dart';
+import 'locales.dart';
 import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox(AppConstants.boxName);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ProviderScope(
-      child: MyApp(),
+    EasyLocalization(
+      supportedLocales: Locales.supportedLocales,
+      path: Locales.path,
+      fallbackLocale: Locales.fallbackLocale,
+      child: ProviderScope(child: MyApp()),
     ),
   );
 }
@@ -30,6 +36,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: "Food Boxes",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

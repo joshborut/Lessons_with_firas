@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_boxes/utility/dimensions_extensions.dart';
 
+import '../generated/locale_keys.g.dart';
 import '../widgets/email_pw_page.dart';
 import 'reg_screen.dart';
 import 'reset_pw_screen.dart';
@@ -27,8 +29,8 @@ class AuthenticationScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               EmailPasswordPage(
-                titleText: "Login",
-                subtitle: "Please sign in to proceed",
+                titleText: LocaleKeys.authScrnTitle.tr(),
+                subtitle: LocaleKeys.authScrnSubtitle.tr(),
               ),
               Spacer(),
               GestureDetector(
@@ -40,7 +42,7 @@ class AuthenticationScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   width: context.safeWidth,
                   child: Text(
-                    "Forgot Password",
+                    LocaleKeys.authScrnForgotPswBtn.tr(),
                     style: TextStyle(
                       fontSize: context.percentHeight(2),
                       color: Theme.of(context).colorScheme.primary,

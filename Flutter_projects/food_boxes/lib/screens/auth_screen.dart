@@ -54,16 +54,14 @@ class AuthenticationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "New here?",
+                    LocaleKeys.authScrnNewHere.tr(),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(RegisterationScreen.routeName);
-                    },
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(RegisterationScreen.routeName),
                     child: Text(
-                      "Create an Account",
+                      LocaleKeys.authScrnCreateAcc.tr(),
                       style: TextStyle(
                         fontSize: context.percentHeight(2),
                         color: Theme.of(context).colorScheme.primary,

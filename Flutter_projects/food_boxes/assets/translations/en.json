@@ -6,5 +6,7 @@
     "authScrnCreateAcc": "Create an Account",
     "formTxtFieldEmailLabel": "Email",
     "formTxtFieldPwLabel": "Password",
-    "formSubmitBtn": "Submit"
+    "formSubmitBtn": "Submit",
+    "resetPWScrnEmailInstructions": "Please follow the directions sent to your email",
+    "resetPWScrnResetPW": "Reset password"
 }

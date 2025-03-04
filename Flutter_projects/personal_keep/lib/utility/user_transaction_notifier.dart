@@ -12,8 +12,12 @@ class TransactionListNotifier extends Notifier<List<Transaction>> {
   List<Transaction> build() => AppConstants.userTransactions;
 
   void addTransaction(String title, double amount, DateTime? chosenDate) {
-    final newTransaction =
-        Transaction(id: DateTime.now.toString(), title: title, amount: amount);
+    final newTransaction = Transaction(
+      id: DateTime.now.toString(),
+      title: title,
+      amount: amount,
+      date: chosenDate,
+    );
     state = [...state, newTransaction];
   }
 

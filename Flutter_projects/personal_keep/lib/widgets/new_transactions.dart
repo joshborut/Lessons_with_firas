@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_keep/utility/user_transaction_notifier.dart';
 
-import '../utility/home_functions.dart';
+import '../utility/shared_functions.dart';
 import 'adaptive_button.dart';
 import 'custom_text_field.dart';
 
@@ -22,22 +22,22 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
   // Used to check multiple fields that make up a form
   final _formKey = GlobalKey<FormState>();
   DateTime? _selectedDate;
+  bool? _datePickerUsed;
 
   void _submitData() {
-    if (_formKey.currentState!.validate() == false) return;
+    if (_formKey.currentState!.validate() == false || _selectedDate == null) {
+      showSnackBar("Please ensure all fields are provided");
+      if (_datePickerUsed == null) {
+        setState(() => _datePickerUsed = false);
+      }
+    } else {
+      final enteredAmount = double.parse(_amountController.text);
+      final title = _titleController.text;
 
-    if (_selectedDate == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        getSnackBar("Please select a date.", timeUp: 1000),
-      );
-      return;
+      final userTxNotifier = ref.read(userTransactionProvider.notifier);
+      userTxNotifier.addTransaction(title, enteredAmount, _selectedDate);
+      Navigator.of(context).pop();
     }
-    final enteredAmount = double.parse(_amountController.text);
-    final title = _titleController.text;
-
-    final userTxNotifier = ref.read(userTransactionProvider.notifier);
-    userTxNotifier.addTransaction(title, enteredAmount, _selectedDate);
-    Navigator.of(context).pop();
   }
 
   void _presentDatePicker() {
@@ -49,11 +49,13 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
       ),
       lastDate: DateTime.now(),
     ).then(
-      (pickedDate) {
-        if (pickedDate == null) return;
-        setState(() {
-          _selectedDate = pickedDate;
-        });
+      (date) {
+        if (date != null) {
+          setState(() {
+            _selectedDate = date;
+            _datePickerUsed = true;
+          });
+        }
       },
     );
   }
@@ -74,6 +76,7 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               CustomTxtFormField(
+                decorationLabel: "Title",
                 controller: _titleController,
                 validator: (value) {
                   if (value.trim().isEmpty) {
@@ -81,9 +84,12 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                   }
                   return null;
                 },
-                decorationLabel: "Title",
+                verticalContentPadding:
+                    mediaQuery.orientation == Orientation.landscape ? 5 : 10,
               ),
               CustomTxtFormField(
+                decorationLabel: "Amount",
+                controller: _amountController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'[0-9]'),
@@ -92,7 +98,8 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                 keyboardType: TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                controller: _amountController,
+                verticalContentPadding:
+                    mediaQuery.orientation == Orientation.landscape ? 5 : 10,
                 validator: (value) {
                   if (value.trim().isEmpty ||
                       (double.parse(value.trim()) < 1 &&
@@ -101,10 +108,9 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                   }
                   return null;
                 },
-                decorationLabel: "Amount",
               ),
               Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 10),
+                padding: EdgeInsets.only(top: 30, bottom: 10, left: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -114,7 +120,13 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                             : "Picked date: ${DateFormat.yMd().format(
                                 _selectedDate!,
                               )}",
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(
+                          fontSize: _selectedDate == null ? 18 : 20,
+                          color: _datePickerUsed != null &&
+                                  _datePickerUsed == false
+                              ? const Color(0xFF6A1513)
+                              : const Color(0xFF000000),
+                        ),
                       ),
                     ),
                     AdaptiveButton(

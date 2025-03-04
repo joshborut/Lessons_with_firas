@@ -40,13 +40,11 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
     }
   }
 
-  void _presentDatePicker() {
+  void _chooseDateHandler() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(
-        Duration(days: 365),
-      ),
+      firstDate: DateTime.now().subtract(Duration(days: 7)),
       lastDate: DateTime.now(),
     ).then(
       (date) {
@@ -82,7 +80,6 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                   if (value.trim().isEmpty) {
                     return "Please enter a title.";
                   }
-                  return null;
                 },
                 verticalContentPadding:
                     mediaQuery.orientation == Orientation.landscape ? 5 : 10,
@@ -101,12 +98,10 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                 verticalContentPadding:
                     mediaQuery.orientation == Orientation.landscape ? 5 : 10,
                 validator: (value) {
-                  if (value.trim().isEmpty ||
-                      (double.parse(value.trim()) < 1 &&
-                          double.parse(value.trim()) > 0)) {
+                  final temp = value.trim();
+                  if (temp.isEmpty || (double.parse(temp) <= 0)) {
                     return "Amount greater than zero.";
                   }
-                  return null;
                 },
               ),
               Padding(
@@ -131,7 +126,7 @@ class _NewTransactionState extends ConsumerState<NewTransaction> {
                     ),
                     AdaptiveButton(
                       text: "Choose date",
-                      handler: _presentDatePicker,
+                      handler: _chooseDateHandler,
                     ),
                   ],
                 ),
